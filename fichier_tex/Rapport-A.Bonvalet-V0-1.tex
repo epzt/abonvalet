@@ -123,27 +123,34 @@
 
 \section{INTRODUCTION}
 
-A faire presque à la fin, mais les grandes idées seront:
-\begin{itemize}
-    \item changement climatique, pression anthropique: besoin de gérer l'espace côtier
-    \item modèles numériques, outils pour réaliser divers scénarios pour une bonne gestion
-    \item anse du cul-de-loup (ADCL): un bon exemple de nécessité de gestion raisonnée
-    \item utilisation du code de calcul CROCO pour réaliser un modèle numériques de ADCL
-\end{itemize}
+%
+%A faire presque à la fin, mais les grandes idées seront:
+%\begin{itemize}
+%    \item changement climatique, pression anthropique: besoin de gérer l'espace côtier
+%    \item modèles numériques, outils pour réaliser divers scénarios pour une bonne gestion
+%    \item anse du cul-de-loup (ADCL): un bon exemple de nécessité de gestion raisonnée
+%    \item utilisation du code de calcul CROCO pour réaliser un modèle numériques de ADCL
+%\end{itemize}
+%
 
 
+A l'interface entre les terres et les mers, les zones côtières ont toujours été attractives pour l'Homme, qu'il s'agisse d'y développer des activités économiques ou tout simplement pour y habiter. L’essor industriel des deux cent dernières années a accru la pression anthropique sur ces zones, avec un développement urbain et industriel croissant\footnote{Actuellement, plus de 20\% de la population mondiale vit à moins de 30 km des côtes \cite{senat2015}.}. Depuis environ soixante dix ans, l'accélération quasi exponentielle de ces activités a engendré d'un côté une disparition progressive des espaces naturels côtiers et de l'autre un dérèglement du climat avec une montée régulière du niveau moyen des océans \cite{ipcc2021}. Ce double effet fait aujourd'hui courir de grands risques aux zones côtières.
 
-L'activité de culture d'huître est une source importante de revenus pour certaines régions des côtes françaises (Haut de France, Normandie, Bretagne, Pays de la Loire, Charente-Maritime, Aquitaine). Pour la Normandie, le département de la Manche et ses 670 km de côtes produit plus de \num{15000} tonnes d'huîtres par an. Le tourisme est un autre secteur d'activité important de nombreuses communes côtières. Ainsi, avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup, ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique} (1 et 2) ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algue protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
+En France, l'activité de culture d'huître est une source importante de revenus pour certaines régions (Haut de France, Normandie, Bretagne, Pays de la Loire, Charente-Maritime, Aquitaine). En Normandie, le département de la Manche, avec ses 670 km de côtes, produit plus de \num{15000} tonnes d'huîtres par an. Depuis le \siecle{18}, le Cotentin abrite sur ses côtes des activités conchylicoles \cite{Kopp2000}. Tout d'abord artisanale, cette culture consistait en un reparquage d'huître plates locales. À partir du \siecle{20} (début des années 60), la conchyliculture normande connaît une phase d'expansion importante et devient industrielle. De nouvelles zones côtières sont investies pour implanter les concessions ostréicoles et des aménagements sont réalisés pour en faciliter l'implantation.
+Avec certains de ses secteurs encore sauvages, les côtes Normandes ont aussi un attrait touristique de villégiature ainsi qu'historique\footnote{Notamment en relation avec les évènements de la seconde guerre mondiale et le débarquement du 6 juin 1944.}.  C'est aussi un secteur d'activité important pour de nombreuses communes côtières de cette région, antagoniste d'activités industrielles telles que la conchyliculture.
 
+L'anse du Cul-de-Loup (Normandie, Manche, France, Fig. \ref{fig:carte-adcl}) est un exemple typique de l'évolution au cours du temps des côtes du littoral français (Fig. \ref{fig:historique-adcl}). Avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique.} (1 et 2) ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algues protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
 
+L'état français via ses agences dédiées (Agence de l'Eau, IFREMER, etc.), mais aussi les entités régionales (Région Normandie) et locale (Département de la Manche), financent des travaux et projets dans une optique d'amélioration de la gestion de l'espace de l'anse du Cul-de-Loup. Ainsi, l'Agence de l'Eau Seine-Normandie (AESN) a financé le programme scientifique "\textit{Projet de Territoire : Anse du Cul-de-Loup}" (ProTeC) de 2022 à 2024, dans l'objectif de dresser un état des lieux environnemental. Ce travail a permis de connaître de manière précise, la nature des cortèges sédimentaires de surface de l'anse, ainsi que sa dynamique de mise en place. Les courants étant le moteur principal des mouvements de sédiment, des mesures de vitesses et directions de la masse d'eau ont été acquises, cumulant trois mois de mesures en deux points à l'entrée de l'anse du Cul-de-Loup. Bien que cet effort de mesure soit déjà important, il n'est pas suffisant pour aborder l'hydrodynamique à l'échelle de l'anse toute entière.
 
-
+Seuls les modèles numériques hydrodynamiques peuvent offrir la possibilité d'avoir une telle information spatialement répartie à des coûts acceptables. Ce type d'outil offre la possibilité d'avoir, outre le spatial, une approche temporelle, soit en rejouant des conditions hydrodynamiques passées (utiles pour la validation du modèle), soit au contraire en simulant des conditions futures (utiles pour la gestion de l'espace). Aux échelles spatiales et temporelles d'intérêts, ce sont les modèles de type \textit{Reynolds Average Navier-Stokes} (RANS) les mieux adaptés pour modéliser/simuler les écoulements fluides.
+Le travail qui m'a été demandé dans le cadre de mon stage de seconde année de Master, est de mettre en place un modèle numérique hydrodynamique de l'anse du Cul-de-Loup à l'aide du code de calcul \textit{Coastal and Regional Ocean COmmunity model} (CROCO) (section \ref{sub:croco}). Dans la section \ref{sec:adcl}, je décris brièvement la zone d'étude de l'anse du Cul-de-Loup dans laquelle ont été acquise les données de mesures des courants (section \ref{sub:protec}). Les résultats de la mise en place du modèle numériques sont présentés dans la section \ref{sec:resultats} et la comparaison avec les mesures de terrains est située en section \ref{sec:discussion}. Dans la conclusion (section \ref{sec:conclusion}), je dresse un bilan du travail réalisé et donne des perspectives de travaux complémentaires.
 
 \newpage
 
 \section{ZONE D'ÉTUDE}
+\label{sec:adcl}
 
-Depuis le \siecle{18}, le Cotentin abrite sur ses côtes des activités conchylicoles \cite{Kopp2000}. Tout d'abord artisanale, cette culture consistait en un reparquage d'huître plates locales. À partir du \siecle{20} (début des années 60), la conchyliculture normande connaît une phase d'expansion importante et devient plus industrielle. De nouvelles zones côtières sont investies pour implanter les concessions ostréicoles et des aménagements sont réalisés pour en faciliter l'implantation. L'anse du Cul-de-Loup (Normandie, Manche, France, Fig. \ref{fig:carte-adcl}) est un exemple typique de cette évolution au cours du temps (Fig. \ref{fig:historique-adcl}).
 
 D'une superficie avoisinant les 370 ha, l'anse du Cul-de-Loup n'est ouverte que dans sa partie sud sur la baie de Seine. La fermeture complète de l'anse, à l'est, a été réalisée au cours du \siecle{17} par la construction d'une route-digue qui rejoint le continent depuis St-Vaast-la-Hougue à l'ex île de la Hougue (Fig. \ref{fig:carte-adcl}). L'ensemble de l'anse découvre plus ou moins en fonction des coefficients de marée (marée semi-diurne), avec un marnage d'environ 5 m en marée de vive eau. Le zéro hydrographique est situé juste à l'entrée de l'anse parallèlement à la ligne côtière. L'altitude maximum dans l'anse ne dépasse pas 3 m au dessus du zéro hydrographique.
 
@@ -154,12 +161,14 @@ D'une superficie avoisinant les 370 ha, l'anse du Cul-de-Loup n'est ouverte que 
     \label{fig:carte-adcl}
 \end{figure}
 
-Le vent est régulièrement présent sur la zone du Cul-de-Loup, avec une moyenne de 18-19 km/h l'été majoritairement de secteur ouest et de 25-30 km/h en période hivernale avec un partage plus homogène des directions. L'agitation de surface dans l'anse est de type mer du vent, due au frottement par le vent à la surface de l'eau. L'orientation de l'anse du Cul-de-Loup la protège des houles les plus fréquentes en Baie de Seine, qui sont de secteurs NW-NE essentiellement. Les houles de secteur est et sud-est sont les seules à éventuellement pouvoir pénétrer dans l'anse, mais elles sont à la fois plus rares et de faible leur énergie. Ces dernières sont rapidement dissipées par la présence des structures ostréicoles et pénètrent donc peu à l'intérieure de l'anse. A l'est au niveau de la bordure interne de l'Île de la Hougue, certaines houles peuvent néanmoins diffractées et être canalisées le long de l'île avec une énergie significative11.
+Le vent est régulièrement présent sur la zone du Cul-de-Loup, avec une moyenne de 18-19 km/h l'été majoritairement de secteur ouest et de 25-30 km/h en période hivernale avec un partage plus homogène des directions. L'agitation de surface dans l'anse est majoritairement de type mer du vent, due au frottement par le vent à la surface de l'eau.
+
+L'orientation de l'anse du Cul-de-Loup la protège des houles les plus fréquentes en Baie de Seine, qui sont de secteurs nord-ouest à nord-est essentiellement. Les houles de secteur est et sud-est sont les seules à éventuellement pouvoir pénétrer dans l'anse, mais elles sont à la fois plus rares et de faible énergie. Ces dernières sont rapidement dissipées par la présence des structures ostréicoles et pénètrent donc peu à l'intérieure de l'anse. A l'est au niveau de la bordure interne de l'Île de la Hougue, certaines houles peuvent néanmoins diffractées et être canalisées le long de l'île avec une énergie significative.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.8\linewidth]{../images/historique}
-    \caption[Évolution de l'anse du Cul-de-Loup]{En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole. En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partir nord. En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles.}
+    \caption[Évolution de l'anse du Cul-de-Loup]{En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole. En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partie nord. En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles.}
     \label{fig:historique-adcl}
 \end{figure}
 
@@ -169,6 +178,7 @@ Le vent est régulièrement présent sur la zone du Cul-de-Loup, avec une moyenn
 
 \section{MATÉRIELS ET MÉTHODES}
 \subsection{Le code de calcul CROCO}
+\label{sub:croco}
 
 \subsubsection{Présentation générale}
 Mettre les principes généraux de CROCO (origine, type de modèle, etc...)
@@ -278,6 +288,7 @@ Le second génère un fichier de conditions atmosphériques en surface de l'eau 
 \end{itemize}
 
 \subsection{Données de terrain - Le projet PROTEC}
+\label{sub:protec}
 
 Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin 2022 à juin 2024. Financé par l'Agence de l'Eau Seine-Normandie (AESN), ce programme de recherche était sous la responsabilité de G. Gregoire (MCF au Cnam/Intechmer) et a intéressé plusieurs autres membres de l'équipe du Cnam/Intechmer. L'objectif de PROTEC a été de dresser un état des lieux environnementale de l'anse du Cul-du-Loup, principalement sur les aspects en relations avec les sédiments, leur dynamique actuelle et passée (Fig. \ref{fig:sed-adcl}).
 
@@ -292,6 +303,8 @@ Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin
 
 \newpage
 \section{RÉSULTATS}
+\label{sec:resultats}
+
 {\color{lightgrey}
 Mettre les résultats uniquement.
 }
@@ -408,12 +421,14 @@ Comparaisons : différences, variations de l'écart type
 \newpage
 
 \section{DISCUSSION}
+\label{sec:discussion}
 
 Comparaison des résultats du modèle avec les mesures de terrain: graphiques, indicateurs de qualité (RMSE, etc.)
 
 \newpage
 
 \section{CONCLUSION}
+\label{sec:conclusion}
 
 Ca sera fait à la fin ou presque
 
