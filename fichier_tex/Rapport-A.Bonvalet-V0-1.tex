@@ -20,7 +20,7 @@
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 % Swap the definition of \abs* and \norm*, so that \abs
-% and \norm resizes the size of the brackets, and the 
+% and \norm resizes the size of the brackets, and the
 % starred version does not.
 \makeatletter
 \let\oldabs\abs
@@ -200,18 +200,17 @@ L'orientation de l'anse du Cul-de-Loup la protège des houles les plus fréquent
 %Mettre les principes généraux de CROCO (origine, type de modèle, etc...)
 Le modèle CROCO (\textit{Coastal and Regional Ocean COmmunity model}) est une évolution du code ROMS\_AGRIF (\textit{Regional Oceanic Modeling System with mesh refinement}).
 Le code ROMS\_AGRIF a été développé jusqu'en 2014 par l'IRD (\textit{Institut de Recherche pour le Développement}) et l'INRIA (\textit{Institut National de Recherche en Informatique et en Automatique}) qui ont participé au développement du code CROCO avec
-l'UPS (?), 
-l'IFREMER (\textit{Institut Français de Recherche pour l'Exploitation de la Mer}), 
-le SHOM (\textit{Service hydrographique et océanographique de la Marine}), 
-le CNRS (\textit{Centre National de la Recherche Scientifique})
-et les participants de ROMS comme et principalement 
-l'UCLA (\textit{University of California, Los Angeles}) 
-et la DGEO (\textit{Departamento de Geofísica Universidad de Concepción}). 
+l'UPS (?),
+l'IFREMER (\textit{Institut Français de Recherche pour l'Exploitation de la Mer}),
+le SHOM (\textit{Service hydrographique et océanographique de la Marine}),
+le CNRS (\textit{Centre National de la Recherche Scientifique}). Les principaux autres organismes contributeurs à CROCO sont
+l'UCLA (\textit{University of California, Los Angeles})
+et la DGEO (\textit{Departamento de Geofísica Universidad de Concepción}).
 Le code et la documentation de ROMS\_AGRIF ont progressivement été modifiés pour devenir le modèle communautaire CROCO.
 
 Ce modèle permet désormais de réaliser des modélisations sur des grilles dont la résolution peut être kilométrique (modèle régional) à métrique (modèle côtier).
 
-CROCO permet d'activer la parallélisation des calculs effectués lors de la modélisation. Ainsi, pour certaines configurations, il est possible de modéliser des temporalités de l'ordre de l'année pour une coût de calcul abordable. (ex .)
+Sur le plan de sa mise en \o{}euvre, les calculs CROCO peuvent s’exécuter en mode parallèle, ce qui permet une grande souplesse d'adaptation entre temps nécessaire de calcul d'un côté et résolution et temps modélisé de l'autre.
 
 Le système d'équations utilisées par le modèle est flexible, il permet de choisir la méthode de résolution physico-chimique voulue et adaptée à la configuration.
 Les systèmes d'équations sont progressivement vérifiées par la communauté avec la mise en place de cas test dont la physique est simple. % dont on sait quel résultat est attendu pour quel système d'équation.
@@ -265,10 +264,10 @@ illustre les trois positions, appelées ici U, V et H, que peuvent avoir ces var
 \begin{table}
     \centering
     \begin{tabular}{ c c c }
-        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\ 
+        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\
         | & & | \\
         | & & | \\
-        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\  
+        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\
         | & & | \\
         | & & | \\
         \multicolumn{1}{r}{·--} & \textbf{$V_{i,j}$} & \multicolumn{1}{l}{--·}
@@ -318,7 +317,7 @@ La seconde catégorie contient les forçages qui définissent les conditions aux
 Le fichier correspondant contient donc les données de hauteur d'eau, de courant, de température et de salinité aux bords de la grille durant le temps de la modélisation.
 
 La troisième catégorie contient les forçages de marrée.
-%Ces derniers remplacent les données de hauteur d'eau et éventuellement de courant des conditions aux bordures. 
+%Ces derniers remplacent les données de hauteur d'eau et éventuellement de courant des conditions aux bordures.
 Le fichier correspondant contient donc, pour $n$ harmoniques de marrée, les amplitudes et les phases des hauteurs d'eau et éventuellement les deux composantes horizontales de la vitesse de déplacement de l'onde de marrée.
 
 La quatrième catégorie contient forçages atmosphériques.
@@ -341,10 +340,10 @@ Pour les modélisations effectuées dans le cadre du stage, le contenu du fichie
     Les schémas numérique de diffusion sont laplaciens ou biliplaciens. (ça se dit probablement autrement !)
     Le choix des schémas est libre pour l'utilisateur·ice, (\cite{schemas_advection}) il est toutefois important de noter que les schémas choisis doivent être cohérents entre eux.
     D'autre part, certains schémas sont mieux adaptés que d'autre à certaines situations modélisées, il est donc important de bien comprendre sa configuration avant de choisir les schémas numériques que le modèle doit utiliser.
-    
-    Dans notre configuration, le nombre de couches verticales étant faibles ($\leq 30$) et la topographie étant assez découpée par endroits, le schéma d'advection choisi est celui quasi-monotone de cinquième ordre de WENO (Weighted Essentially Non-Oscillatory scheme). 
+
+    Dans notre configuration, le nombre de couches verticales étant faibles ($\leq 30$) et la topographie étant assez découpée par endroits, le schéma d'advection choisi est celui quasi-monotone de cinquième ordre de WENO (Weighted Essentially Non-Oscillatory scheme).
     Ses particularités sont décrites dans la documentation de croco et en Annexes de ce rapport \ref{WENO}.
-    
+
     D'autre part, le choix des schémas numériques de diffusion verticale est principalement dicté par la structure de la grille du modèle.
     Dans notre configuration, les couches horizontales de la grille sont d'épaisseur variables et suivent la topographie.
     Le schéma de diffusion verticale choisi est Laplacien (ça se dit probablement autrement !) et est résolu dans la direction locale de chaque couche de la grille avec une viscosité turbulente paramétrisée avec/selon Smagorinsky.
@@ -462,15 +461,15 @@ $$SemiMajAxis = \abs{wp}+\abs{wm}$$
 $$Eccentricity = \frac{\abs{wp}+\abs{wm}}{\abs{wp}-\abs{wm}}$$
 $$Inclinaison = \frac{arg(wm)+arg(wp)}{2\pi}.180$$
 $$PhaseAngle =  \frac{arg(wm)-arg(wp)}{2\pi}.180$$
-avec 
+avec
 \begin{equation*}
     wp = \frac{u*+j.v*}{2}
-    \quad\mathrm{et}\quad 
+    \quad\mathrm{et}\quad
     \overline{wm} = \frac{u*-j.v*}{2}
 \end{equation*}
 avec
-\begin{equation*}u* = \exp(\frac{\pi PhaseU}{180}.(-1j)).AmplU 
-    \quad\mathrm{et}\quad 
+\begin{equation*}u* = \exp(\frac{\pi PhaseU}{180}.(-1j)).AmplU
+    \quad\mathrm{et}\quad
     v* = \exp(\frac{\pi PhaseV}{180}.(-1j)).AmplV
 \end{equation*}
 avec $PhaseU$, $PhaseV$, $AmpleU$, $AmplV$ les phases et amplitudes des composantes respectivement Sud-Ouest et Nord-Sud de la vitesse d'une onde de marée.
