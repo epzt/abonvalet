@@ -2,7 +2,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
+\usepackage{blindtext}
 \usepackage{hyperref}
+\usepackage{nameref}
 \usepackage[pdftex]{graphicx}
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} % A personaliser
 \usepackage{libertine}
@@ -74,6 +76,7 @@
 \addbibresource{../rapport-AB.bib}
 \addbibresource{../bibliography.bib}
 
+\usepackage{nameref}
 
 % Pour t'aider à créer et citer la biblio dans le texte, tu peux aller à cette page:
 % -> https://bu.univ-amu.libguides.com/c.php?g=511707&p=3496584
@@ -266,14 +269,14 @@ Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais,
 %Ces codes de pré-traitement utilisent au choix des scripts Matlab (ces outils sont appelés croco\_tools) ou des scripts Python (ces outils sont appelés croco\_pytools).
 %L'utilisation dans le cadre du stage de ces outils est décrite dans la partie suivante.
 
-\subsubsection{Les variables modélisées}
+\subsubsection{Structure des mailles de la grille}
 \label{subsub:variables_modelisees}
 Le modèle CROCO permet la propagation de variables physico-chimiques qui ont un effet rétroactifs sur leur propre propagation ou-et sur la propagation d'autres variables.
 Selon leur type, les paramètres physico-chimiques sont définis à différentes localisations relativement au maillage.
 La table \ref{structure_maille horizontale} % https://croco-ocean.gitlabpages.inria.fr/croco_doc/model/model.grid.html -> Grid staggering
 illustre les trois positions, appelées ici U, V et H, que peuvent avoir ces variables.
 
-\begin{table}
+\begin{table}[h!]
     \centering
     \begin{tabular}{ c c c }
         \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\
@@ -314,10 +317,10 @@ Enfin, les paramètres localisés à la \textbf{position V} du maillage sont:
     \item la composante Nord-Sud de la vitesse de déplacement de l'air à $10m$.
 \end{itemize}
 
-Pour tous les paramètre, ils ne sont par exprimés et pas pris en compte aux points indiqués comme émergés par la grille.
+L'ensemble de ces paramètres ne sont ni exprimés ni pris en compte aux points indiqués comme émergés par la grille.
 Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
 D'autres ne le sont qu'aux limites de la grille, c'est à dire sur tout le tour de cette dernière.
-D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais uniquement en surface ou au fond.
+D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille d'une verticalement,  soit en surface soit au fond.
 
 L'ensemble de ces paramètres définissent les forçages physico-chimiques imposés au modèle.
 Ils sont regroupés dans plusieurs fichiers selon la manière dont ils influent sur le modèle.
@@ -341,7 +344,7 @@ Le fichier correspondant contient donc notamment l'humidité, la température, l
 Lors de sa compilation, CROCO utilise le fichier \textit{cppdef.h}, l'un des quatre fichiers dont le contenu est modifié par l'utilisateur·ice, pour déterminer quelles équations physiques doivent être résolues par le modèle.
 Ces fichiers sont représentés en bleu en Figure \ref{fig:workflow_simple}.
 
-Pour les modélisations effectuées dans le cadre du stage, le contenu du fichier a été modifié pour que les équations résolues correspondent à un schéma d'advection de cinquième ordre \ref{WENO}.
+Pour les modélisations effectuées dans le cadre du stage, le contenu du fichier a été modifié pour que les équations résolues correspondent à un schéma d'advection de cinquième ordre (\ref{anx:WENO}) et à un schéma de diffusion adapté à la configuration.
 
 
 \begin{codeEnv}{Les schémas d'advection et de diffusion}
@@ -352,25 +355,36 @@ Pour les modélisations effectuées dans le cadre du stage, le contenu du fichie
     Les schémas numérique de diffusion sont laplaciens ou biliplaciens. (ça se dit probablement autrement !)
     Le choix des schémas est libre pour l'utilisateur·ice, (\cite{schemas_advection}) il est toutefois important de noter que les schémas choisis doivent être cohérents entre eux.
     D'autre part, certains schémas sont mieux adaptés que d'autre à certaines situations modélisées, il est donc important de bien comprendre sa configuration avant de choisir les schémas numériques que le modèle doit utiliser.
+<<<<<<< HEAD
 
     Dans notre configuration, le nombre de couches verticales étant faibles ($\leq 30$) et la topographie étant assez découpée par endroits, le schéma d'advection choisi est celui quasi-monotone de cinquième ordre de WENO (Weighted Essentially Non-Oscillatory scheme).
     Ses particularités sont décrites dans la documentation de croco et en Annexes de ce rapport \ref{WENO}.
 
+=======
+    
+    Dans notre configuration, le nombre de couches verticales étant faible ($\leq 30$) et la topographie étant assez découpée par endroits, le schéma d'advection choisi est celui quasi-monotone de cinquième ordre de WENO (Weighted Essentially Non-Oscillatory scheme). 
+    Ses particularités sont décrites dans la documentation de croco et en Annexes de ce rapport \ref{anx:WENO}.
+    
+>>>>>>> 1270256979d6ea58085c59011b90dda7e559cc24
     D'autre part, le choix des schémas numériques de diffusion verticale est principalement dicté par la structure de la grille du modèle.
     Dans notre configuration, les couches horizontales de la grille sont d'épaisseur variables et suivent la topographie.
     Le schéma de diffusion verticale choisi est Laplacien (ça se dit probablement autrement !) et est résolu dans la direction locale de chaque couche de la grille avec une viscosité turbulente paramétrisée avec/selon Smagorinsky.
     Enfin, le schéma de diffusion horizontale est de type GLS (Generic Length Scale) en K-OMEGA provenant de \cite{GLS_KOMEGA_kolmogorov1941equations}.
 \end{codeEnv}
 
-Le détail des clefs activées pour correspondre à ce modèle physique se trouve en Annexes. (à faire)
+Le détail des clefs activées pour correspondre à ce modèle physique se trouve en Annexes (\ref{anx:cppdefs}).
 Ces clefs ont été principalement déterminées sur la base de la documentation principale (\cite{cppkeys_description}).
-Elles ont de plus été adaptées pour correspondre au modèle de plage de \cite{swash_article_MARCHESIELLO2021101816} dont le modèle n'est pas à la même échelle que ceux réalisés dans le cadre de ce stage mais il fait aussi face à des dynamiques de découvrement régulier de mailles de la grille dans la zone d'action des vagues.
-En effet, dans notre situation, le découvrement s'effectue pour les mailles de la zone de balancement des marées et nécessite ainsi la même robustesse que le modèle précédemment cité.
+Elles ont de plus été adaptées pour correspondre à la configuration du modèle de plage de \cite{swash_article_MARCHESIELLO2021101816}.
+Certes, ce dernier modèle n'est pas à la même échelle que ceux réalisés dans le cadre du stage, mais il fait face à des dynamiques de découvrement régulier de certaines mailles de la grille dans la zone d'action des vagues.
+Cette dynamique est analogue à celle de notre configuration.
+En effet, dans le modèle de l'anse du Cul-de-Loup, le découvrement s'effectue sur les mailles dans la zone de balancement des marées.
+La même robustesse que la configuration précédemment citée est donc recherchée.
 
 
 \subsubsection{La grille CROCO}
 \label{subsub:grille_croco}
-Le maillage horizontal suivi par la modélisation est déterminé par les données de la grille CROCO. Cette grille est localisée en longitude et latitude à la surface de la planète.
+Le maillage horizontal indiquant la position de chaque variable modélisée est contenu dans le fichier de la grille CROCO.
+Cette grille est localisée en longitude et latitude à la surface de la Terre.
 Elle définit par ailleurs l'étendue horizontale et la résolution du maillage.
 La grille CROCO contient aussi une donnée de bathymétrie / topographie pour chacune de ses mailles.
 Enfin, elle contient un masque définissant quelles mailles sont fixées comme toujours émergées.
@@ -379,7 +393,7 @@ Le modèle ne sera ainsi jamais exécuté au niveau de ces mailles.
 Les résolutions verticales du maillage complet utilisé par le modèle sont déterminées par le fichier de conditions initiales.
 Selon les paramètre choisis, la résolution verticale peut ainsi varier verticalement selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
 Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale à l'approche de la surface et du fond.
-Leurs effets peuvent être visualisés en Figure \ref{}
+Leurs effets peuvent être visualisés en Figure \ref{fig:vertical_resolution}.
 
 \subsubsection{L'enchaînement de plusieurs modélisations}
 \label{subsub:enchainement_modelisations}
@@ -387,21 +401,22 @@ Le modèle CROCO permet de mettre en place l'étude d'un lieux en plusieurs éta
 
 L'usage principal de cette fonctionnalité consiste à emboîter plusieurs grilles de résolution croissante et de taille décroissante autour d'un zone d'intérêt.
 Toutes les grilles contenues dans la grille principale extraient leur conditions aux bords de la grille qui les précède.
-Cette méthode d'emboîtement de grilles permet de s'affranchir du besoin de données pour les conditions aux bords de la grille d'intérêt tout en maintenant un coût de modélisation assez léger.
+Cette méthode d'emboîtement de grilles permet de s'affranchir du besoin de données externes pour les conditions aux bords de la grille d'intérêt tout en maintenant un coût de modélisation assez léger.
 Les avantages procurés par cet usage correspondent bien au contexte de l'étude où la zone d'étude est fortement restreinte dans l'espace et où les données doivent y être finement modélisées.
-Il existe de type de mise en place de système en grilles emboîtées dans CROCO :
+Il existe deux types d'implémentation d'un système en grilles emboîtées dans CROCO :
 \begin{itemize}
     \item le premier type d'emboîtement des grilles (Offline zoom) est linéaire, c'est à dire qu'une grille fille est toujours générées après l'exécution de la modélisation CROCO sur sa grille mère.
-    les données de sortie du précédent modèle sont utilisées pour générer les conditions initiales et aux limites de la grille fille.
+    Les données de sortie du précédent modèle sont utilisées pour générer les conditions initiales et aux limites de la grille fille.
     Cette méthode est illustrée en Figure XXX,
     \item le second type d'emboîtement (AGRIF) est simultané et rétrospectif.
     Ce qui signifie que toutes les grilles sont générées avec les données du pré-traitement avant la modélisation.
     Ensuite, pendant la modélisation, CROCO utilise alternativement les données de la gille mère pour les conditions aux bords de la grille fille puis les valeurs au bords de la grille fille pour contraindre les valeurs au sein de la grille mère.
 \end{itemize}
 
-Un second usage consiste à mettre en continuité plusieurs grilles de même résolution afin de suivre le trait de côte par exemple.
-Ainsi, moins de données de conditions aux limites sont nécessaires par rapport à une modélisation de multiples grilles de manière indépendante.
-Cet usage ne correspond pas aux besoin de cette étude qui a pour but de modéliser une zone aisément assimilable à un rectangle, c'est à dire que cette zone peut être efficacement représentée par une unique grille.
+Un autre usage de modélisation sur plusieurs grilles en parallèle consiste à mettre en continuité spatiale des grilles de même résolution afin de modéliser une zone dont la forme est peu similaire à celle d'un rectangle.
+Cet usage est en particulier proposé pour effectuer une modélisation le long d'un trait de côte sinueux.
+Ainsi, moins de données brutes pour les conditions aux limites sont nécessaires par rapport à une modélisation de multiples grilles de manière indépendante.
+Cet usage ne correspond pas aux besoin de cette étude qui a pour but de modéliser une zone aisément assimilable à un rectangle, c'est à dire que cette zone peut être efficacement représentée par une unique sous-grille.
 
 
 \subsection{Les outils de pré-traitement}
@@ -421,8 +436,9 @@ La création des fichiers nécessaires au démarrage de CROCO, suit l'ordre suiv
 \end{itemize}
 
 La Figure\ref{fig:workflow_prepro_main} présente le fonctionnement des CROCO Pytools et des scripts écrits dans le cadre du stage pour le pré-traitement, c'est à dire pour générer les fichiers nécessaires au modèle CROCO à partir des données brutes.
-Les chemins de fichiers présentées dans le rapport correspondent à la nomenclature définie en Annexes.
-\begin{figure}[h]
+Les chemins de fichiers présentées dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
+
+\begin{figure}[h!]
     \begin{center}
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_mere.pdf}
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_fille_zoom.pdf}
@@ -449,26 +465,28 @@ Toutefois, cette méthode a été abandonnée durant le stage car il est apparu,
 (à lister... trop de dépendances et de contraintes sur les données utilisées).
 Ainsi, c'est la méthode Offline zoom qui est utilisée pour la suite du rapport.
 
-Chaque grille CROCO, pour être utilisée par le modèle, doit être liée à d'autres fichiers de données qui permettent l'initialisation et la mise en mouvement de la masse d'eau. Ces fichiers sont décrits dans les paragraphes suivants.
+Chaque grille CROCO, pour être utilisée par le modèle, doit être accompagnée par d'autres fichiers de données qui permettent l'initialisation et la mise en mouvement de la masse d'eau. Ces fichiers sont décrits dans les paragraphes suivants.
 
 \subsubsection{La génération des données d'entrée}
 \label{generation donnees entrée}
 Les outils de pré-traitement originaux n'ont été utilisés que pour la génération des conditions initiales et au bord.
-Les deux fichiers de forçage par la marrée et atmosphériques \ref{subsub:forcages_atm} ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
+Les deux fichiers de forçage par la marrée et atmosphériques \ref{par:forcages_atm} ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
 En effet, les croco\_pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
 
 \textbf{Les conditions initiales}\\
 \label{par:cond_init}
-Le fichier "croco\_ini.nc" contient notamment des données comme la température, la salinité, et la hauteur de la surface de l'eau. Ces données couvrent chaque maille de la grille CROCO et correspondent aux paramètres physiques de la zone au début de la modélisation.
+Le fichier "croco\_ini.nc" contient notamment des données comme la température, la salinité, et la hauteur de la surface de l'eau.
+Ces données couvrent chaque maille de la grille CROCO et correspondent aux paramètres physiques de la zone au début de la modélisation.
 
 \textbf{Les conditions aux bordures}\\
 \label{par:cond_bords}
-Le fichier "croco\_bry.nc" contient notamment les données comme la température, la salinité et éventuellement la hauteur d'eau et les vitesses des courants. Ces données couvrent seulement les bords extérieurs de la grille CROCO sur toute la durée temporelle de la modélisation.
+Le fichier "croco\_bry.nc" contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants.
+Ces données couvrent seulement les bords extérieurs de la grille CROCO sur toute la durée temporelle de la modélisation.
 
 \textbf{Les forçages par la marrée}\\
 \label{par:forcages_marree}
 Le premier script permet de générer un fichier de marrée pour CROCO à partir des données des modèles TPXO10 ou FES2014.
-Dans ce script, les amplitudes et phases des vitesses des ondes de marée sont transformées en ellipse de périodicité selon les formules utilisée dans le croco\_pytool de référence,
+Dans ce script, les amplitudes et phases des vitesses des ondes de marée sont transformées en ellipse de périodicité selon les formules utilisée dans le croco\_pytool de référence avec la fonction ap2ep. Cette fonction est aussi décrite dans \cite{ap2ep},
 $$SemiMajAxis = \abs{wp}+\abs{wm}$$
 $$Eccentricity = \frac{\abs{wp}+\abs{wm}}{\abs{wp}-\abs{wm}}$$
 $$Inclinaison = \frac{arg(wm)+arg(wp)}{2\pi}.180$$
@@ -492,9 +510,34 @@ Le second génère un fichier de conditions atmosphériques en surface de l'eau 
 Au préalable, les valeurs d'humidité relative $RH$ sont calculées et stockées dans une nouvelle variable selon la méthode décrite par \cite{humidity_formulation} en considérant une température entre $-20$ et $+50°C$ : $$RH = 10^{7,591386.(\frac{T_{dewpt}}{T_{dewpt}+240,7263}-\frac{T}{T+240,7263})}$$
 avec $T_{dewpt}$ la température du point de rosée de l'air à $2m$ au dessus de la surface de l'eau et $T$ la température de l'air à la même altitude.
 
+\subsection{Données externes utilisées}
+\label{sub:donnees_externes}
+Plusieurs types de fichiers de données brutes ont été recherchés. L'ensemble de ces fichiers est représenté en Figure \ref{fig:workflow_prepro_main}.
+À l'exception de la campagne PROTEC, l'intégralité des données ont été utilisées par les codes de pré-traitement pour générer la grille et ses fichiers de forçages.
 
-\subsection{Données de terrain - Le projet PROTEC}
-\label{sub:protec}
+\subsubsection{Données physico-chimiques - Copernicus marine data}
+\label{subsub:source_donnees_brutes}
+La majorité des données proviennent des bases de données de Copernicus (marine ou climate).
+Ces données sont : la température, la salinité, les conditions atmosphériques, (vérifier si plus de données).
+
+\subsubsection{Modèle de marrée - FES2014}
+Les données de marrée du modèle TPXO10 ont été testées, mais ce sont les résultats du modèle FES2014 qui ont finalement été retenus. (indiquer pourquoi ? meilleure résolution dans notre zone, données à un format plus adapté au pré-processing)
+
+\subsubsection{Données géographiques - GEBCO, ROL, XXX}
+Pour la majorité de la surface couverte par la grille mère, les données de bathymétrie proviennent du GEBCO 2024.
+Ces données sont continues dans l'espace.
+
+Par ailleurs, deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'Anse du Cul-de-Loup.
+La campagne du ROL constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes. Les données de cette campagnes utilisées pour l'étude de l'Anse du Cul-de-Loup proviennent de prises Lidar.
+La campagne XXX a été réalisée dans le but de compléter les données d
+Les données provenant de GEBCO et PROTEC sont donc fusionnées entre elles afin d'obtenir une cartographie bathymétrique uniforme de haute résolution dans les zones où les données le permettent.
+
+Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA). Toutefois, cette fonctionnalité des CROCO\_Pytools ne semble pas encore fonctionnelle.
+Les données vectorielles du trait de côte sont corrigées par les données de la campagne PROTEC qui sont plus précises mais qui couvrent seulement le Nord du Cotentin.
+
+
+\subsubsection{Données de terrain - Le projet PROTEC}
+\label{subsub:protec}
 
 Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin 2022 à juin 2024. Financé par l'Agence de l'Eau Seine-Normandie (AESN), ce programme de recherche était sous la responsabilité de G. Gregoire (MCF au Cnam/Intechmer) et a intéressé plusieurs autres membres de l'équipe du Cnam/Intechmer. L'objectif de PROTEC a été de dresser un état des lieux environnementale de l'anse du Cul-du-Loup, principalement sur les aspects en relations avec les sédiments, leur dynamique actuelle et passée (Fig. \ref{fig:sed-adcl}).
 
@@ -504,6 +547,7 @@ Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin
     \caption[Sédiment de l'anse du Cul-de-Loup]{Pourcentages relatif des principales fractions granulométriques dans des échantillons sédimentaires de surface prélevés dans l'anse du Cul-de-Loup (jaune - 10 $\mu$m, orange - 77 $\mu$m, rouge - 200 $\mu$m).}
     \label{fig:sed-adcl}
 \end{figure}
+
 
 
 \subsection{Post processing}
@@ -525,6 +569,7 @@ Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin
 %}
 
 \subsection{Le modèle "Anse du Cul-de-Loup"}
+\label{sub:modele_ADCL}
 %{\color{lightgrey}
 %    Grosse partie dans laquelle il va falloir expliquer les différentes étapes de mis en place du modèle ADCL (pour la mise en place non spécifique à la zone, partie précédente ?) détailler les paramètres choisis.
 %}
@@ -533,23 +578,9 @@ La lecture de la documentation, des codes des CROCO Pytools et de fichiers d'exe
 Ce dernier à aboutit à la préparation correcte des fichiers pour l'exécution du code CROCO.
 Les choix qui ont été faits sont détaillés dans les parties suivantes.
 
-\subsubsection{Données brutes utilisées}
-Plusieurs types de fichiers de données brutes sont recherchées. L'ensemble de ces fichiers est représenté en Figure \ref{fig:workflow_prepro_main}.
-La majorité des données proviennent des bases de données de Copernicus (marine ou climate).
-Les données de marrée du modèle TPXO10 ont été testées, mais ce sont les résultats du modèle FES2014 qui ont finalement été retenus. (indiquer pourquoi ? meilleure résolution dans notre zone ?)
-
-Pour la majorité de la surface couverte par la grille mère, les données de bathymétrie proviennent du GEBCO 2024.
-Ces données sont continues dans l'espace.
-Par ailleurs, la campagne PROTEC offre des données de haute résolution mais discontinues sur la zone de l'Anse du Cul-de-Loup.
-Les données provenant de GEBCO et PROTEC sont donc fusionnées entre elles afin d'obtenir une cartographie bathymétrique de haute résolution dans les zones où les données le permettent.
-
-Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA).
-Ces données vectorielles sont corrigées par les données de la campagne PROTEC qui sont plus précises mais qui couvrent seulement le Nord du Cotentin.
-
-Une fois ces données acquises, il convient de générer la grille du modèle ainsi que ses fichier d'initialisation et de contraintes au limites.
-Les paramètres de cette grille sont utilisés par les codes de pré-traitement pour transformer les données brutes en données utilisables par CROCO.
 
 \subsubsection{Paramètres généraux choisis}
+\label{subsub:param_generaux}
 {\color{lightgrey}
     Paramètres de la grille (étendue, localisation, résolution horizontale et verticale, etc.), choix du LES.
 }
@@ -587,6 +618,7 @@ De plus, la grille est générée en utilisant les données brutes de bathymétr
 La localisation et l'étendue spatiale de la grille sont choisies afin que ses faces ouvertes sur le plan d'eau soient le moins possible recoupées par des zones émergées.
 
 \subsubsection{Augmentation de la résolution}
+\label{subsub:augmentation_resolution}
 {\color{lightgrey}
     Nombre et paramètres des grilles imbriquées
 }
@@ -619,7 +651,7 @@ La position des grilles emboîtées est déterminée selon deux règles :
 \end{itemize}
 
 \subsection{Résultats (sortie de modèle)}
-
+\label{sub:sortie_modele}
 Sorties selon les choix de modélisation:
 \begin{itemize}
     \item mode hydro (RANS, LES, etc.) (à voir)
@@ -647,10 +679,10 @@ Ca sera fait à la fin ou presque
 
 
 \newpage
-\section*{ANNEXES}
-
-\section{schémas numériques}
-\subsection{Shema WENO de cinquième ordre (Weighted Essentially Non-Oscillatory scheme)}\label{WENO}
+\section{ANNEXES}
+\label{annexes}
+\subsection{Schémas numériques}
+\subsubsection{Schéma WENO de cinquième ordre (Weighted Essentially Non-Oscillatory scheme)}\label{anx:WENO}
 Les variables sont disposées en C-grille d'Arakawa.
 Les valeurs des traceurs sont notées $q_i$ et les vitesses $u_i$.
 Dans le cadre de ce schémas d'advection, trois valeurs aux interfaces sont évaluées en se utilisant trois stencils différents. Une moyenne non linéaire entre ces trois valeurs est utilisée comme suit pour déterminer la valeur calculée :
@@ -662,19 +694,41 @@ Les constantes de pondération sont définies selon les règles suivantes :
     \item cinquième ordre à condition que q(x) soit peut rugueux.
 \end{enumerate}
 C'est un schéma à variation bornée (TBV, Total variation Bounded).
-source : \cite{schemas_advection}
+source pour l'équation et son explication : \cite{schemas_advection}
 
 
-\section{MATÉRIELS ET MÉTHODES}
+\subsection{Fichiers d'entrées}
+\subsubsection{\textit{cppdefs.h}}
+\label{anx:cppdefs}
+Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessous. Pour la grille mère, comme il n'y a pas de données héritées d'une grille précédente, quelques clefs sont modifiées selon la table \ref{table:cppdefs_mere}.
 
-\subsection{Le code de calcul CROCO}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c | c c c}
+    BSTRESS\_FAST & define & $\rightarrow$ & {\color{red}undef}\\
+    \hline
+    LIMIT\_BSTRESS & undef & $\rightarrow$ & {\color{green}define}\\
+    \hline
+    SPONGE & undef & $\rightarrow$ & {\color{green}define}\\
+    \hline
+    TIDE & undef & $\rightarrow$ & {\color{green}define}\\
+    \end{tabular}
+    \caption{
+    Modifications à appliquer au fichier cppdefs d'une grille fille dont un exemple est donnée dans l'encadré en section \ref{codecppdefs} pour obtenir celui de la grille mère.
+    Le statut de la clefs dans le fichier de la grille fille est écrit en colonne centrale, le statut dans le fichier de la grille mère est indiqué en colonne de droite.
+    }
+    \label{table:cppdefs_mere}
+\end{table}
 
-mettre les principes généraux de CROCO (origine, type de modèle, etc...)
+% peut être à transformer en un tableau pour une meilleure lisibilité
+% + nettoyer
+\begin{codeEnv}{{Contenu du fichier cppdefs.h d'une sous-grille\label{codecppdefs}}}
+    \lstinputlisting[firstline=3,lastline=386,language=bash]{../croco_files/cppdefs_child.h}
+\end{codeEnv}
 
-+ organisation des fichiers
-
-
+\subsection{Nomenclature et organisation des fichiers de la configuration}
 \color{darkgrey}
+\label{anx:orga_fichiers}
 \dirtree{%
     .0 ~/\DTcomment{le chemin peut être différent pour PATH-TO-CROCO/ et PATH-TO-CONFIG/}.
     .1 PATH-TO-CROCO/.
@@ -717,14 +771,29 @@ mettre les principes généraux de CROCO (origine, type de modèle, etc...)
     .6 copernicus\_marine\_data.nc.
     .5 Topo/.
     .6 topo.nc.
-    .4 preproOUTPUT/.
+    .4 CROCO\_FILES/\DTcomment{données d'entrée pour le modèle provenant du pré-processing}.
+    .4 OUTPUTS/\DTcomment{dossier d'écriture des sorties du modèle}.
+    .5 croco\_his.nc.
+    .5 croco\_avg.nc.
+    .5 croco\_rst.nc.
     .4 cppdefs.h.
     .4 param.h.
     .4 jobcomp.
     .4 croco.in.
-    %
 }
 \color{black}
+
+\newpage
+\section{ANNEXES À ORGANISER}
+\section{MATÉRIELS ET MÉTHODES}
+
+\subsection{Le code de calcul CROCO}
+
+mettre les principes généraux de CROCO (origine, type de modèle, etc...)
+
++ organisation des fichiers
+
+
 
 \subsubsection{Processus généraux}
 
