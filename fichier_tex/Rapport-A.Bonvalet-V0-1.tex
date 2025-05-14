@@ -252,81 +252,12 @@ Un schéma global de la mise en place du modèle est présenté en Figure \ref{f
 \end{figure}
 
 Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
-Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais, pour mieux correspondre à la dynamique open-source de CROCO, de nouveaux outils, les CROCO\_Pytools, sont en cours de développement en Python.
+Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais, pour mieux correspondre à la dynamique open-source de CROCO, de nouveaux outils, les CROCO Pytools, sont en cours de développement en Python.
 
 %Afin de simplifier le travail de pré-traitement, la communauté a développé des outils numériques de lecture, calcul et écriture de données.
-%Ces codes de pré-traitement utilisent au choix des scripts Matlab (ces outils sont appelés croco\_tools) ou des scripts Python (ces outils sont appelés croco\_pytools).
+%Ces codes de pré-traitement utilisent au choix des scripts Matlab (ces outils sont appelés croco\_tools) ou des scripts Python (ces outils sont appelés CROCO Pytools).
 %L'utilisation dans le cadre du stage de ces outils est décrite dans la partie suivante.
 
-\subsubsection{Structure des mailles de la grille}
-\label{subsub:variables_modelisees}
-Le modèle CROCO permet la propagation de variables physico-chimiques qui ont un effet rétroactifs sur leur propre propagation ou-et sur la propagation d'autres variables.
-Selon leur type, les paramètres physico-chimiques sont définis à différentes localisations relativement au maillage.
-La table \ref{structure_maille horizontale} % https://croco-ocean.gitlabpages.inria.fr/croco_doc/model/model.grid.html -> Grid staggering
-illustre les trois positions, appelées ici U, V et H, que peuvent avoir ces variables.
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}{ c c c }
-        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\ 
-        | & & | \\
-        | & & | \\
-        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\  
-        | & & | \\
-        | & & | \\
-        \multicolumn{1}{r}{·--} & \textbf{$V_{i,j}$} & \multicolumn{1}{l}{--·}
-    \end{tabular}
-    \caption{Représentation d'une maille $i,j$ horizontale de la grille CROCO.
-        Les points sont des nœuds et les tirets sont les cotés de la maille.
-        La position à laquelle est calculé chaque type paramètre de la maille est représentée par $U_{i,j}$, $V_{i,j}$ et $H_{i,j}$ leur première lettre correspondent au type des paramètres quelles représentent.
-        L'existence des paramètres $V_{i,j+1}$ et $U_{i+1,j}$ suppose que la maille $i,j$ ne se situe pas à l'extrémité d'une ligne ou d'une colonne de la grille CROCO.
-    }
-    \label{structure_maille horizontale}
-\end{table}
-
-Une importante part des variables sont localisées en \textbf{position centrale H} au maillage.
-Ces variables sont :
-\begin{itemize}
-    \item la hauteur de la colonne d'eau relativement au niveau marin moyen (à vérifier),
-    \item la température de l'eau,
-    \item la salinité de d'eau,
-    \item l'ensemble des paramètres décrivant les ondes de marrée (phase et amplitude de la hauteur d'eau ainsi que celles des deux composantes des courants induits),
-    \item l'ensemble des paramètres atmosphériques à l'exception du vent (précipitation, température de l'air, vitesse absolue et direction du vent à $10m$ au dessus de la surface de l'eau, etc.).
-\end{itemize}
-Les paramètres localisés à la \textbf{position U} du maillage sont:
-\begin{itemize}
-    \item la composante Est-Ouest de la vitesse de déplacement de l'eau,
-    \item la contrainte à la surface de l'eau causée par la composante Est-Ouest du vent,
-    \item la composante Est-Ouest de la vitesse de déplacement de l'air à $10m$.
-\end{itemize}
-Enfin, les paramètres localisés à la \textbf{position V} du maillage sont:
-\begin{itemize}
-    \item la composante Nord-Sud de la vitesse de déplacement de l'eau,
-    \item la contrainte à la surface de l'eau causée par la composante Nord-Sud du vent,
-    \item la composante Nord-Sud de la vitesse de déplacement de l'air à $10m$.
-\end{itemize}
-
-L'ensemble de ces paramètres ne sont ni exprimés ni pris en compte aux points indiqués comme émergés par la grille.
-Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
-D'autres ne le sont qu'aux limites de la grille, c'est à dire sur tout le tour de cette dernière.
-D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille d'une verticalement,  soit en surface soit au fond.
-
-L'ensemble de ces paramètres définissent les forçages physico-chimiques imposés au modèle.
-Ils sont regroupés dans plusieurs fichiers selon la manière dont ils influent sur le modèle.
-
-La première catégorie contient les forçages qui définissent les conditions initiales.
-Le fichier correspondant contient donc les données de hauteur d'eau, de courant, de température et de salinité sur l'ensemble de la grille à l'initialisation du modèle.
-
-La seconde catégorie contient les forçages qui définissent les conditions aux bords latéraux de la grille.
-Le fichier correspondant contient donc les données de hauteur d'eau, de courant, de température et de salinité aux bords de la grille durant le temps de la modélisation.
-
-La troisième catégorie contient les forçages de marrée.
-%Ces derniers remplacent les données de hauteur d'eau et éventuellement de courant des conditions aux bordures. 
-Le fichier correspondant contient donc, pour $n$ harmoniques de marrée, les amplitudes et les phases des hauteurs d'eau et éventuellement les deux composantes horizontales de la vitesse de déplacement de l'onde de marrée.
-
-La quatrième catégorie contient forçages atmosphériques.
-Ils concernent la surface de l'eau et l'air qui la surplombe pour chaque maille de la grille CROCO.
-Le fichier correspondant contient donc notamment l'humidité, la température, la pression de l'air au dessus de la surface de l'eau, la vitesse du vent à $10m$ au dessus de la surface, des paramètres sur les contraintes de surfaces imposés par le vent et les radiations solaires reçues par la masse d'eau pour les courtes et longues longueurs d'ondes.
 
 \subsubsection{Physique du modèle}
 \label{subsub:pysique_modele}
@@ -365,59 +296,142 @@ La même robustesse que la configuration précédemment citée est donc recherch
 
 \subsubsection{La grille CROCO}
 \label{subsub:grille_croco}
-Le maillage horizontal indiquant la position de chaque variable modélisée est contenu dans le fichier de la grille CROCO.
+Le maillage horizontal indiquant la position géographique des variables modélisées est contenu dans un unique fichier NetCDF.
+On appelle le contenu de ce fichier la grille CROCO.
 Cette grille est localisée en longitude et latitude à la surface de la Terre.
-Elle définit par ailleurs l'étendue horizontale et la résolution du maillage.
+Elle contient trois maillages dont deux son issus de la translation Nord-Sud et Est-Ouest du maillage central sur une longueur d'une demi-maille.
+Pour chaque maille de chacun des trois maillages, une latitude et une longitude sont attribués dans le fichier.
 La grille CROCO contient aussi une donnée de bathymétrie / topographie pour chacune de ses mailles.
-Enfin, elle contient un masque définissant quelles mailles sont fixées comme toujours émergées.
-Le modèle ne sera ainsi jamais exécuté au niveau de ces mailles.
+Enfin, elle contient un masque définissant quelles mailles sont définies comme toujours émergées.
+Les équations du modèle ne seront ainsi jamais résolues au niveau de ces mailles.
 
-Les résolutions verticales du maillage complet utilisé par le modèle sont déterminées par le fichier de conditions initiales.
-Selon les paramètre choisis, la résolution verticale peut ainsi varier verticalement selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
+Les résolutions verticales des trois maillages sont identiques.
+Cette résolution verticale n'est toutefois pas définies dans la grille CROCO.
+Elle est contenue dans les données de forçage initiaux et aux bords de la grille et est définie et indiquée au modèle dans les fichiers d'entrées \textit{param.h} et \textit{croco.in}.
+Selon les paramètre choisis, la résolution verticale peut varier verticalement selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
 Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale à l'approche de la surface et du fond.
 Leurs effets peuvent être visualisés en Figure \ref{fig:vertical_resolution}.
+
+%Les variables physico-chimiques que le modèle propage ont généralement un effet rétroactifs sur leur propre propagation ou-et sur la propagation d'autres variables.
+Selon leur type, les variables physico-chimiques que le modèle propage sont définies sur l'un des trois maillages.
+La table \ref{structure_maille horizontale} issue de \cite{grid_doc} illustre les trois positions, appelées ici U, V et H, que peuvent avoir ces variables relativement à une cellule du maillage central.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ c c c }
+        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\ 
+        | & & | \\
+        | & & | \\
+        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\  
+        | & & | \\
+        | & & | \\
+        \multicolumn{1}{r}{·--} & \textbf{$V_{i,j}$} & \multicolumn{1}{l}{--·}
+    \end{tabular}
+    \caption{
+        Représentation d'une maille $i,j$ horizontale de la grille CROCO.
+        Les points sont des nœuds et les tirets sont les cotés de la maille.
+        La position à laquelle est calculé chaque type paramètre de la maille est représentée par $U_{i,j}$, $V_{i,j}$ et $H_{i,j}$ leur première lettre correspondent au type des paramètres quelles représentent.
+        L'existence des paramètres $V_{i,j+1}$ et $U_{i+1,j}$ suppose que la maille $i,j$ ne se situe pas à l'extrémité d'une ligne ou d'une colonne de la grille CROCO. Cette représentation est issue de \cite{grid_doc}
+    }
+    \label{structure_maille horizontale}
+\end{table}
+
+Les variables que nous avons choisies de modéliser sont organisées comme suit entre les trois maillages.
+Une importante part des variables sont localisées en \textbf{position H}, sur le maillage central.
+\begin{itemize}
+    \item la hauteur de la colonne d'eau relativement au niveau marin moyen (à vérifier),
+    \item la température de l'eau,
+    \item la salinité de d'eau,
+    \item l'ensemble des paramètres décrivant les ondes de marrée (phase et amplitude de la hauteur d'eau ainsi que celles des deux composantes des courants induits),
+    \item l'ensemble des paramètres atmosphériques à l'exception du vent (précipitation, température de l'air, vitesse absolue et direction du vent à $10m$ au dessus de la surface de l'eau, etc.).
+\end{itemize}
+Les paramètres localisés à la \textbf{position U}, sur un second maillage :
+\begin{itemize}
+    \item la composante Est-Ouest de la vitesse de déplacement de l'eau,
+    \item la contrainte à la surface de l'eau causée par la composante Est-Ouest du vent,
+    \item la composante Est-Ouest de la vitesse de déplacement de l'air à $10m$.
+\end{itemize}
+Enfin, les paramètres localisés à la \textbf{position V}, sur un troisième:
+\begin{itemize}
+    \item la composante Nord-Sud de la vitesse de déplacement de l'eau,
+    \item la contrainte à la surface de l'eau causée par la composante Nord-Sud du vent,
+    \item la composante Nord-Sud de la vitesse de déplacement de l'air à $10m$.
+\end{itemize}
+
+%L'ensemble de ces paramètres ne sont ni exprimés ni pris en compte aux points indiqués comme émergés par la grille.
+Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
+D'autres ne le sont qu'aux limites de la grille, c'est à dire sur tout le tour de cette dernière.
+D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille d'un point de vue vertical, ces données sont localisées soit en surface (ex. vent) soit au fond (ex. rugosité).
+
+\subsubsection{Les forçages du modèle}
+\label{subsub:forcages}
+L'ensemble de des paramètres et variables donnés par l'utilisateur définissent les forçages physico-chimiques imposés au modèle.
+Leur présentation dans ce rapport est restreinte à ceux utilisés dans le cadre de notre étude.
+Les forçages sont regroupés dans plusieurs fichiers selon la manière dont ils influent sur le modèle.
+Les données des forçages sont au format NetCDF.
+
+La première catégorie correspond aux forçages qui définissent les conditions initiales.
+Le fichier correspondant, \textit{croco\_ini.nc}, contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants sur l'ensemble de la grille à l'initialisation du modèle.
+
+La seconde catégorie correspond aux forçages qui définissent les conditions aux bords latéraux de la grille sur toute la durée temporelle de la modélisation.
+Le fichier correspondant, \textit{croco\_bry.nc}, contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants aux bords de la grille durant le temps de la modélisation.
+
+La troisième catégorie correspond aux forçages de marrée.
+%Ces derniers remplacent les données de hauteur d'eau et éventuellement de courant des conditions aux bordures. 
+Le fichier correspondant, \textit{croco\_frc.nc} contient donc, pour $n$ harmoniques de marrée, les amplitudes et les phases des hauteurs d'eau et éventuellement les deux composantes horizontales de la vitesse de déplacement de l'onde de marrée.
+
+La quatrième catégorie correspond aux forçages atmosphériques.
+Ils concernent la surface de l'eau et l'air qui la surplombe pour chaque maille de la grille CROCO.
+Le fichier correspondant, \textit{croco\_blk.nc}, contient donc notamment l'humidité, la température, la pression de l'air au dessus de la surface de l'eau, la vitesse du vent à $10m$ au dessus de la surface, des paramètres sur les contraintes de surfaces imposés par le vent et les radiations solaires reçues par la masse d'eau pour les courtes et longues longueurs d'ondes.
 
 \subsubsection{L'enchaînement de plusieurs modélisations}
 \label{subsub:enchainement_modelisations}
 Le modèle CROCO permet de mettre en place l'étude d'un lieux en plusieurs étapes de modélisation.
 
 L'usage principal de cette fonctionnalité consiste à emboîter plusieurs grilles de résolution croissante et de taille décroissante autour d'un zone d'intérêt.
-Toutes les grilles contenues dans la grille principale extraient leur conditions aux bords de la grille qui les précède.
-Cette méthode d'emboîtement de grilles permet de s'affranchir du besoin de données externes pour les conditions aux bords de la grille d'intérêt tout en maintenant un coût de modélisation assez léger.
-Les avantages procurés par cet usage correspondent bien au contexte de l'étude où la zone d'étude est fortement restreinte dans l'espace et où les données doivent y être finement modélisées.
+Toutes les grilles contenues dans la grille principale extraient leur conditions aux limites à partir des résultats de la grille qui les précède.
+Cette méthode d'emboîtement de grilles permet de s'affranchir du besoin de données externes pour les conditions aux bords de la grille d'intérêt la plus petite et résolue tout en maintenant un coût de modélisation assez léger.
+Les avantages procurés par cet usage correspondent bien au contexte de cette étude car la zone d'intérêt est fortement restreinte dans l'espace et les données doivent y être finement modélisées.
 Il existe deux types d'implémentation d'un système en grilles emboîtées dans CROCO :
 \begin{itemize}
-    \item le premier type d'emboîtement des grilles (Offline zoom) est linéaire, c'est à dire qu'une grille fille est toujours générées après l'exécution de la modélisation CROCO sur sa grille mère.
-    Les données de sortie du précédent modèle sont utilisées pour générer les conditions initiales et aux limites de la grille fille.
-    Cette méthode est illustrée en Figure XXX,
-    \item le second type d'emboîtement (AGRIF) est simultané et rétrospectif.
+    \item le premier type d'emboîtement des grilles (AGRIF) est simultané et rétrospectif.
     Ce qui signifie que toutes les grilles sont générées avec les données du pré-traitement avant la modélisation.
     Ensuite, pendant la modélisation, CROCO utilise alternativement les données de la gille mère pour les conditions aux bords de la grille fille puis les valeurs au bords de la grille fille pour contraindre les valeurs au sein de la grille mère.
+    Ce système d'emboîtement simplifie la modélisation du côté de l'utilisateur·ice qui n'a besoin de mettre en place et de démarrer le modèle qu'une unique fois pour obtenir les résultats de haute résolution des grilles filles.
+    D'autre part, il a plus de chances de mieux représenter la réalité grâce à son fonctionnement en aller retour entre les grilles.
+    \item le second type d'emboîtement est linéaire, c'est à dire qu'une grille fille est toujours générées après l'exécution de la modélisation CROCO sur sa grille mère.
+    Les données de sortie du précédent modèle sont utilisées par l'utilisateur·ice pour générer les conditions initiales et aux limites de la grille fille.
+    Cette méthode est illustrée en Figure XXX et \ref{fig:imbrication}, elle n'implique pas de changement de comportement du modèle au sens strict car elle est principalement prise en charge par l'utilisateur·ice.
 \end{itemize}
 
-Un autre usage de modélisation sur plusieurs grilles en parallèle consiste à mettre en continuité spatiale des grilles de même résolution afin de modéliser une zone dont la forme est peu similaire à celle d'un rectangle.
+Un autre usage de modélisation sur plusieurs grilles en parallèle (AGRIF) consiste à mettre en continuité spatiale des grilles de même résolution afin de modéliser une zone dont la forme n'est que peu similaire à celle d'un rectangle.
 Cet usage est en particulier proposé pour effectuer une modélisation le long d'un trait de côte sinueux.
 Ainsi, moins de données brutes pour les conditions aux limites sont nécessaires par rapport à une modélisation de multiples grilles de manière indépendante.
 Cet usage ne correspond pas aux besoin de cette étude qui a pour but de modéliser une zone aisément assimilable à un rectangle, c'est à dire que cette zone peut être efficacement représentée par une unique sous-grille.
 
-
 \subsection{Les outils de pré-traitement}
 \label{sub:outils_pretraitement}
-Dans le cadre du stage, ce sont les outils Python qui sont utilisés pour le pré-traitement. Ces outils sont identifiés comme les "CROCO Pytools" et sont les plus récents intégrés dans l'univers CROCO.
+Dans le cadre du stage, ce sont les outils Python qui sont utilisés pour le pré-traitement.
+Ces outils sont identifiés comme les \textit{CROCO Pytools} et sont les plus récents intégrés dans l'univers CROCO.
 
 Les CROCO Pytools sont encore en cours de développement, les utiliser permet de participer à la vérification de leur fonctionnement pour la communauté.
-Certaines fonctionnalités sont encore manquantes dans les CROCO Pytools. Il est donc nécessaire de les ajouter soit en modifiant les scripts déjà présents, soit d'écrire des scripts supplémentaires pour réaliser certaines tâches spécifiques.
+Certaines fonctionnalités sont encore manquantes dans les CROCO Pytools.
+Il est donc nécessaire de les ajouter soit en modifiant les scripts déjà présents, soit d'écrire des scripts supplémentaires pour réaliser certaines tâches spécifiques.
 
-La création des fichiers nécessaires au démarrage de CROCO, suit l'ordre suivant\ :
+La création des fichiers nécessaires au démarrage de CROCO, suit l'ordre suivant :
 
 \begin{itemize}
-    \item création des grilles de calcul décrivant la morphologie du domaine modélisé;
-    \item création des conditions de forçages pour la mise en mouvement de la masse d'eau;
-    \item création des conditions aux bordures du domaine modélisé;
-    \item création des conditions initiales à l'intérieur du domaine modélisé.
+    \item création de la grille de calcul (grille CROCO) décrivant la morphologie du domaine modélisé ;
+    \item création des différents forçages imposés à la masse d'eau au début et au cours de la modélisation.
 \end{itemize}
+%\begin{itemize}
+    %\item création de la grille de calcul (grille CROCO) décrivant la morphologie du domaine modélisé avec %\textit{make\_grid.py};
+    %\item création des conditions aux bordures du domaine modélisé avec \textit{make\_bry.py} ou %\textit{make\_zoom\_ibc.py};
+    %\item création des conditions initiales à l'intérieur du domaine modélisé avec \textit{make\_ini.py} ou %\textit{make\_zoom\_ibc.py};
+    %\item création des conditions de forçages pour la mise en mouvement de la masse d'eau avec %\textit{make\_frc.py} et \textit{make\_blk.py}.
+%\end{itemize}
 
-La Figure\ref{fig:workflow_prepro_main} présente le fonctionnement des CROCO Pytools et des scripts écrits dans le cadre du stage pour le pré-traitement, c'est à dire pour générer les fichiers nécessaires au modèle CROCO à partir des données brutes.
+La Figure \ref{fig:workflow_prepro_main} présente le fonctionnement des CROCO Pytools et des scripts écrits dans le cadre du stage pour le pré-traitement, c'est à dire pour générer les fichiers nécessaires au modèle CROCO à partir des données brutes.
 Les chemins de fichiers présentées dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
 
 \begin{figure}[h!]
@@ -425,7 +439,8 @@ Les chemins de fichiers présentées dans le rapport correspondent à la nomencl
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_mere.pdf}
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_fille_zoom.pdf}
         \caption{
-            \textbf{Pré-traitement avec les croco\_pytools pour une grille simple ({\color{workColor}mère}) à gauche et pour une sous-grille imbriquée ({\color{orange}fille}) à droite.}
+            [à simplifier sur la partie "données brutes"]
+            \textbf{Pré-traitement avec les CROCO Pytools pour une grille simple ({\color{workColor}mère}) à gauche et pour une sous-grille imbriquée ({\color{orange}fille}) à droite.}
             \\Les paramètres marqués d'une {\color{paramColor}astérisque (*) bleue} sont ceux qui doivent être modifiés en fonction du code pour lesquels ils sont utilisés (\textit{make\_frc\_tide.py} ou \textit{make\_blk\_interpol.py}).
             Les paramètres marqués d'une {\color{orange}astérisque (*) orange} sont des paramètres qui ont la même signification pour la grille mère et pour la grille fille mais leur valeur peut être différente pour chaque grille.
             Dans les données brutes de la grille fille, {\color{outputColor}croco\_his.nc} provient de l'exécution du modèle CROCO sur la grille mère {\color{workColor}croco\_grd.nc}.
@@ -437,38 +452,37 @@ Les chemins de fichiers présentées dans le rapport correspondent à la nomencl
 
 \subsubsection{La gestion de plusieurs grilles CROCO}
 \label{subsub:gestion_multigrid}
-D'autre part, les CROCO Pytools permettent la préparation de deux types de grilles emboîtées (Offline Zoom et AGRIF)
+Les CROCO Pytools, avec \textit{make\_grid.py}, permettent la préparation de deux types de grilles emboîtées.
+La première méthode, AGRIF permet de mettre en place le système d'emboîtement de grilles simultané et rétrospectif su même nom.
+La seconde méthode, Offline Zoom, permet de mettre en place manuellement et successivement un emboîtement linéaire de grilles.
 
-La méthode d'emboîtement des grilles AGRIF était préférée.
-En effet, elle simplifie la modélisation du côté de l'utilisateur·ice qui n'a besoin de mettre en place et de démarrer le modèle qu'une unique fois pour obtenir les résultats de haute résolution des grilles filles.
-D'autre part, elle a plus de chances de mieux représenter la réalité grâce à son fonctionnement en aller retour entre les grilles.
+La méthode d'emboîtement des grilles AGRIF a été testée dans un premier temps.
+Il est apparu que son implémentation dans les CROCO Pytools est encore incomplète.
+D'autre part, l'utilisation de AGRIF impose des dépendances sur les clefs autorisées pour la modélisations (définies dans la fichier \textit{cppdefs.h}) (c'est bien le cas ?)
 
-Toutefois, cette méthode a été abandonnée durant le stage car il est apparu, pendant les phases de test, que
-(à lister... trop de dépendances et de contraintes sur les données utilisées).
 Ainsi, c'est la méthode Offline zoom qui est utilisée pour la suite du rapport.
-
-Chaque grille CROCO, pour être utilisée par le modèle, doit être accompagnée par d'autres fichiers de données qui permettent l'initialisation et la mise en mouvement de la masse d'eau. Ces fichiers sont décrits dans les paragraphes suivants.
+Cette méthode semble correctement implémentée dans les CROCO Pytools (ajouter qu'on a des doutes du la prise en charge du wet/dry ?)
 
 \subsubsection{La génération des données d'entrée}
 \label{generation donnees entrée}
-Les outils de pré-traitement originaux n'ont été utilisés que pour la génération des conditions initiales et au bord.
-Les deux fichiers de forçage par la marrée et atmosphériques \ref{par:forcages_atm} ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
-En effet, les croco\_pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
+Comme décrit en \ref{subsub:forcages}, chaque grille CROCO, pour être utilisée par le modèle, doit être accompagnée par d'autres fichiers de forçages qui contraignent l'initialisation et la mise en mouvement de la masse d'eau.
+
+Les outils de pré-traitement originaux n'ont été utilisés que pour la génération des conditions initiales et aux limites des grilles.
+Les deux fichiers de forçage restants - par la marrée et atmosphériques \ref{par:forcages_atm} - ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
+En effet, les CROCO Pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
 
 \textbf{Les conditions initiales}\\
 \label{par:cond_init}
-Le fichier "croco\_ini.nc" contient notamment des données comme la température, la salinité, et la hauteur de la surface de l'eau.
-Ces données couvrent chaque maille de la grille CROCO et correspondent aux paramètres physiques de la zone au début de la modélisation.
+Le fichier "croco\_ini.nc" est généré avec le script \textit{make\_ini.py} pour la grille mère et avec le script \textit{make\_zoom\_icb.py} pour toutes les grilles filles.
 
 \textbf{Les conditions aux bordures}\\
 \label{par:cond_bords}
-Le fichier "croco\_bry.nc" contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants.
-Ces données couvrent seulement les bords extérieurs de la grille CROCO sur toute la durée temporelle de la modélisation.
+Le fichier "croco\_bry.nc" est généré avec le script \textit{make\_bry.py} pour la grille mère et avec le script \textit{make\_zoom\_icb.py} pour toutes les grilles filles, en même temps que les conditions initiales.
 
 \textbf{Les forçages par la marrée}\\
 \label{par:forcages_marree}
 Le premier script permet de générer un fichier de marrée pour CROCO à partir des données des modèles TPXO10 ou FES2014.
-Dans ce script, les amplitudes et phases des vitesses des ondes de marée sont transformées en ellipse de périodicité selon les formules utilisée dans le croco\_pytool de référence avec la fonction ap2ep. Cette fonction est aussi décrite dans \cite{ap2ep},
+Dans ce script, les amplitudes et phases des vitesses des ondes de marée sont transformées en ellipse de périodicité selon les formules utilisée dans le code des CROCO Pytool de référence avec la fonction ap2ep. Cette fonction est aussi décrite dans \cite{ap2ep},
 $$SemiMajAxis = \abs{wp}+\abs{wm}$$
 $$Eccentricity = \frac{\abs{wp}+\abs{wm}}{\abs{wp}-\abs{wm}}$$
 $$Inclinaison = \frac{arg(wm)+arg(wp)}{2\pi}.180$$
@@ -510,11 +524,11 @@ Pour la majorité de la surface couverte par la grille mère, les données de ba
 Ces données sont continues dans l'espace.
 
 Par ailleurs, deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'Anse du Cul-de-Loup.
-La campagne du ROL constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes. Les données de cette campagnes utilisées pour l'étude de l'Anse du Cul-de-Loup proviennent de prises Lidar.
+La campagne du ROL (https://www.rolnhdf.fr/) constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes. Les données de cette campagnes utilisées pour l'étude de l'Anse du Cul-de-Loup proviennent de prises Lidar.
 La campagne XXX a été réalisée dans le but de compléter les données d
 Les données provenant de GEBCO et PROTEC sont donc fusionnées entre elles afin d'obtenir une cartographie bathymétrique uniforme de haute résolution dans les zones où les données le permettent.
 
-Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA). Toutefois, cette fonctionnalité des CROCO\_Pytools ne semble pas encore fonctionnelle.
+Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA). Toutefois, cette fonctionnalité des CROCO Pytools ne semble pas encore fonctionnelle.
 Les données vectorielles du trait de côte sont corrigées par les données de la campagne PROTEC qui sont plus précises mais qui couvrent seulement le Nord du Cotentin.
 
 
@@ -724,7 +738,7 @@ Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessou
     .3 REANDME.md.
     .3 CHANGELOG.md.
     %
-    .2 croco\_pytools/\DTcomment{dossier généré par l'installation des outils python (croco\_pytools)}.
+    .2 croco\_pytools/\DTcomment{dossier généré par l'installation des outils python (CROCO Pytools)}.
     .3 prepro/.
     .4 Modules/.
     .5 tides.txt.
@@ -781,7 +795,7 @@ mettre les principes généraux de CROCO (origine, type de modèle, etc...)
 
 \textbf{Installation}
 
-Explication de l'installation des pytools, de croco et de l'activation de l'environnement Anaconda/Miniconda \textit{croco\_pyenv}.
+Explication de l'installation des CROCO Pytools, de croco et de l'activation de l'environnement Anaconda/Miniconda \textit{croco\_pyenv}.
 
 \begin{codeEnv}{installation de croco}
     \begin{lstlisting}[language=bash]
@@ -800,7 +814,7 @@ Explication de l'installation des pytools, de croco et de l'activation de l'envi
     \end{lstlisting}
 \end{codeEnv}
 
-\begin{codeEnv}{installation des croco\_pytools}
+\begin{codeEnv}{installation des CROCO Pytools}
     \begin{lstlisting}[language=bash]
         # en se placant dans PATH-TO-CROCO/
         git clone --branch release https://gitlab.inria.fr/croco-ocean/croco_pytools.git
@@ -812,7 +826,7 @@ Explication de l'installation des pytools, de croco et de l'activation de l'envi
     \end{lstlisting}
 \end{codeEnv}
 
-Une fois croco et les croco\_pytools installés, l'achitecture de la configuration doit être générée. Nativement, croco contient un fichier \textit{create\_config.bash} qui effetue ce travail. Toutefois, comme l'architecture choisie pour ce rapport est différente de celle de référence, un nouveau fichier \textit{create\_config.bash} a été écrit, son contenu est défini ci-après.
+Une fois croco et les CROCO Pytools installés, l'achitecture de la configuration doit être générée. Nativement, croco contient un fichier \textit{create\_config.bash} qui effetue ce travail. Toutefois, comme l'architecture choisie pour ce rapport est différente de celle de référence, un nouveau fichier \textit{create\_config.bash} a été écrit, son contenu est défini ci-après.
 
 \begin{codeEnv}{\textbf{contenu de \textit{create\_config.bash} adapté à l’architecture choisie pour ce rapport}}\label{create_config}
     \begin{lstlisting}[language=bash]
@@ -892,7 +906,7 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
         \item le masque côtier {\color{darkgrey}[GSHHS\_f\_L1.shp]} comprenant au moins les côtes de la zone d'étude,
         \item les données marines {\color{darkgrey}[copernicus\_marine\_data.nc]} couvrant une zone la plus large possible autour et comprenant la zone d'étude. Ces données doivent aussi couvrir le plus finement possible la gamme temporelle mentionnée dans la section précédente,
         \item les données issues d'un modèle global ou local de marée, par exemple TPXO10 ou FES2014 {\color{darkgrey}[FES2014*.nc]} incluant des données de hauteur d'eau et de courant pour les différentes fréquences de vagues de marrée (M2, S2, N2, K2, K1, O1, P1, Q1, MF, MM,...)
-        \item le fichier texte présent nativement dans les croco\_pytools {\color{darkgrey}[tides.txt]} contenant les noms et les périodes des différentes harmoniques des vagues de marrée.
+        \item le fichier texte présent nativement dans les CROCO Pytools {\color{darkgrey}[tides.txt]} contenant les noms et les périodes des différentes harmoniques des vagues de marrée.
         \item les données atmosphériques {\color{darkgrey}[copernicus\_atmospheric\_data.nc]} couvrant une zone large autour et comprenant la zone d'étude. Ces données doivent couvrir le plus finement possible la gamme temporelle mentionnée dans la section précédente.
     \end{enumerate}
 
@@ -907,7 +921,7 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
 
     {\color{workColor}\textbf{Pré-processing}}
 
-    Le pré-processing des données brutes n'est détaillé ici que pour les croco\_pytools. Les outils Matlab ne sont pas abordés.
+    Le pré-processing des données brutes n'est détaillé ici que pour les CROCO Pytools. Les outils Matlab ne sont pas abordés.
 
     \textbf{- modifications basiques des fichiers netCDF}
 
