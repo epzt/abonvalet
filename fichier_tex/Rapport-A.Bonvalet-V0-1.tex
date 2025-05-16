@@ -19,7 +19,6 @@
 \usepackage[]{caption}
 \usepackage{siunitx}
 \usepackage{mathtools}
-\usepackage{easyReview}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 % Swap the definition of \abs* and \norm*, so that \abs
@@ -218,6 +217,9 @@ Le code CROCO est fondé sur la résolution des équations Navier-Stokes.
 Son système d'équations est flexible, il permet de choisir la méthode de résolution physico-chimique et de l'adapter à la configuration.
 Les systèmes d'équations sont progressivement vérifiées par la communauté avec la mise en place de cas test dont la physique est simple. % dont on sait quel résultat est attendu pour quel système d'équation.
 
+Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
+Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais, pour mieux correspondre à la dynamique open-source de CROCO, de nouveaux outils, les CROCO Pytools, sont en cours de développement en Python.
+
 %+ Philosophie section (aspects spécifiques mis en oeuvre)
 La nature et les possibilités accordées par CROCO sont ainsi très variées.
 Dans la suite de la section, seuls les aspects de CROCO spécifiquement choisis et utilisés pour la mise en \oe{}vre des modèles réalisés dans ce cadre de ces travaux sont présentés.
@@ -225,24 +227,40 @@ Pour une description exhaustive du code CROCO, la documentation est disponible e
 
 \subsubsection{Mode de mise en \oe{}uvre}
 \label{subsub:presentation_generale}
-Les forçages physico-chimiques initiaux et aux limites sont la source des mouvements dans la masse d'eau.
-Ils sont intégralement choisis par l'utilisateur·ice de CROCO.
-Ces forçages peuvent contenir une large variété de données spatiales et temporelles.
+[sous-section à reprendre + compléter, si possible, garder la relecture de cette partie pour plus tard] - A
+[ajouter la description des fichiers de configuration de croco (cppdefs, param.h, in, jobcomp)]
+
+Deux types d'entrées dictent le comportement du modèle CROCO : les fichiers de configuration et les données numérisant la zone étudiée.
+
+Les fichiers de configurations sont au nombre de quatre :
+\begin{itemize}
+    \item param.h est un fichier de paramètres qui indique les dimensions du maillage utilisé pour la modélisation ainsi que les variables associées à l'ensemble de la zone,
+    \item cppdefs.h est un fichier contenant des indications d'activations et de désactivations de clefs. Ces clefs sont notamment des options qui changent la façon don le modèle interprète et propage les données. Il permet par exemple de déterminer quelles équations physiques doivent être résolues par le modèle,
+    \item .jobcom est un fichier exécutable qui défini les options de compilations du code CROCO,
+    \item croco.in est un fichiers de paramètres qui défini l'étendue temporelle de la modélisation et les fréquences de sauvegardes. Il indique aussi la localisation des données numérisant la zone,
+\end{itemize}
+Ces fichiers sont représentés en bleu en Figure \ref{fig:workflow_simple}.
+
+Les fichiers numérisant la zone étudiée contiennent des données qui contraignent le déplacement de la masse d'eau.
+Ces fichiers de numérisation de la zone sont intégralement choisis par l'utilisateur·ice de CROCO.
+Parmi ces fichiers, les forçages physico-chimiques initiaux et aux limites sont la source des mouvements dans la masse d'eau qui sont contraints par les données du fichier déterminant la morphologie du domaine.
+Les forçages peuvent contenir une large variété de données spatiales et temporelles.
 On relèvera notamment la possibilité d'indiquer la valeur des températures, des salinités, des hauteur d'eau relativement au niveau marins de référence, des vitesses de courant et des conditions atmosphériques à proximité de la surface.
-Les données des forçages sont rassemblées au sein de plusieurs fichiers.
-Ces dernières sont regroupées dans cinq principaux fichiers comme listé ci-dessous:
+Les données des forçages sont regroupées dans cinq principaux fichiers comme listé ci-dessous:
 
 \begin{itemize}
-    \item le contexte physique du domaine modélisé (bathymétrie, limite côte-océan, etc.);
+    \item le contexte morphologique du domaine modélisé (bathymétrie, limite côte-océan, etc.);
     \item les phénomènes physiques externes à la masse d'eau qui forcent son déplacement :
     \begin{itemize}
         \item[.] la marée (amplitude et vitesse de d'placement de l'onde de marée),
         \item[.] les conditions atmosphériques (vent, pluie, etc.),
     \end{itemize}
     \item les conditions physico-chimiques internes à la masse d'eau aux limites durant la période modélisées (température salinité, etc.),
-    \item les mêmes conditions physico-chimiques dans l'ensemble de la zone modélisée au départ du modèle.
+    \item les mêmes conditions physico-chimiques dans l'ensemble de la zone modélisée à l'initialisation du modèle.
 \end{itemize}
 Ces fichiers doivent respecter une structure et une nomenclature particulière afin d'être utilisables par le code CROCO.
+Ils sont généralement extraits et interpolés à partir de données brutes à l'aide des outils communautaires associés à CROCO.
+
 Un schéma global de la mise en place du modèle est présenté en Figure \ref{fig:workflow_simple}
 \begin{figure}[h!]
     \centering
@@ -256,14 +274,6 @@ Un schéma global de la mise en place du modèle est présenté en Figure \ref{f
     }
     \label{fig:workflow_simple}
 \end{figure}
-
-Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
-Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais, pour mieux correspondre à la dynamique open-source de CROCO, de nouveaux outils, les CROCO Pytools, sont en cours de développement en Python.
-
-[reprendre + compléter]
-
-Lors de sa compilation, CROCO utilise le fichier \textit{cppdef.h}, l'un des quatre fichiers dont le contenu est modifié par l'utilisateur·ice, pour déterminer quelles équations physiques doivent être résolues par le modèle.
-Ces fichiers sont représentés en bleu en Figure \ref{fig:workflow_simple}.
 
 
 %Afin de simplifier le travail de pré-traitement, la communauté a développé des outils numériques de lecture, calcul et écriture de données.
