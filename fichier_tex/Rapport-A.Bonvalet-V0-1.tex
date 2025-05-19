@@ -1,6 +1,7 @@
 \documentclass[10pt,a4paper,titlepage]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+%\usepackage[square,sort]{natbib}
 \usepackage[french]{babel}
 \usepackage{blindtext}
 \usepackage{hyperref}
@@ -72,7 +73,8 @@
 %]{biblatex}
 % quand tu auras créé ton fichier bib
 % \addbibresource{ton-fichier-biblio.bib}
-\usepackage{biblatex}
+\usepackage[style=bwl-FU]{biblatex}
+%\bibliographystyle{apalike}
 \addbibresource{../rapport-AB.bib}
 \addbibresource{../bibliography.bib}
 
@@ -207,25 +209,42 @@ et les participants de ROMS comme et principalement
 l'Université de Californie à Los Angeles (UCLA\footnote{UCLA : University of California, Los Angeles}) 
 et le département de Géophysique de l'université de Concepción (DGEO\footnote{DGEO : Departamento de Geofísica Universidad de Concepción}).
 
-Le code et la documentation de ROMS\_AGRIF ont progressivement été modifiés pour devenir le modèle communautaire CROCO.
+% Le code et la documentation de ROMS\_AGRIF ont progressivement été modifiés pour devenir le modèle communautaire CROCO.
 
-Ce modèle permet désormais de réaliser des modélisations sur des grilles dont la résolution peut être kilométrique (modèle régional) à métrique (modèle côtier).
+Ce modèle CROCO permet désormais de réaliser des modélisations sur des grilles dont la résolution peut être de kilométrique (modèle régional) à métrique (modèle côtier).
 
-CROCO permet d'activer la parallélisation des calculs effectués lors de la modélisation. Ainsi, pour certaines configurations, il est possible de modéliser des temporalités de l'ordre de l'année pour un coût de calcul abordable. (ex .)
+Le code CROCO est fondé sur la résolution des équations Navier-Stokes avec l'approche Reynolds Average Navier-Stokes (RANS) (ref*).
+[image possible sur les modèles possibles]
+Les modèles de la catégorie RANS permettent de mettre en \oe{}vre des modélisations à des échelles spatiales et temporelles plus importantes que les approches Direct Numerical Simulation (DNS) ou encore Large Eddy Simulation (LES).
 
-Le code CROCO est fondé sur la résolution des équations Navier-Stokes.
-Son système d'équations est flexible, il permet de choisir la méthode de résolution physico-chimique et de l'adapter à la configuration.
+[]
+Le système d'équations de CROCO est flexible.
+ il permet de choisir la méthode de résolution physico-chimique et de l'adapter à la configuration.
 Les systèmes d'équations sont progressivement vérifiées par la communauté avec la mise en place de cas test dont la physique est simple. % dont on sait quel résultat est attendu pour quel système d'équation.
++ 3D
+[]
 
-Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
-Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools mais, pour mieux correspondre à la dynamique open-source de CROCO, de nouveaux outils, les CROCO Pytools, sont en cours de développement en Python.
+CROCO peut être exécuté sur les machines parallèles ou des clusters d'ordinateurs.
+%permet d'activer la parallélisation des calculs effectués lors de la modélisation.
+Ainsi, pour certaines configurations, il est possible de modéliser des temporalités de l'ordre de l'année pour un coût de calcul abordable. (ex .)
+Ainsi, en fonctions des objectifs, il est possible de mettre en place des modélisations à la fois finement résolues et couvrant des périodes de temps annuelles pour des coûts de calcul abordables*.
+
+
+%Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
+Pour faciliter la mise en place des configurations CROCO, un ensemble d'outils ont été développés.
+Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools.
+Plus récemment, de nouveaux outils développés en Python sont disponibles et appelés les CROCO Pytools.
+% Le transfert des outils de Matlab vers Python renforce l'aspect leur ouvert et communautaires.
+En éliminant la dépendance aux licences Matlab, ces nouveaux outils renforcent leur accessibilité et par conséquent leur universalité.
 
 %+ Philosophie section (aspects spécifiques mis en oeuvre)
-La nature et les possibilités accordées par CROCO sont ainsi très variées.
-Dans la suite de la section, seuls les aspects de CROCO spécifiquement choisis et utilisés pour la mise en \oe{}vre des modèles réalisés dans ce cadre de ces travaux sont présentés.
-Pour une description exhaustive du code CROCO, la documentation est disponible et entretenue en ligne \cite{documentation_croco}.
+CROCO étant très polymorphe, une présentation de l'ensemble des caractéristiques offertes sort du contexte de ce travail.
+Pour une description exhaustive de ces possibilités, une documentation est disponible et entretenue en ligne \cite{documentation_croco}.
+%La nature et les possibilités accordées par CROCO sont très variées.
+Dans la suite du rapport, seuls les aspects de CROCO spécifiquement utilisés pour la mise en \oe{}vre du Modèle de l'Anse du Cul-de-Loup (MACLoup) sont présentés.
 
-\subsubsection{Mode de mise en \oe{}uvre}
+
+\subsubsection{Mise en \oe{}uvre de MACLoup}
 \label{subsub:presentation_generale}
 [sous-section à reprendre + compléter, si possible, garder la relecture de cette partie pour plus tard] - A
 [ajouter la description des fichiers de configuration de croco (cppdefs, param.h, in, jobcomp)]
@@ -281,59 +300,112 @@ Un schéma global de la mise en place du modèle est présenté en Figure \ref{f
 %L'utilisation dans le cadre du stage de ces outils est décrite dans la partie suivante.
 
 
-\subsubsection{Physique du modèle}
+\subsubsection{Hydrodynamique de MACLoup}
 \label{subsub:pysique_modele}
-Le fichier \textit{cppdef.h} détermine quelles équations physiques doivent être résolues par le modèle.
+C'est le fichier nommé \textit{cppdefs.h} qui détermine les caractéristiques hydrodynamiques effectivement résolues dans le modèle.
+% quelles équations physiques doivent être résolues par le modèle.
+La définition de ces caractéristiques s'appuie sur la présence de mots clefs.
+Chaque mot clef active ou désactive une fonctionnalité avec la syntaxe "\# define"  ou "\# undef" qui le précède.
+Par exemple, l'ajout de la ligne "\# define SALINITY" dans \textit{cppedefs.h} active, au moment de la compilation, la prise en compte de la salinité.
 
-Pour les modélisations effectuées dans le cadre du stage, le contenu du fichier a été modifié pour que les équations résolues correspondent à un schéma d'advection de cinquième ordre (\ref{anx:WENO}) et à un schéma de diffusion adapté à la configuration.
-Le détail des choix effectués est donné dans l'encadré suivant \ref{encadre:precisions_schema}.
 
-\begin{codeEnv}{Les schémas d'advection et de diffusion\label{encadre:precisions_schema}}
+%Dans le cadre du stage, le contenu du fichier a été défini pour que les équations résolues prennent la forme d'un schéma d'advection de cinquième ordre WENO5 (Annexes \ref{anx:WENO}) et d'un schéma de diffusion adapté à la configuration.
+%Une précision des choix effectués est donné dans l'encadré suivant \ref{encadre:precisions_schema}.
+
+%\begin{codeEnv}{Les schémas d'advection et de diffusion\label{encadre:precisions_schema}}
     %(\cite{dev_RANS-LES_these}, \cite{comp_RANS_LES})
     %Les équations utilisées et résolues par CROCO durant la modélisation sont flexibles.
-    Dans le fichier \textit{cppdefs.h} de la configuration CROCO, l'utilisateur·ice choisit quels schémas numériques sont utilisés pour la résolution de l'advection d'une part et de la diffusion d'autre part.
-    Les schémas numériques possibles pour l'advection sont au minimum de second ordre et au maximum de cinquième ordre.
-    Les schémas numérique de diffusion sont laplaciens ou biliplaciens. (ça se dit probablement autrement !)
-    Le choix des schémas est libre pour l'utilisateur·ice, (\cite{schemas_advection}) il est toutefois important de noter que les schémas choisis doivent être cohérents entre eux.
-    D'autre part, certains schémas sont mieux adaptés que d'autres à certaines situations modélisées, il est donc important de bien comprendre sa configuration avant de choisir les schémas numériques que le modèle doit utiliser.
+    Les premiers choix fondamentaux à faire sont ceux des types de schémas numériques de résolution de l'advection et de la diffusion.
+    Le code CROCO en propose divers schémas qu'il est nécessaire de choisir en cohérence. % (entre eux)
+    %[enlever ?]
+    %Les schémas numériques possibles pour l'advection sont au minimum de second ordre et au maximum de cinquième ordre.
+    %Les schémas numérique de diffusion sont laplaciens ou biliplaciens. (ça se dit probablement autrement !)
+    %[]
+    %Le choix des schémas est libre pour l'utilisateur·ice, (\cite{schemas_advection}) il est toutefois important de noter que les schémas choisis doivent être cohérents entre eux.
+    Certains schémas sont mieux adaptés que d'autres à chaque configuration.
+    Il est donc important que cette dernière soit correctement identifiée avant de choisir les schémas numériques.
     
-    Dans notre configuration, le nombre de couches verticales étant faible ($\leq 30$) et la topographie étant assez découpée par endroits, le schéma d'advection choisi est celui quasi-monotone de cinquième ordre de WENO (Weighted Essentially Non-Oscillatory scheme). 
-    Ses particularités sont décrites dans la documentation de croco et en Annexes de ce rapport \ref{anx:WENO}.
+    Dans l'Anse du Cul-de-Loup, la côte est tortueuse et de larges zones sont régulièrement découvertes et recouvertes au cours d'un cycle de marée.
+    D'un point de vue numérique, ces caractéristiques sont contraignantes et déterminent la nature des schémas d'advection possibles.
+    %Dans MACLoup, le nombre de couches verticales est faible ($\leq 30$) et la topographie est assez découpée par endroits.
+    Ces choix ont principalement faits sur la base de la documentation principale \parencite{cppkeys_description}.
+    Ils ont été complétés avec la configuration du modèle de plage de  \cite{swash_article_MARCHESIELLO2021101816}.
+    Ce dernier modèle fait face à des dynamiques de découvrement régulier de certaines mailles de la grille dans la zone d'action des vagues.
+    Cette dynamique est analogue à celle de notre configuration.
+    %En effet, dans le modèle de l'anse du Cul-de-Loup, le découvrement s'effectue sur les mailles dans la zone de balancement des marées.
+    %La même robustesse que la configuration précédemment citée est donc recherchée.
     
-    D'autre part, le choix des schémas numériques de diffusion verticale est principalement dicté par la structure de la grille du modèle.
-    Dans notre configuration, les couches horizontales de la grille sont d'épaisseur variables et suivent la topographie.
-    Le schéma de diffusion verticale choisi est Laplacien (ça se dit probablement autrement !) et est résolu dans la direction locale de chaque couche de la grille avec une viscosité turbulente paramétrisée avec/selon Smagorinsky.
-    Enfin, le schéma de diffusion horizontale est de type GLS (Generic Length Scale) en K-OMEGA provenant de \cite{GLS_KOMEGA_kolmogorov1941equations}.
-\end{codeEnv}
+    Le schéma retenu est celui d'advection quasi-monotone de cinquième ordre de WENO\footnote{Weighted Essentially Non-Oscillatory scheme} (voir Annexes \ref{anx:WENO}).
+    
+    Le choix du schéma numérique de diffusion est de type Generic Length Scale (GLS).
+    Les schémas de diffusion verticale et horizontal sont différenciés.
+    En effet, la résolution verticale et horizontales sont différentes (voir section \ref{subsub:grille_croco}).
+    %Le schéma vertical est conditionné par la structure de la grille du modèle.
+    %Dans la configuration MACLoup, les couches horizontales de la grille sont d'épaisseur variables et suivent la topographie.
+    Le schéma de diffusion horizontale choisi est de type Laplacien avec une viscosité turbulente paramétrisée avec la méthode de Smagorinsky (*citation).
+    Enfin, le schéma de diffusion horizontale est de type K-OMEGA provenant de \cite{GLS_KOMEGA_kolmogorov1941equations}.
+%\end{codeEnv}
 
-Le détail des clefs activées pour correspondre à ce modèle physique se trouve en Annexes (Section \ref{anx:cppdefs}).
-Ces clefs ont été principalement déterminées sur la base de la documentation principale \cite{cppkeys_description}.
-Elles ont de plus été adaptées pour correspondre à la configuration du modèle de plage de  \cite[Marchesiello et al. (2021)][ ]{swash_article_MARCHESIELLO2021101816}.
-Certes, ce dernier modèle n'est pas à la même échelle que ceux réalisés dans le cadre du stage, mais il fait face à des dynamiques de découvrement régulier de certaines mailles de la grille dans la zone d'action des vagues.
-Cette dynamique est analogue à celle de notre configuration.
-En effet, dans le modèle de l'anse du Cul-de-Loup, le découvrement s'effectue sur les mailles dans la zone de balancement des marées.
-La même robustesse que la configuration précédemment citée est donc recherchée.
+L'ensemble des clefs activées qui définissent le schéma d'advection-diffusion de MACLoup se trouve en Annexes (Section \ref{anx:cppdefs}).
 
 
-\subsubsection{Le domaine CROCO}
+
+\subsubsection{Le domaine MACLoup}
 \label{subsub:grille_croco}
-Les maillages horizontaux indiquant la position géographique des variables modélisées sont contenus dans un unique fichier NetCDF.
-On appelle le contenu de ce fichier le domaine CROCO.
-Ce domaine est localisé en longitude et latitude à la surface de la Terre.
-Il contient trois maillages dont deux son issus de la translation Nord-Sud et Est-Ouest du maillage central sur une longueur d'une demi-maille.
-Pour chaque maille des trois maillages, une latitude et une longitude sont attribués dans le fichier du domaine CROCO.
-Le domaine contient aussi une donnée de bathymétrie / topographie pour chacune de ses mailles.
-Enfin, il contient une donnée booléenne\footnote{valeurs indiquant soit \textit{vrai} (1) soit \textit{faux} (0)} attribuée à chaque maille du maillage principal.
-L'ensemble de ces données booléennes sont appelées le masque du domaine.
-Le masque indique quelles mailles sont définies comme toujours émergées.
-Les équations du modèle ne seront ainsi jamais résolues au niveau des valeurs fausses du masque du domaine.
+Le domaine CROCO, comme dans toutes autres modélisations numériques, est une discrétisation spatiale de la morphologie de la zone modélisée.
+Il représente la bathymétrie et le trait de côte.
+Le domaine est supporté par un maillage horizontal (2D) dont chaque n\oe{}ud est géoréférencé et présent au centre d'une maille.
+Dans MACLoup, chaque maille suit la définition de \cite{Arakawa_C-grid_1977} en grille de type C.
+Selon cette définition toutes les variables (température, salinité, hauteur d'eau, etc.) sont définies et résolues au centre des mailles ($H_{i,j}$, Figure \ref{fig:structure_maille horizontale}).
+Seules les composantes de vitesse $U$ et $V$ sont présentes aux bords des mailles (Figure \ref{fig:structure_maille horizontale}).
+\begin{figure}[h!]
+    \centering
+    \begin{tabular}{ c c c }
+        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\ 
+        | & & | \\
+        | & & | \\
+        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\  
+        | & & | \\
+        | & & | \\
+        \multicolumn{1}{r}{·--} & \textbf{$V_{i,j}$} & \multicolumn{1}{l}{--·}
+    \end{tabular}
+    \caption{
+        Maille $i,j$ horizontale de type Arakawa C-grid.
+        %Représentation d'une maille  du domaine CROCO.
+         %Les tirets (\_|) indiquent les cotés de la maille.
+        Les variables modélisées sont résolues en position $H_{i,j}$.
+        Les composantes horizontales de vitesse sont présentes aux bords de la maille en position $U_{i,j}$ et $V_{i,j}$.
+        %La position à laquelle est calculé chaque type paramètre de la maille est représentée par $U_{i,j}$, $V_{i,j}$ et .
+        %La première lettre de ces indicateurs correspond au type des paramètres qu'elles représentent.
+        Les composantes de vitesses $V_{i,j+1}$ et $U_{i+1,j}$ appartiennent aux mailles adjacentes.
+        % suppose que la maille $i,j$ ne se situe pas à l'extrémité d'une ligne ou d'une colonne de son maillage.
+        Cette représentation est issue de \cite{grid_doc}.
+    }
+    \label{fig:structure_maille horizontale}
+\end{figure}
 
-Les résolutions verticales des trois maillages d'un même domaine sont identiques.
-Cette résolution verticale n'est toutefois pas définie dans le fichier du domaine CROCO.
-Elle est contenue dans la structure des données de forçage initiaux et aux bords du domaine et elle est définie et indiquée au code CROCO dans les fichiers d'entrées \textit{param.h} et \textit{croco.in} de la configuration.
-Selon les paramètre choisis, la résolution verticale peut varier verticalement selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
-Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale à l'approche, respectivement, de la surface et du fond.
+
+%La morphologie du domaine modélisé dans CROCO est présente sous la forme de maillages horizontaux et verticaux.
+%Ce domaine est localisé en longitude et latitude à la surface de la Terre.
+%Il contient trois maillages dont deux son issus de la translation Nord-Sud et Est-Ouest du maillage central sur une longueur d'une demi-maille.
+%Pour chaque maille des trois maillages, une latitude et une longitude sont attribués dans le fichier du domaine CROCO.
+%Le domaine contient aussi une donnée de bathymétrie / topographie pour chacune de ses mailles.
+Pour séparer les zones immergeables des autres, un booléen est attribué à chaque maille, respectivement $1$ (True) pour les mailles immergeables et $0$ (False) pour les autres.
+%Le domaine contient une donnée booléenne\footnote{valeurs indiquant soit \textit{vrai} (1) soit \textit{faux} (0)} attribuée à chaque maille du maillage principal.
+%L'ensemble de ces données booléennes sont appelées le masque du domaine.
+%Le masque indique quelles mailles sont définies comme toujours émergées.
+Les équations ne seront jamais résolues au niveau des mailles non-immergeables du domaine.
+%Le domaine CROCO est contenu dans un unique fichier NetCDF.
+
+Le modèle MACLoup est défini en dimensions pseudo-3D, il est composé d'une succession de maillages 2D répartis verticalement selon une dimension $\sigma$.
+Dans cette définition, les couches sont contraintes verticalement par la bathymétrie et le hauteur d'eau.
+Par convention, la surface est à $0$ et le fond est à $1$ sur la dimension $\sigma$.
+Cette répartition est modulée selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$ qui décrivent la résolution verticale respectivement à l'approche de la surface et du fond.
 Leurs effets peuvent être visualisés en Figure \ref{fig:vertical_resolution}.
+%La résolution verticale du maillage n'est pas définie dans le fichier du domaine CROCO.
+Cette paramétrisation de la verticale est indiquée dans les fichiers d'entrées \textit{param.h} et \textit{croco.in} de la configuration.
+%Selon les paramètre choisis, la résolution verticale peut varier verticalement selon les deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
+%Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale respectivement à l'approche de la surface et du fond.
 
 \begin{figure}[h!]
     \centering
@@ -347,78 +419,34 @@ Leurs effets peuvent être visualisés en Figure \ref{fig:vertical_resolution}.
 \end{figure}
 
 %Les variables physico-chimiques que le modèle propage ont généralement un effet rétroactifs sur leur propre propagation ou-et sur la propagation d'autres variables.
-Selon leur type, les variables physico-chimiques que le modèle propage sont définies sur l'un des trois maillages du domaine.
-La table \ref{structure_maille horizontale} issue de la documentation \cite{grid_doc} illustre les trois positions, appelées ici U, V et H, que peuvent avoir ces variables relativement à une cellule du maillage principal.
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}{ c c c }
-        \multicolumn{1}{r}{·--} & $V_{i,{\color{red}j+1}}$ & \multicolumn{1}{l}{--·} \\ 
-        | & & | \\
-        | & & | \\
-        $U_{i,j}$ & $H_{i,j}$ & $U_{{\color{red}i+1},j}$ \\  
-        | & & | \\
-        | & & | \\
-        \multicolumn{1}{r}{·--} & \textbf{$V_{i,j}$} & \multicolumn{1}{l}{--·}
-    \end{tabular}
-    \caption{
-        Représentation d'une maille $i,j$ horizontale du domaine CROCO.
-        Les points (.) représentent des n\oe{}uds et les tirets (\_|) indiquent les cotés de la maille.
-        La position à laquelle est calculé chaque type paramètre de la maille est représentée par $U_{i,j}$, $V_{i,j}$ et $H_{i,j}$.
-        La première lettre de ces indicateurs correspond au type des paramètres quelles représentent.
-        L'existence des paramètres $V_{i,j+1}$ et $U_{i+1,j}$ qui appartiennent à des mailles adjacentes suppose que la maille $i,j$ ne se situe pas à l'extrémité d'une ligne ou d'une colonne de son maillage.
-        Cette représentation est issue de \cite{grid_doc}
-    }
-    \label{structure_maille horizontale}
-\end{table}
-
-Les variables que nous avons choisies de modéliser sont organisées comme suit entre les trois maillages.\\
-Une importante part des variables sont localisées en \textbf{position H}, sur le maillage central.
-\begin{itemize}
-    \item la hauteur de la colonne d'eau relativement au niveau marin moyen (référentiel à vérifier),
-    \item la température de l'eau,
-    \item la salinité de d'eau,
-    \item l'ensemble des paramètres décrivant les ondes de marrée (phase et amplitude de la hauteur d'eau ainsi que celles des deux composantes des courants induits),
-    \item l'ensemble des paramètres atmosphériques à l'exception du vent (précipitation, température de l'air, vitesse absolue et direction du vent à $10~m$ au dessus de la surface de l'eau, etc.).
-\end{itemize}
-Les paramètres localisés à la \textbf{position U}, sur un second maillage :
-\begin{itemize}
-    \item la composante Est-Ouest de la vitesse de déplacement de l'eau,
-    \item la contrainte à la surface de l'eau causée par la composante Est-Ouest du vent,
-    \item la composante Est-Ouest de la vitesse de déplacement de l'air à $10~m$.
-\end{itemize}
-Enfin, les paramètres localisés à la \textbf{position V}, sur un troisième:
-\begin{itemize}
-    \item la composante Nord-Sud de la vitesse de déplacement de l'eau,
-    \item la contrainte à la surface de l'eau causée par la composante Nord-Sud du vent,
-    \item la composante Nord-Sud de la vitesse de déplacement de l'air à $10~m$.
-\end{itemize}
-
-%L'ensemble de ces paramètres ne sont ni exprimés ni pris en compte aux points indiqués comme émergés par la grille.
-Indépendamment de leur appartenance à l'un ou l'autre des maillages, les paramètres forçant le modèle ne couvrent pas toujours l'ensemble du maillage.
-Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
-D'autres ne le sont qu'aux bords du maillage, parfois sur l'ensemble des mailles verticales.
-D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille à la verticale, ces données sont localisées soit en surface (ex. vent) soit au fond (ex. rugosité).
 
 \subsubsection{Les forçages du modèle}
 \label{subsub:forcages}
-L'ensemble de des paramètres et variables donnés par l'utilisateur définissent les forçages physico-chimiques imposés au modèle.
-Leur présentation dans ce rapport est restreinte à ceux utilisés dans le cadre de notre étude.
+%L'ensemble de des paramètres et variables donnés par l'utilisateur définissent les forçages physico-chimiques imposés au modèle.
+La présentation des fichiers de forçages est restreinte à ceux qui sont utilisés dans le cadre de notre étude.
 Les forçages sont regroupés dans plusieurs fichiers selon la manière dont ils influent sur le modèle.
-Les données des forçages sont au format NetCDF.
+%Les données des forçages sont au format NetCDF.
 
-La première catégorie correspond aux forçages qui définissent les conditions initiales.
-Le fichier correspondant, \textit{croco\_ini.nc}, contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants sur l'ensemble de la grille à l'initialisation du modèle.
-
-La seconde catégorie correspond aux forçages qui définissent les conditions aux bords latéraux de la grille.
-Le fichier correspondant, \textit{croco\_bry.nc}, contient notamment les données de température, salinité et éventuellement hauteur d'eau et vitesses des courants aux bords de la grille sur toute la durée temporelle de la modélisation.
-
-La troisième catégorie correspond aux forçages de marrée.
+La dynamique de l'Anse du Cul-de-Loup étant dominée par la marée, il est indispensable d'inclure les données tidales dans un fichier de forçage.
+%La troisième catégorie correspond aux forçages de marrée.
 %Ces derniers remplacent les données de hauteur d'eau et éventuellement de courant des conditions aux bordures. 
-Le fichier correspondant, \textit{croco\_frc.nc} contient donc, pour $n$ harmoniques de marrée, les amplitudes et les phases des hauteurs d'eau et éventuellement les deux composantes horizontales de la vitesse de déplacement de l'onde de marrée.
+Ce fichier, \textit{croco\_frc.nc}, contient, pour $n$ harmoniques de marrée, les amplitudes et les phases des hauteurs d'eau ainsi qu'éventuellement les deux composantes horizontales de la vitesse de déplacement de l'onde de marrée.
 
-La quatrième catégorie correspond aux forçages atmosphériques.
-Ils concernent la surface de l'eau et l'air qui la surplombe pour chaque maille de la grille CROCO.
+
+Ensuite, il est nécessaire que la modélisation soit initialisée avec des variables qui représentent au mieux les conditions réelles au départ du modèle.
+%La seconde catégorie correspond aux forçages qui définissent les conditions initiales.
+Un fichier de forçage est donc attribué aux conditions initiales.
+Le fichier, \textit{croco\_ini.nc}, contient notamment les données de température, salinité, hauteur d'eau et vitesses des courants sur l'ensemble de la grille à l'initialisation du modèle.
+
+
+Les valeurs aux bords latéraux du domaine des variables qui ne sont pas définies dans les forçages de marée sont définies dans un troisième fichier de forçage.
+%La seconde catégorie correspond aux forçages qui définissent les conditions aux bords latéraux de la grille.
+Ce fichier, \textit{croco\_bry.nc}, contient notamment les données de température et de salinité %et éventuellement hauteur d'eau et vitesses des courants
+aux bords de la grille sur toute la durée temporelle de la modélisation.
+
+Enfin, des forçages atmosphériques peuvent être ajoutés.
+%La quatrième catégorie correspond aux forçages atmosphériques.
+Ils concernent la surface de l'eau et l'air qui la surplombe sur toute l'étendue du maillage horizontal.
 Le fichier correspondant, \textit{croco\_blk.nc}, contient donc notamment l'humidité, la température, la pression de l'air au dessus de la surface de l'eau, la vitesse du vent à $10~m$ au dessus de la surface, des paramètres sur les contraintes de surfaces imposés par le vent et les radiations solaires reçues par la masse d'eau pour les courtes et longues longueurs d'ondes.
 
 \subsubsection{L'enchaînement de plusieurs modélisations}
@@ -746,11 +774,43 @@ bilan + perspective
 
 \newpage
 \section{BIBLIOGRAPHIE}
+%\bibliography{../rapport-AB.bib}
+%\bibliography{../bibliography.bib}
 \printbibliography
 
 \newpage
 \section{ANNEXES}
 \label{annexes}
+\subsection{Répartition des variables dans les mailles}
+Les variables que nous avons choisies de modéliser sont organisées comme suit entre les localisations sur les mailles de \cite{Arakawa_C-grid_1977}.\\
+La majorité des variables sont localisées en \textbf{position H}, sur le maillage central.
+\begin{itemize}
+    \item la hauteur de la colonne d'eau relativement au niveau marin moyen (*référentiel à vérifier),
+    \item la température de l'eau,
+    \item la salinité de d'eau,
+    \item l'ensemble des paramètres décrivant les ondes de marrée (phase et amplitude de la hauteur d'eau ainsi que celles des deux composantes des courants induits),
+    \item l'ensemble des paramètres atmosphériques à l'exception du vent (précipitation, température de l'air, vitesse absolue et direction du vent à $10~m$ au dessus de la surface de l'eau, etc.).
+\end{itemize}
+Les paramètres localisés à la \textbf{position U}, sur un second maillage :
+\begin{itemize}
+    \item la composante Est-Ouest de la vitesse de déplacement de l'eau,
+    \item la contrainte à la surface de l'eau causée par la composante Est-Ouest du vent,
+    \item la composante Est-Ouest de la vitesse de déplacement de l'air à $10~m$.
+\end{itemize}
+Enfin, les paramètres localisés à la \textbf{position V}, sur un troisième:
+\begin{itemize}
+    \item la composante Nord-Sud de la vitesse de déplacement de l'eau,
+    \item la contrainte à la surface de l'eau causée par la composante Nord-Sud du vent,
+    \item la composante Nord-Sud de la vitesse de déplacement de l'air à $10~m$.
+\end{itemize}
+
+%L'ensemble de ces paramètres ne sont ni exprimés ni pris en compte aux points indiqués comme émergés par la grille.
+Indépendamment de leur appartenance à l'un ou l'autre des maillages, les paramètres forçant le modèle ne couvrent pas toujours l'ensemble du maillage.
+Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
+D'autres ne le sont qu'aux bords du maillage, parfois sur l'ensemble des mailles verticales.
+D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille à la verticale, ces données sont localisées soit en surface (ex. vent) soit au fond (ex. rugosité).
+
+
 \subsection{Schémas numériques}
 \subsubsection{Schéma WENO de cinquième ordre (Weighted Essentially Non-Oscillatory scheme)}\label{anx:WENO}
 Les variables sont disposées en C-grille d'Arakawa.
@@ -1044,7 +1104,7 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
     \begin{codeEnv}{\textbf{Concaténation de plusieurs fichiers selon les dimensions communes}}
         \begin{lstlisting}[language=bash]
             # concatene tous les fichiers data_*.nc en un fichier data_tot_calc.nc
-            ncks -h -A raw_download/data_*.nc data_tot_calc.nc
+            ncrcat raw_download/data_*.nc data_tot_calc.nc
         \end{lstlisting}
     \end{codeEnv}
 
@@ -1550,7 +1610,6 @@ détailler les paramètres choisis
 Pour moi: quelques mots sur les données disponibles pour comparer les résultats modèle avec des mesures de terrain (cf Discussion)
 
 
-\printbibliography
 
 \end{document}
 
