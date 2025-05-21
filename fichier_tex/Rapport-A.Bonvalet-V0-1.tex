@@ -160,7 +160,7 @@ Avec certains de ses secteurs encore sauvages, les côtes Normandes ont aussi un
 
 L'anse du Cul-de-Loup (Normandie, Manche, France, Fig. \ref{fig:carte-adcl}) est un exemple typique de l'évolution au cours du temps des côtes du littoral français (Fig. \ref{fig:historique-adcl}). Avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique.} (1 et 2) ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algues protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
 
-L'état français via ses agences dédiées (Agence de l'Eau, IFREMER, etc.), mais aussi les entités régionales (Région Normandie) et locale (Département de la Manche), financent des travaux et projets dans une optique d'amélioration de la gestion de l'espace de l'anse du Cul-de-Loup. Ainsi, l'Agence de l'Eau Seine-Normandie (AESN) a financé le programme scientifique "\textit{Projet de Territoire : Anse du Cul-de-Loup}" (ProTeC) de 2022 à 2024, dans l'objectif de dresser un état des lieux environnemental. Ce travail a permis de connaître de manière précise, la nature des cortèges sédimentaires de surface de l'anse, ainsi que sa dynamique de mise en place. Les courants étant le moteur principal des mouvements de sédiment, des mesures de vitesses et directions de la masse d'eau ont été acquises, cumulant trois mois de mesures en deux points à l'entrée de l'anse du Cul-de-Loup. Bien que cet effort de mesure soit déjà important, il n'est pas suffisant pour aborder l'hydrodynamique à l'échelle de l'anse toute entière.
+L'état français via ses agences dédiées (Agence de l'Eau, IFREMER, etc.), mais aussi les entités régionales (Région Normandie) et locale (Département de la Manche), financent des travaux et projets dans une optique d'amélioration de la gestion de l'espace de l'anse du Cul-de-Loup. Ainsi, l'Agence de l'Eau Seine-Normandie (AESN) a financé le programme scientifique "\textit{Projet de Territoire : anse du Cul-de-Loup}" (ProTeC) de 2022 à 2024, dans l'objectif de dresser un état des lieux environnemental. Ce travail a permis de connaître de manière précise, la nature des cortèges sédimentaires de surface de l'anse, ainsi que sa dynamique de mise en place. Les courants étant le moteur principal des mouvements de sédiment, des mesures de vitesses et directions de la masse d'eau ont été acquises, cumulant trois mois de mesures en deux points à l'entrée de l'anse du Cul-de-Loup. Bien que cet effort de mesure soit déjà important, il n'est pas suffisant pour aborder l'hydrodynamique à l'échelle de l'anse toute entière.
 
 Seuls les modèles numériques hydrodynamiques peuvent offrir la possibilité d'avoir une telle information spatialement répartie à des coûts acceptables. Ce type d'outil offre la possibilité d'avoir, outre le spatial, une approche temporelle, soit en rejouant des conditions hydrodynamiques passées (utiles pour la validation du modèle), soit au contraire en simulant des conditions futures (utiles pour la gestion de l'espace). Aux échelles spatiales et temporelles d'intérêts, ce sont les modèles de type \textit{Reynolds Average Navier-Stokes} (RANS) les mieux adaptés pour modéliser/simuler les écoulements fluides.
 Le travail qui m'a été demandé dans le cadre de mon stage de seconde année de Master, est de mettre en place un modèle numérique hydrodynamique de l'anse du Cul-de-Loup à l'aide du code de calcul \textit{Coastal and Regional Ocean COmmunity model} (CROCO) (section \ref{sub:croco}). Dans la section \ref{sec:adcl}, je décris brièvement la zone d'étude de l'anse du Cul-de-Loup dans laquelle ont été acquise les données de mesures des courants (section \ref{sub:protec}). Les résultats de la mise en place du modèle numériques sont présentés dans la section \ref{sec:resultats} et la comparaison avec les mesures de terrains est située en section \ref{sec:discussion}. Dans la conclusion (section \ref{sec:conclusion}), je dresse un bilan du travail réalisé et donne des perspectives de travaux complémentaires.
@@ -176,7 +176,7 @@ D'une superficie avoisinant les 370 ha, l'anse du Cul-de-Loup n'est ouverte que 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.8\linewidth]{../images/carte-ADCL}
-    \caption[Anse du Cul-de-Loup.]{L'anse du Cul-de-Loup.}
+    \caption[anse du Cul-de-Loup.]{L'anse du Cul-de-Loup.}
     \label{fig:carte-adcl}
 \end{figure}
 
@@ -241,7 +241,7 @@ En éliminant la dépendance aux licences Matlab, ces nouveaux outils renforcent
 CROCO étant très polymorphe, une présentation de l'ensemble des caractéristiques offertes sort du contexte de ce travail.
 Pour une description exhaustive de ces possibilités, une documentation est disponible et entretenue en ligne \cite{documentation_croco}.
 %La nature et les possibilités accordées par CROCO sont très variées.
-Dans la suite du rapport, seuls les aspects de CROCO spécifiquement utilisés pour la mise en \oe{}vre du Modèle de l'Anse du Cul-de-Loup (MACLoup) sont présentés.
+Dans la suite du rapport, seuls les aspects de CROCO spécifiquement utilisés pour la mise en \oe{}vre du Modèle de l'anse du Cul-de-Loup (MACLoup) sont présentés.
 
 
 \subsubsection{Mise en \oe{}uvre de MACLoup}
@@ -325,7 +325,7 @@ Par exemple, l'ajout de la ligne "\# define SALINITY" dans \textit{cppedefs.h} a
     Certains schémas sont mieux adaptés que d'autres à chaque configuration.
     Il est donc important que cette dernière soit correctement identifiée avant de choisir les schémas numériques.
     
-    Dans l'Anse du Cul-de-Loup, la côte est tortueuse et de larges zones sont régulièrement découvertes et recouvertes au cours d'un cycle de marée.
+    Dans l'anse du Cul-de-Loup, la côte est tortueuse et de larges zones sont régulièrement découvertes et recouvertes au cours d'un cycle de marée.
     D'un point de vue numérique, ces caractéristiques sont contraignantes et déterminent la nature des schémas d'advection possibles.
     %Dans MACLoup, le nombre de couches verticales est faible ($\leq 30$) et la topographie est assez découpée par endroits.
     Ces choix ont principalement faits sur la base de la documentation principale \parencite{cppkeys_description}.
@@ -407,6 +407,8 @@ Cette paramétrisation de la verticale est indiquée dans les fichiers d'entrée
 %Selon les paramètre choisis, la résolution verticale peut varier verticalement selon les deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
 %Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale respectivement à l'approche de la surface et du fond.
 
+[indiquer l'existence du masque de côte]
+
 \begin{figure}[h!]
     \centering
     \includegraphics{../images/vcoord_ex1.png}
@@ -429,7 +431,7 @@ La présentation de ces forces est restreinte à celles qui sont utilisées dans
 Concrètement, dans CROCO, les forçages sont regroupés dans plusieurs fichiers selon le moment et le lieu où ils s'appliquent dans le modèle.
 %Les données des forçages sont au format NetCDF.
 
-L'hydrodynamique de l'Anse du Cul-de-Loup est dominée par les forces de marée. 
+L'hydrodynamique de l'anse du Cul-de-Loup est dominée par les forces de marée. 
 La marée est donc le forçage principal de MACLoup et fait l'objet de la construction spécifique d'un fichier.
 %d'inclure les données tidales dans un fichier de forçage.
 %La troisième catégorie correspond aux forçages de marée.
@@ -473,7 +475,7 @@ Il est possible de généraliser la démarche sur une suite de domaines successi
 %Le domaine B est appelé le domaine enfant du modèle A.
 Tous les domaines enfants extraient leur conditions aux limites des résultats de leur domaine parent respectif.
 
-Dans CROCO, existe deux manières de prendre en charge un système en domaines emboîtés : un emboîtement de type temps-réel et l'autre de type temps-différé.
+Dans CROCO, il existe deux manières de prendre en charge un système en domaines emboîtés : un emboîtement de type temps-réel et l'autre de type temps-différé.
 La méthode de type temps-réel est prise en charge dans CROCO via le module AGRIF\footnote{AGRIF : Adaptive Grid Refinement In Fortran}.
 Cette méthode n'a pas été retenue dans le cadre de MACLoup, des précisions sur ce point sont présentes en Annexes (\ref{anx:AGRIF}).
 Le choix de la méthode d'emboîtement s'est donc porté sur le type temps-différé.
@@ -485,22 +487,24 @@ Cette méthode est illustrée en Figure XXX et \ref{fig:imbrication}.
 
 Dans le cadre de MACLoup, deux domaines successifs sont modélisés.
 Le premier domaine couvre une zone de $150$ par $150~km$ centré sur le département de la Manche.
-Le second est centré sur l'Anse du Cul-de-Loup, sur une zone de $7$ par $11~km$ (Figure \ref{fig:imbrication}).
+Le second est centré sur l'anse du Cul-de-Loup, sur une zone de $7$ par $11~km$ (Figure \ref{fig:imbrication}).
 
 %La zone d'intérêt de MACLoup est fortement restreinte dans l'espace et les données doivent y être finement modélisées.
-%Une démarche d'emboîtement de domaines a donc été mise en place pour la modélisation de l'Anse du Cul-de-Loup (MACLoup).
+%Une démarche d'emboîtement de domaines a donc été mise en place pour la modélisation de l'anse du Cul-de-Loup (MACLoup).
 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.4]{../images/COTENTIN.png}
-\includegraphics[scale=0.27]{../images/ADCL_4.png}
+\includegraphics[scale=0.4]{../images/COTENTIN_ADCL5.png}
+\includegraphics[scale=0.27]{../images/ADCL5.png}
 %\includegraphics[scale=0.27]{../images/croco_grd.nc.2_V2.png}
 \caption{
-    \textbf{Visualisation des domaines emboîtés choisis pour MACLoup.}
-    À gauche, le grand rectangle rouge représente l'empâtement le domaine parent, le petit rectangle représente le domaine cible.
+    \textbf{Visualisation des domaines emboîtés choisis pour MACLoup.}\\
+    \textbf{À gauche}, le grand rectangle rouge représente l'empâtement le domaine parent, le petit rectangle représente le domaine cible.
+    \textbf{À droite}, une capture plus recentrée sur le domaine cible.
+    Les données à l'extérieur du rectangle correspondent au domaine parent.
     \\
-    Les pixels oranges sont les maille considérées comme obligatoirement émergées.
+    Pour les deux figures, les pixels oranges sont les maille considérées comme obligatoirement émergées.
     Les autres couleurs (du bleu au jaune) représentent la bathymétrie dont les échelles respectives sont représentées en dessous de chaque graphique.
 }
 \label{fig:imbrication}
@@ -513,7 +517,7 @@ Le second est centré sur l'Anse du Cul-de-Loup, sur une zone de $7$ par $11~km$
 
 \subsection{Les outils de pré-traitement}
 \label{sub:outils_pretraitement}
-Le pré-traitement constitue en la création des fichiers nécessaires au démarrage de CROCO.
+Le pré-traitement correspond à la création des fichiers nécessaires au démarrage de CROCO.
 Il inclue :
 \begin{itemize}
     \item la création du domaine qui représente la zone modélisé (voir \ref{subsub:grille_croco}),
@@ -535,38 +539,152 @@ Certaines fonctionnalités sont encore à valider ou à développer.
     %\item création des conditions de forçages pour la mise en mouvement de la masse d'eau avec %\textit{make\_frc.py} et \textit{make\_blk.py}.
 %\end{itemize}
 
-\subsubsection{Modifications et apports aux CROCO Pytools}
+%\subsubsection{Modifications et apports aux CROCO Pytools}
 L'ensemble des travaux associés au prétraitement représentent le c\oe{}ur du travail effectué durant le stage.
 Ces travaux sont structurés en trois parties principales :
 \begin{itemize}
     \item un état des lieux des outils existants et de leur fonctionnement général,
-    \item une application d'un maximum de CROCO Pytools en leur apportant les modifications nécessaires,
-    \item le développement des nouveaux outils nécessaires.
+    \item une utilisation directe des CROCO Pytools en apportant, si nécessaire, des modifications,
+    \item le développement d'outils manquants.
 \end{itemize}
+Un détail de ces trois parties est donné ci-dessous.
 
-Dans un premier temps, un état des lieux des CROCO Pytools a été dressé.
-Cet état des lieux a mené à une synthétisation de la marche à suivre par la création d'une figure dont la version synthétique est présentée en Figure \ref{fig:workflow_original_simple}.
-Cette figure peut être utile pour la prise en main des Pytools.
+\subsubsection{État des lieux}
+\label{subsub:etat_des_lieux}
 
-Par la suite, les codes des CROCO Pytools sont utilisés pour la création du domaine et de ses conditions initiales et aux bords.
-Au préalable, les dysfonctionnalités des codes ont été recherchées.
-Il apparaît qu'actuellement, le code de création de domaine ne prend pas en compte les données vectorielles .shp utilisées pour déterminer le masquage des mailles non-immergeables.
-Toutefois, la fonctionnalité de seuillage des données de bathymétrie est fonctionnelle.
-Le masque du domaine a donc été imposé en fixant les données de bathymétrie des zones émergées au dessus du seuil choisi.
-Toutefois, cette modification a soulevé un autre problème du code de création du domaine.
-En effet, le code permet de choisir une distance d'interpolation plus ou moins grande et les valeurs sélectionnées pour l'interpolation peuvent être localisées sous le masque.
-Pour éviter que les données modifiées appartenant au masque n'aient une influence sur les données de bathymétrie, l'option d'interpolation n'a pas été utilisée pour le domaine d'intérêt centré sur l'anse du Cul-de-Loup.
-Par ailleurs, le code de création des conditions aux bords présente des dysfontionnalités qui semblent internent.
-Elles ont été résolues en modifiant un module des CROCO Pytools que ce code utilise.
-Les fichiers de création des conditions aux bords et de création des conditions initiales et aux bords héritées d'un modèle parent sont apparus comme fonctionnels.
+Dans un premier temps, l'état des lieux des CROCO Pytools a été dressé.
+Ce travail a mené à une synthétisation de la marche à suivre par la création d'une figure qui est présentée en Figure \ref{fig:workflow_prepro_original}.
+Cette figure est utile pour une prise en main des CROCO Pytools.
 
-Les codes de création des forçages de marée et atmosphériques des CROCO Pytools n'ont pas été fonctionnels avec les données utilisées dans le cadre du stage.
-Il a donc été décidé d'écrire deux nouveaux codes en s'appuyant sur des exemples de résultats offerts par les CROCO tools (en Matlab) disponibles en ligne \cite{croco_files_examples}.
-Les deux codes ont été développés dans le but de pouvoir être appliqués à des données dont les nomenclatures varient en permettant à l'utilisateur·ice d'adapter le code aisément par l'intermédiaire de dictionnaires.
-Deux nombreux tests restent à faire pour s'assurer du bon fonctionnement de cette option.
-Les deux codes reposent sur la mise en place d'une interpolation paramétrable de données d'entrées pour générer un fichier de forçage adapté au domaine indiqué par l'utilisateur·ice.
-Pour le code de création des forçages tidaux, comme dans le code original des CROCO Pytools, certains calculs ont été mis en place selon la définition de \cite{ap2ep}, les détail de ces calculs est donnée en Annexes \ref{anx:ap2ep}.
-Pour organiser les processus effectués par les codes de créations des fichiers de forçages, quatre modules-classes ont été écrits, chacun contient la définition d'une classe du même nom :
+[texte sur la figure de synthèse]
+[+ indication de la version plus complexe en annexes]
+\begin{figure}[h!]
+    \centering
+    %\includegraphics{}
+    \caption{
+        \textbf{[FIGURE À FAIRE]}
+        version similaire à la Figure \ref{fig:workflow_prepro_main}
+    }
+    \label{fig:workflow_prepro_original}
+\end{figure}
+
+
+\subsubsection{Modification et utilisation}
+
+Parmi les CROCO Pytools, quatre outils ont été utilisés ou mis en \oe{uvre} moyennant des modifications sensibles.
+% pour la création du domaine et de ses conditions initiales et aux bords.
+%Au préalable, les dysfonctionnalités des codes ont été recherchées.
+
+Le premier code, \textit{make\_grid.py}, permet de créer les domaines CROCO.
+Il prend en charge la création du masque qui sépare les mailles émergées des mailles immergeables.
+Cette opération utilise un fichier de données vectorielles représentant le trait de côte.
+La version de l'outil ne fonctionne pas avec le fichier qui lui a été fourni pour créer le domaine MACLoup.
+La solution adoptée consiste à modifier les données de bathymétrie en imposant une valeur forte et aberrantes  aux mailles émergées.
+% ne prend pas en compte nos données vectorielles .shp pour déterminer le masquage des mailles non-immergeables.
+%Toutefois, la fonctionnalité de seuillage des données de bathymétrie est fonctionnelle.
+%Le masque du domaine a donc été imposé en fixant les données de bathymétrie des zones émergées au dessus du seuil choisi.
+Cette modification des données rend inadaptée la procédure de lissage préexistante.
+Cette dernière a nécessité d'être redéfinie de manière à ne pas être influencée par les données des mailles émergées.
+%Cette modification a soulevé un autre problème du code de création du domaine.
+%En effet, le code permet de choisir une distance d'interpolation plus ou moins grande et les valeurs sélectionnées pour l'interpolation peuvent être localisées sous le masque.
+%Pour éviter que les données modifiées appartenant au masque n'aient une influence sur les données de bathymétrie, l'option d'interpolation n'a pas été utilisée pour le domaine d'intérêt centré sur l'anse du Cul-de-Loup.
+Le code \textit{make\_grid.py} gère aussi la mise en place de domaines emboîtés qu'il s'agisse du type temps réel (AGRIF) ou du type temps-différé (notre choix) décrits en section \ref{subsub:enchainement_modelisations}.
+%La première méthode permet de mettre en place le système d'esmboîtement de domaines simultané et rétrospectif.
+%Cette méthode de création de domaines emboîtés est appelée AGRIF dans les CROCO Pytools.
+%La seconde méthode permet de mettre en place manuellement et successivement un emboîtement linéaire de domaines.
+%Cette méthode est appelée Offline Zoom, le système d'emboîtement qu'elle génère est décrit à la suite du système AGRIF en section \ref{subsub:enchainement_modelisations}.
+%La méthode AGRIF de création de domaines emboîtés a été testée dans un premier temps.
+%Il est apparu que son implémentation dans les CROCO Pytools est encore incomplète.
+%D'autre part, l'utilisation du système d'emboîtement AGRIF impose des dépendances sur les clefs définies dans le fichier \textit{cppdefs.h} (section \ref{subsub:pysique_modele}) activées pour la modélisation.
+%[vérifier la véracité de cette phrase]
+La procédure d'emboitement de type temps-différé est identifiée comme "Offline Zoom" dans l'outil
+%qui est utilisée pour la génération des domaines emboîtés présentés dans la suite du rapport.
+et a été utilisée sans adaptation particulière.
+%et n'implique pas de dépendances particulières pour les clefs du fichier \textit{cppdefs.h}.
+%[ajouter qu'on a des doutes du la prise en charge du wet/dry ? => non, a l'air ok en regardant les nouvelles grilles (ou effet vite dissipé d'une fine tranche d'eau initiale)]
+
+Les deux codes \textit{make\_bry.py} et \textit{make\_ini.py} sont chargés respectivement de la création des données au bords et des conditions initiales du domaine.
+Des modifications leur ont été apportées afin qu'ils prennent en charge la structure et le format des données brutes utilisées pour MACLoup.
+%Par ailleurs, le code de création des conditions aux bords présente des dysfontionnalités qui semblent internent.
+%Elles ont été résolues en modifiant un module des CROCO Pytools que ce code utilise.
+
+Dans le cadre d'un emboîtement de domaine, le dernier outil, \textit{make\_zoom\_ibc.py}, permet la création de conditions aux bords et initiales héritées d'un modèle parent.
+Cet outils s'est révélé fonctionnel sans que des modifications importantes n'y soient apportées.
+
+
+%%%%%%% AJOUT à gérer %%%%%%%%%%ù
+
+
+%Comme décrit en \ref{subsub:forcages}, chaque domaine CROCO, pour être utilisée par le modèle, doit être accompagnée par d'autres fichiers de forçages qui contraignent l'initialisation et la mise en mouvement de la masse d'eau.
+
+%Les outils de pré-traitement originaux n'ont été utilisés que pour la génération du domaine et des conditions initiales et aux limites des grilles.
+
+
+
+
+
+%\textbf{Le domaines CROCO}\\
+%Pour le domaine parent comme pour les domaines enfants, le fichier définissant le domaine, "croco\_grd.nc", est généré avec le script \textit{make\_grid.py} des CROCO Pytools.
+%\\
+%Toutefois, cette fonctionnalité des CROCO Pytools ne semble pas encore fonctionnelle.
+%Les données vectorielles du trait de côte sont donc corrigées par les données des campagnes plus précises mais qui couvrent seulement le Nord du Cotentin.
+
+%Pour les domaines enfant, le fichier "croco\_ini.nc" est généré avec le script \textit{make\_zoom\_icb.py}.
+%Les données utilisées sont les sorties de modélisations des domaines parents.
+
+%Pour les domaines enfant, le fichier "croco\_bry.nc" est généré en même temps et avec les mêmes données que le fichier "croco\_ini.nc" avec le script \textit{make\_zoom\_icb.py}.
+
+
+
+\subsubsection{Outils développés}
+
+Comme expliqué en Section \ref{subsub:forcages}, les phénomènes de marée sont centraux dans l'hydrodynamique de l'anse du Cul-de-Loup.
+Une attention particulière a donc été portée sur le choix du modèle de marée utilisé.
+Le modèle TPXO10 est le modèle traditionnellement utilisé.
+Il apparaît de plus en plus dans la littérature scientifique que le modèle Finite Element Solution (FES2014) lui est préféré.
+Uune nouvelle version du modèle de marée FES (FES2022) est disponible depuis peu mais ne contient pas les données de vitesse de l'onde de marée.
+Le modèle FES2014 a été choisi car il est préférable pour la qualité et la performance des calculs que ces vitesses soient présentes dans les données de forçages plutôt que d'être définies analytiquement.
+%Nous avons sélectionné la version FES2014 car elle contient les données de courants et de hauteur d'eau à l'inverse de FES2022 qui ne contient pour l'instant que les données de hauteur d'eau.
+%Si les données de FES2022 sont complétées dans le futur, il sera alors possible d'aisément re-modéliser les domaines avec les nouvelles données.
+
+La différence majeure entre ces deux modèles réside dans le nombre d'harmoniques de marée qu'ils contiennent.
+Le modèle FES2014 en contient 33 tandis que TPXO10 en propose 15.
+Deux modélisations test ont été réalisées pour vérifier l'effet des 18 harmoniques supplémentaires de FES2014 en sortie de modélisation.
+Les résultats sont présentés en Figure \ref{fig:comp_harmoniques_10_ou_33}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{../images/[49.55, -1.28108]_full_tide_VS_10_tide.png}
+    \caption{
+        \textbf{[Figure à mettre au propre]}
+        effet de la prise en comte de plus ou moins d'harmoniques de marées sur les résultats de la modélisation.
+    }
+    \label{fig:comp_harmoniques_10_ou_33}
+\end{figure}
+
+[à compléter avec la figure une fois qu'elle est réalisée]
+Il apparaît qu'il est intéressant de prendre en compte des harmoniques supplémentaires à celles de TPXO10 en utilisant les données de FES2014.
+Le modèle FES2014 a été édité en 2014 son intégration dans les CROCO Pytools est récente.
+Étant donné l'importance du forçage tidal, il a été choisi de développer un outil dont le contenu et les opérations sont maîtrisés et explicites.
+%Les codes de création des forçages de marée et atmosphériques des CROCO Pytools n'ont pas été fonctionnels avec les données utilisées dans le cadre du stage.
+%L'écriture de ce nouvel outil a été dictée par les exemples de résultats offerts par les CROCO tools (en Matlab) disponibles en ligne \parencite{croco_files_examples}.
+La démarche adoptée est de type reverse engeenering, par analyse des résultats issus de l'utilisation des CROCO tools (en Matlab) disponibles en ligne \parencite{croco_files_examples}.
+Le code de ce nouvel outil a été développé pour une utilisation générique au regard des différents formats des jeux de données disponibles.
+%dans le but de pouvoir être appliqué à des données dont les nomenclatures varient en permettant à l'utilisateur·ice d'adapter une entête aisément par l'intermédiaire de dictionnaires.
+%Des tests sont encore nécessaires pour s'assurer du bon fonctionnement de cette option.
+En outre, le développement de l'outil a permis de proposer une nouvelle approche d'interpolation en la rendant paramétrable, ce qui permet de l'adapter au jeu de données utilisé.
+%Les processus réalisés par l'outil reposent sur la mise en place d'une interpolation paramétrable des données du modèle entrée afin de générer un fichier de forçage correspondant au domaine créé par l'utilisateur·ice.
+%Pour que les forçages tidaux soient correctement interprété par CROCO certaines variables du modèles doivent être traduites.
+%Cette transformation est implémentée dans le code original des CROCO Pytools.
+%Les calculs ont donc été mis en place de la même manière que dans l'outil original en suivant définition de \cite{ap2ep}, les détail de ces calculs est donnée en Annexes \ref{anx:ap2ep}.
+
+Les données de forçage atmosphérique sont contenues dans un fichier nommé textit{croco\_blk.nc}.
+Aucun outils n'est jusqu'alors présent dans les CROCO Pytools pour générer ce fichier.
+Un nouvel outil a donc été développé en reprenant la démarche reverse engeenering et l'objectif d'utilisation générique des jeux de données.
+la base de ce qui a été réalisé pour \textit{make\_frc.nc}.
+Ce nouvel outil a été nommé \textit{make\_blk.py}.
+
+Pour que les processus effectués par ces deux nouveaux codes de créations des fichiers de forçages soient mis en commun et organisés, quatre modules-classes ont été écrits, chacun contient la définition d'une classe du même nom :
 \begin{itemize}
     \item la classe "Operators" contient quelques fonctionnalités élémentaires comme l'affichage d'une erreur ou d'un dictionnaire, la gestion du type de certaines données (entiers, chaînes de caractères, tableaux, listes numpy) et le calcul d'un interpolation linéaire.
     La classe "Operators" n'est pas instanciée dans les codes de pré-traitement écrits.
@@ -577,11 +695,30 @@ Pour organiser les processus effectués par les codes de créations des fichiers
     \item la classe "Timer" contient quelques fonctionnalités de chronométrisation des processus des codes.
     Elle a été notamment utile pour localiser les parties les plus gourmandes en calcul des différents codes de pré-traitement.
 \end{itemize}
-Par ailleurs, un code de traitement du fichier de définition du domaine a été développé.
-En effet, l'absence de lissage de la bathymétrie n'est pas supporté par CROCO dans le cas où elle impose la présence de pentes fortes.
-En effet, des variations trop brutales de la bathymétrie rendent la modélisation moins stable et impliquent souvent des crash.
-Ce nouveau pré-traitement est imposé au domaine MACLoup final immédiatement après sa création avec le CROCO Pytool correspondant.
-En plus de permettre la mise en place d'un lissage plus ou moins intense, il permet la modification du trait de côte en le lissant automatiquement ou en ajoutant et en retirant des pixels dont les coordonnées sur le maillages sont manuellement entrés.
+Ces classes sont utilisées par les deux nouveaux outils de pré-traitement \textit{make\_frc.py} et \textit{make\_blk.py}.
+
+Par ailleurs, un outil supplémentaire, \textit{apply\_grid\_smoothing.py} a été développé afin de traiter le fichier de définition du domaine \textit{croco\_grid.nc}.
+En effet, l'absence de lissage de la bathymétrie n'est pas supporté par CROCO dans le cas où elle impose la présence de pentes fortes car les variations brutales de la bathymétrie rendent la modélisation instable engendrant souvent des crash.
+Ce nouveau pré-traitement est appliqué au domaine MACLoup final immédiatement après sa création avec le CROCO Pytool correspondant.
+En plus de permettre la mise en place d'un lissage plus ou moins intense, il permet la modification du trait de côte en le lissant automatiquement et-ou en ajoutant et en retirant des pixels dont les coordonnées sur le maillages sont manuellement entrés.
+Une visualisation de l'utilisation de ce nouvel outil est donnée en Figure \ref{fig:new_smooth}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.35]{../images/grid_smoothing_adcl5_9.png}
+    \caption{
+        \textbf{Visualisation du nouvel l'outil de traitement du domaine MACLoup.}\\
+        \textbf{À gauche}, le domaine original, les teintes de couleurs correspondent à la bathymétrie par rapport au niveau marin moyen.
+        Une valeur positive correspond à une hauteur en dessous du niveau marin.
+        Les pixels sont noirs au niveau du masque qui identifie les zones émergées.
+        Un pixel représente une surface de $75$ par $75~m$.
+        \textbf{Au centre}, le domaine modifié.
+        La bathymétrie est lissée et le masque est complété
+        \textbf{À droite}, carte des différences de bathymétrie entre le domaine original et modifié.
+        Cette carte permet notamment de vérifier que les valeurs n'ont pas été modifiées aux limites externes du domaine.
+        }
+    \label{fig:new_smooth}
+\end{figure}
 
 La Figure \ref{fig:workflow_prepro_main} présente l'utilisation des CROCO Pytools modifiés et des scripts écrits dans le cadre du stage pour l'ensemble des opérations de pré-traitement.
 Les chemins de fichiers présentées dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
@@ -602,76 +739,24 @@ Les chemins de fichiers présentées dans le rapport correspondent à la nomencl
     \end{center}
 \end{figure}
 
-\subsubsection{La création des domaines MACLoup}
-\label{subsub:gestion_multi_domaines}
-Le code \textit{make\_grid.py} des CROCO Pytools permet la préparation des domaines CROCO.
-La première méthode permet de mettre en place le système d'emboîtement de domaines simultané et rétrospectif.
-Cette méthode de création de domaines emboîtés est appelée AGRIF dans les CROCO Pytools.
-La seconde méthode permet de mettre en place manuellement et successivement un emboîtement linéaire de domaines.
-Cette méthode est appelée Offline Zoom, le système d'emboîtement qu'elle génère est décrit à la suite du système AGRIF en section \ref{subsub:enchainement_modelisations}.
 
-La méthode AGRIF de création de domaines emboîtés a été testée dans un premier temps.
-Il est apparu que son implémentation dans les CROCO Pytools est encore incomplète.
-D'autre part, l'utilisation du système d'emboîtement AGRIF impose des dépendances sur les clefs définies dans le fichier \textit{cppdefs.h} (section \ref{subsub:pysique_modele}) activées pour la modélisation.
-[vérifier la véracité de cette phrase]
 
-Ainsi, c'est la méthode Offline zoom qui est utilisée pour la génération des domaines emboîtés présentés dans la suite du rapport.
-Cette méthode semble correctement implémentée dans les CROCO Pytools et n'implique pas de dépendances particulières pour les clefs du fichier \textit{cppdefs.h}.
-[ajouter qu'on a des doutes du la prise en charge du wet/dry ? => non, a l'air ok en regardant les nouvelles grilles (ou effet vite dissipé d'une fine tranche d'eau initiale)]
 
-\subsubsection{La génération des forçages MACLoup}
-\label{generation_donnees_entrée}
-Comme décrit en \ref{subsub:forcages}, chaque domaine CROCO, pour être utilisée par le modèle, doit être accompagnée par d'autres fichiers de forçages qui contraignent l'initialisation et la mise en mouvement de la masse d'eau.
+%Les deux fichiers de forçage restants - les forçages par la marée et atmosphériques \ref{par:forcages_atm} - ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
+%En effet, les CROCO Pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
 
-Les outils de pré-traitement originaux n'ont été utilisés que pour la génération du domaine et des conditions initiales et aux limites des grilles.
-Les deux fichiers de forçage restants - les forçages par la marée et atmosphériques \ref{par:forcages_atm} - ont été générés à partir de données brutes par deux scripts Python développés dans le cadre du stage.
-En effet, les CROCO Pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
-
-L'ensemble des données brutes utilisées pour la génération des données d'entrées est représenté en Figure \ref{fig:workflow_prepro_main}.
-
-\textbf{Le domaines CROCO}\\
-Pour le domaine parent comme pour les domaines enfants, le fichier définissant le domaine, "croco\_grd.nc", est généré avec le script \textit{make\_grid.py} des CROCO Pytools.
-\\
-Pour la majorité de la surface couverte par la grille mère, les données de bathymétrie proviennent de GEBCO 2024.
-Ces données couvrent l'espace selon une grille régulière.
-Par ailleurs, deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'Anse du Cul-de-Loup.
-La campagne du ROL (https://www.rolnhdf.fr/) constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes.
-Les données de cette campagnes utilisées pour l'étude de l'Anse du Cul-de-Loup proviennent de prises Lidar.
-La campagne XXX a été réalisée dans le but de compléter les données de la campagne ROL.
-Les données provenant de GEBCO, ROL et XXX sont donc fusionnées entre elles afin d'obtenir une cartographie bathymétrique uniforme de haute résolution dans les zones où les données le permettent.
-\\
-Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA).
-Toutefois, cette fonctionnalité des CROCO Pytools ne semble pas encore fonctionnelle.
-Les données vectorielles du trait de côte sont donc corrigées par les données des campagnes plus précises mais qui couvrent seulement le Nord du Cotentin.
-
-\textbf{Les conditions initiales}\\
-\label{par:cond_init}
-Le fichier "croco\_ini.nc" est généré avec le script \textit{make\_ini.py} pour le domaine parent.
-Les données utilisées sont alors celles des bases de données de Copernicus (marine).
-Ces données sont : la température et la salinité %, les conditions atmosphériques, (vérifier si plus de données).
-Pour les domaines enfant, le fichier "croco\_ini.nc" est généré avec le script \textit{make\_zoom\_icb.py}.
-Les données utilisées sont les sorties de modélisations des domaines parents.
-
-\textbf{Les conditions aux bordures}\\
-\label{par:cond_bords}
-Le fichier "croco\_bry.nc" est généré avec le script \textit{make\_bry.py} pour le domaine parent.
-Les données utilisées sont alors celles des bases de données de Copernicus (marine).
-Ces données sont : la température et la salinité %, les conditions atmosphériques, (vérifier si plus de données).
-Pour les domaines enfant, le fichier "croco\_bry.nc" est généré en même temps et avec les mêmes données que le fichier "croco\_ini.nc" avec le script \textit{make\_zoom\_icb.py}.
 
 \textbf{Les forçages par la marée}\\
-\label{par:forcages_marree}
-Le script \textit{make\_frc.py}, écrit dans le cadre du stage, permet de générer un fichier de marée pour CROCO à partir des données des modèles TPXO10 ou FES2014.
-Les données procurées par les modèles de marées sont les amplitudes et les phases des hauteur d'eau et des composantes des courants associées à différentes harmoniques de marées en fonction de la position à la surface du globe.
-Les données que doit contenir le fichier \textit{make\_frc.py} sont les amplitudes et phases des hauteur d'eau et les paramètres de l'ellipse représentative des courants de marée.
-Une conversion doit donc être effectuée dans le script \textit{make\_frc.py}.
-La conversion utilise les formules utilisée dans la fonction ap2ep dans le code des CROCO Pytool de référence.
-Cette fonction est définie par \cite[Zhigang Xu (2002)][]{ap2ep} dans une fonction matlab similaire à celle des CROCO Pytools.
-Les équations résumant les opérations effectuées par la fonction ap2ep sont détaillées en Annexe (\ref{anx:ap2ep}).
-Les données de marée du modèle TPXO10 ont été testées, mais ce sont les résultats du modèle FES2014 qui ont finalement été retenus notamment car ils contiennent un nombre plus important d'harmoniques de marées.
-D'autre part, les données de ce modèles sont disponible en ligne et une nouvelle version appelée FES2022 est disponible.
-Nous avons sélectionné la version FES2014 car elle contient les données de courants et de hauteur d'eau à l'inverse de FES2022 qui ne contient pour l'instant que les données de hauteur d'eau.
-Si les données de FES2022 sont complétées dans le futur, il sera alors possible d'aisément re-modéliser les domaines avec les nouvelles données.
+%\label{par:forcages_marree}
+%Le script \textit{make\_frc.py}, écrit dans le cadre du stage, permet de générer un fichier de marée pour CROCO à partir des données des modèles TPXO10 ou FES2014.
+%Les données procurées par les modèles de marées sont les amplitudes et les phases des hauteur d'eau et des composantes des courants associées à différentes harmoniques de marées en fonction de la position à la surface du globe.
+%Les données que doit contenir le fichier \textit{make\_frc.py} sont les amplitudes et phases des hauteur d'eau et les paramètres de l'ellipse représentative des courants de marée.
+%Une conversion doit donc être effectuée dans le script \textit{make\_frc.py}.
+%La conversion utilise les formules utilisée dans la fonction ap2ep dans le code des CROCO Pytool de référence.
+%Cette fonction est définie par \cite[Zhigang Xu (2002)][]{ap2ep} dans une fonction matlab similaire à celle des CROCO Pytools.
+%Les équations résumant les opérations effectuées par la fonction ap2ep sont détaillées en Annexe (\ref{anx:ap2ep}).
+%Les données de marée du modèle TPXO10 ont été testées, mais ce sont les résultats du modèle FES2014 qui ont finalement été retenus notamment car ils contiennent un nombre plus important d'harmoniques de marées.
+%Si les données de FES2022 sont complétées dans le futur, il sera alors possible d'aisément re-modéliser les domaines avec les nouvelles données.
 %(indiquer pourquoi ? meilleure résolution dans notre zone, données à un format plus adapté au pré-processing)
 
 \textbf{les forçages atmosphériques}\\
@@ -685,6 +770,33 @@ Le calcul des valeurs d'humidité relative $RH$ suit le méthode décrite par \c
 $$RH = 10^{7,591386.(\frac{T_{dewpt}}{T_{dewpt}+240,7263}-\frac{T}{T+240,7263})}$$
 avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus de la surface de l'eau et $T$ la température de l'air à la même altitude.
 
+\subsubsection{Données brutes utilisées}
+
+L'ensemble des données brutes utilisées pour la génération des données d'entrées est représenté en Figure \ref{fig:workflow_prepro_main}.
+
+Pour la majorité de la surface couverte par la grille mère, les données de bathymétrie proviennent de GEBCO 2024.
+Ces données couvrent l'espace selon une grille régulière.
+Par ailleurs, deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'anse du Cul-de-Loup.
+La campagne du ROL (https://www.rolnhdf.fr/) constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes.
+Les données de cette campagnes utilisées pour l'étude de l'anse du Cul-de-Loup proviennent de prises Lidar.
+La campagne XXX a été réalisée dans le but de compléter les données de la campagne ROL.
+Les données provenant de GEBCO, ROL et XXX sont donc fusionnées entre elles afin d'obtenir une cartographie bathymétrique uniforme de haute résolution dans les zones où les données le permettent.
+\\
+Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA).
+
+
+\textbf{Les conditions initiales}\\
+\label{par:cond_init}
+%Le fichier "croco\_ini.nc" est généré avec le script \textit{make\_ini.py} pour le domaine parent.
+Les données utilisées sont alors celles des bases de données de Copernicus (marine).
+Ces données sont : la température et la salinité %, les conditions atmosphériques, (vérifier si plus de données).
+
+
+\textbf{Les conditions aux bordures}\\
+\label{par:cond_bords}
+%Le fichier "croco\_bry.nc" est généré avec le script \textit{make\_bry.py} pour le domaine parent.
+Les données utilisées sont alors celles des bases de données de Copernicus (marine).
+Ces données sont : la température et la salinité %, les conditions atmosphériques, (vérifier si plus de données).
 
 
 \subsection{Post processing}
@@ -705,7 +817,7 @@ avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus 
 %Mettre les résultats uniquement.
 %}
 
-\subsection{Le modèle "Anse du Cul-de-Loup"}
+\subsection{Le modèle "anse du Cul-de-Loup"}
 \label{sub:modele_ADCL}
 
 [propriété des grilles en premier (+ important)]
@@ -798,7 +910,7 @@ La localisation et l'étendue spatiale de la grille sont choisies afin que ses f
 La zone d'étude a un rayon d'une dizaine de kilomètre et la résolution des données attendues est d'au moins quelques dizaines de mètre.
 Toutefois, les données brutes (les modèles de marées et les données générales marines et atmosphérique) qui sont utilisées pour fixer les conditions initiales et aux limites pour un modèle dans cette zone ont une résolution largement inférieure à celle attendue en sortie de modèle.
 Il est donc intéressant de mettre en place un ensemble de modélisations en grilles emboîtées afin de décrire correctement les courants autour du Nord du Cotentin.
-L'imbrication successive des grilles permet d'aboutir à la modélisation plus réaliste et stable numériquement d'une zone restreinte à l'Anse du Cul-de-Loup.
+L'imbrication successive des grilles permet d'aboutir à la modélisation plus réaliste et stable numériquement d'une zone restreinte à l'anse du Cul-de-Loup.
 Trois grilles emboîtées ont ainsi été réalisées ici, elles sont illustrées en Figure \ref{fig:imbrication}.
 
 
@@ -850,7 +962,7 @@ Effet de l'ajout du bottom drag (à voir)
 \subsection{Données de validation - Le projet PROTEC}
 \label{subsub:protec}
 
-Le "Projet de Territoire : Anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin 2022 à juin 2024. Financé par l'Agence de l'Eau Seine-Normandie (AESN), ce programme de recherche était sous la responsabilité de G. Gregoire (MCF au Cnam/Intechmer) et a intéressé plusieurs autres membres de l'équipe du Cnam/Intechmer. L'objectif de PROTEC a été de dresser un état des lieux environnementale de l'anse du Cul-du-Loup, principalement sur les aspects en relations avec les sédiments, leur dynamique actuelle et passée (Fig. \ref{fig:sed-adcl}).
+Le "Projet de Territoire : anse du Cul-de-Loup" (PROTEC) s'est déroulé de juin 2022 à juin 2024. Financé par l'Agence de l'Eau Seine-Normandie (AESN), ce programme de recherche était sous la responsabilité de G. Gregoire (MCF au Cnam/Intechmer) et a intéressé plusieurs autres membres de l'équipe du Cnam/Intechmer. L'objectif de PROTEC a été de dresser un état des lieux environnementale de l'anse du Cul-du-Loup, principalement sur les aspects en relations avec les sédiments, leur dynamique actuelle et passée (Fig. \ref{fig:sed-adcl}).
 
 \begin{figure}[!h]
     \centering
@@ -1762,7 +1874,7 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
 \subsubsection{Détail des processus du modèle}
 schéma détaillé de la marche à suivre pour faire fonctionner le modèle à partir des fichiers du pre-processing.
 
-\subsection{Le modèle "Anse du Cul-de-Loup"}
+\subsection{Le modèle "anse du Cul-de-Loup"}
 
 Grosse partie dans laquelle il va falloir expliquer les différentes étapes de mis en place du modèle ADCL
 
