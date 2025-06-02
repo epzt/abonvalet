@@ -1,7 +1,7 @@
 *.toc
 *.gz
 *.xml
-*.pdf
+fichier_tex/*.pdf
 *.out
 *.log
 *.bcf
