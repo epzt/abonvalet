@@ -208,14 +208,14 @@
     le Service hydrographique et océanographique de la Marine (SHOM),
     et le Centre National de la Recherche Scientifique (CNRS).
     L'aspect aujourd'hui communautaire de CROCO fédère à la fois les développeurs/utilisateurs de ROMS, ainsi que des universités et organismes étrangers tels que l'Université de Californie à Los Angeles (UCLA\footnote{UCLA : University of California, Los Angeles})
-    et le département de Géophysique de l'université de Concepción (\alert{donner le nom de pays de cette université}) (DGEO\footnote{DGEO : Departamento de Geofísica Universidad de Concepción}).
+    et le département de Géophysique de l'université de Concepción au Chili (DGEO\footnote{DGEO : Departamento de Geofísica Universidad de Concepción, Chile}).
     
     % Le code et la documentation de ROMS\_AGRIF ont progressivement été modifiés pour devenir le modèle communautaire CROCO.
     
     Ce modèle CROCO permet désormais de réaliser des modélisations sur des grilles dont la résolution peut être de kilométrique (modèle régional) à métrique (modèle côtier).
     
-    Le code CROCO est fondé sur la résolution des équations Navier-Stokes avec l'approche Reynolds Average Navier-Stokes (RANS) \alert{(ref*).
-        [image possible sur les modèles possibles]}
+    Le code CROCO est fondé sur la résolution des équations Navier-Stokes avec l'approche Reynolds Average Navier-Stokes (RANS) \alert{(ref*)}.
+    %        [image possible sur les modèles possibles]}
     Les modèles de la catégorie RANS permettent de mettre en \oe{}uvre des modélisations à des échelles spatiales et temporelles plus importantes que les approches Direct Numerical Simulation (DNS) ou encore Large Eddy Simulation (LES).
     
     Le système d'équations de CROCO est flexible.
@@ -407,10 +407,10 @@
     
     Le choix du schéma numérique de diffusion est de type Generic Length Scale (GLS).
     Les schémas de diffusion verticale et horizontal sont différenciés.
-    En effet, la résolution verticale et horizontales sont différentes (voir section \ref{subsub:grille_croco}).
+    En effet, les résolutions verticales et horizontales sont différentes (voir section \ref{subsub:grille_croco}).
     %Le schéma vertical est conditionné par la structure de la grille du modèle.
     %Dans la configuration MACLoup, les couches horizontales de la grille sont d'épaisseur variables et suivent la topographie.
-    Le schéma de diffusion horizontale choisi est de type Laplacien avec une viscosité turbulente paramétrisée avec la méthode de Smagorinsky \alert{(*citation)}.
+    Le schéma de diffusion horizontale choisi est de type Laplacien avec une viscosité turbulente paramétrisée avec la méthode de Smagorinsky (\cite{schemas_diffusion_horizontale}).
     Enfin, le schéma de diffusion horizontale est de type K-OMEGA provenant de \cite{GLS_KOMEGA_kolmogorov1941equations}.
     %\end{codeEnv}
     
@@ -477,8 +477,14 @@
     Dans ce mode, Les modèles sont exécutés les uns après les autres en commençant par le domaine parent de plus haut niveau.
     Les résultats de chaque parent sont successivement utilisés pour générer les fichiers de forçages du domaine sous-jacent.
     
-    Cette méthode est illustrée en \alert{Figure XXX} et \ref{fig:imbrication}.
-    [Figure XXX]
+    Cette méthode est illustrée en \ref{fig:imbrication_workflow} et \ref{fig:imbrication}.
+    
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.3]{../images/workflow/multi_grid.pdf}
+        \caption{Schéma de la mise en place des domaines emboîtés du modèle MACLoup. Les étapes peuvent être répétées pour }
+        \label{fig:imbrication_workflow}
+    \end{figure}
     
     Dans le cadre de MACLoup, deux domaines successifs sont modélisés.
     Le premier domaine couvre une zone de $150$ par $150~km$ centré sur le département de la Manche.
@@ -694,8 +700,15 @@
     La présence de gradients de pentes importants est préjudiciable à la stabilité des calculs. Ces zones sont à l'origine de la génération de vitesses trop importantes qui ne peuvent pas être prise en compte par les conditions de mise en place du code CROCO.
     Ce nouveau pré-traitement de lissage de certaine partie du domaine MACLoup est appliqué immédiatement après sa création avec le CROCO Pytool correspondant.
     En plus de permettre la mise en place d'un lissage plus ou moins intense, il permet la modification du trait de côte en le lissant automatiquement et-ou en ajoutant et en retirant des pixels dont les coordonnées sur le maillage sont manuellement entrés.
-    Une visualisation de l'utilisation de ce nouvel outil est donnée en Figure \ref{fig:new_smooth}.
+    Une visualisation du fonctionnement et de l'utilisation de ce nouvel outil est donnée en Figure \ref{fig:new_smooth_work} et \ref{fig:new_smooth}.
     
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.7]{../images/workflow/grid_smoothing.pdf}
+        \caption{Organisation des étapes de traitement effectuées par le nouveau code de calcul \textit{apply\_grid\_smoothing.py} suite à l'utilisation de l'outil original \textit{make\_grid.py}.}
+        \label{fig:new_smooth_work}
+        
+    \end{figure}
     \begin{figure}[h!]
         \centering
         \includegraphics[scale=0.35]{../images/grid_smoothing_adcl5_9.png}
