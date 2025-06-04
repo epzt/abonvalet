@@ -782,16 +782,19 @@ avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus 
 
 \subsection{Les données brutes}
 
-
-
-
 La liste des données brutes utilisées pour la génération des données d'entrées est représentée en Figure \ref{fig:workflow_prepro_main}. La recherche, la concaténation et la mise en forme de ces données pour le code CROCO, forment un ensemble d'opérations qui peut s'avérer relativement long et fastidieux en fonction du lieux modélisé et de la précision recherchée. Si des données générales sont facilement disponibles, leur précision ne permet pas la mise en place de configurations à faible emprise géographique. Dans ce cas, il est nécessaire de rechercher des informations complémentaires plus précises mais parfois plus difficilement disponibles. Se pose aussi souvent le problème du format dans lequel ces données sont présentes, qui peut nécessiter le développement d'outils spécifiques de mise en forme.
 
 \textbf{Les données de morphologie}\\
 Dans le cas de MACLoup, dans un premier temps, les données de bathymétrie ont été extraites du jeu de donnée générale \textit{GEBCO 2024} disponible gratuitement. Ces données bathymétriques couvrent la planète entière avec une résolution de \alert{xxx}. Si cette dernière s'est avérée suffisante pour la grille principale du modèle, il a fallu rechercher et utiliser des données plus précises pour la seconde grille centrée sur l'anse du Cul-de-Loup. Ces informations complémentaires sont issues de deux jeux de données distincts obtenus après des campagnes de mesures de terrain.
 
-Le premier jeu est l'\oe{}uvre du \textit{ROLNHDF} (Réseau d'Observation du Littoral Normand et des Hautes De France)\footnote{https://www.rolnhdf.fr} qui ont réalisé des campagnes d'acquisition de données LIDAR bathymétrique aéroporté. Toute la frange littorale de la Normandie a été survolée en deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) et a permis l'acquisition de donnée haute résolution ($<0.5 m$ de résolution verticale). Ces données sont disponibles gratuitement sous forme de dalles géographiques d'emprise régulière ($1 km x 1 km$). Un interface dédié est disponible dans le lequel il est possible de sélectionner les dalles d'intérêt et de réaliser la demande de téléchargement des données. Une fois obtenues, ces données ont présentes dans des fichiers au format \textit{Arc ASCII Grid}.
+Le premier jeu est l'\oe{}uvre du \textit{ROLNHDF} (Réseau d'Observation du Littoral Normand et des Hautes De France)\footnote{https://www.rolnhdf.fr} qui ont réalisé des campagnes d'acquisition de données LIDAR bathymétrique aéroporté. Toute la frange littorale de la Normandie a été survolée en deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) et a permis l'acquisition de donnée haute résolution ($<0.5 m$ de résolution verticale). Ces données sont disponibles gratuitement sous forme de dalles géographiques d'emprise régulière ($1 km x 1 km$). Un interface dédié est disponible dans le lequel il est possible de sélectionner les dalles d'intérêt et de réaliser la demande de téléchargement des données. Une fois obtenues, ces données ont présentes dans des fichiers au format \textit{Arc ASCII Grid}. Le logiciel de système d'information géographique (SIG) QGIS (Quantum GIS)\footnote{http://www.qgis.org} a été utilisé pour visualiser les données LIDAR du ROLNHDF et ses outils d'opérations raster pour la concaténation des différentes dalles contenant la zone de l'anse du Cul-de-Loup.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.35]{../images/ROLNHDF.png}
+    \caption{Données bathymétriques LIDAR aéroportées du ROLNHDF assemblées via les outils raster de QGIS.}
+    \label{fig:ROLNHDF}
+\end{figure}
 
 Les données de cette campagnes utilisées pour l'étude de l'anse du Cul-de-Loup proviennent de prises Lidar.
 La campagne XXX a été réalisée dans le but de compléter les données de la campagne ROL.
