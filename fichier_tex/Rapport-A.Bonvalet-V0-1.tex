@@ -22,6 +22,10 @@
 \usepackage{siunitx}
 \usepackage{mathtools}
 \usepackage{float}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 % Swap the definition of \abs* and \norm*, so that \abs
@@ -484,7 +488,7 @@ Cette méthode est illustrée par les Figures \ref{fig:imbrication_workflow} et 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.3]{../images/workflow/multi_grid.pdf}
-    \caption{Schéma de la mise en place des domaines emboîtés du modèle MACLoup. Les étapes peuvent être répétées pour }
+    \caption{Schéma de la mise en place des domaines emboîtés du modèle MACLoup. Les étapes peuvent être répétées pour \alert{à compléter}}
     \label{fig:imbrication_workflow}
 \end{figure}
 
@@ -502,13 +506,11 @@ Le second est centré sur l'anse du Cul-de-Loup, sur une zone de $7$ par $11~km$
     \includegraphics[scale=0.27]{../images/ADCL5.png}
     %\includegraphics[scale=0.27]{../images/croco_grd.nc.2_V2.png}
     \caption{
-        \textbf{Visualisation des domaines emboîtés choisis pour MACLoup.}\\
+        \textbf{Visualisation des domaines emboîtés et de la bathymétrie utilisés dans MACLoup.}\\
         \textbf{À gauche}, le grand rectangle rouge représente l'empâtement le domaine parent, le petit rectangle représente le domaine cible.
-        \textbf{À droite}, une capture plus recentrée sur le domaine cible.
-        Les données à l'extérieur du rectangle correspondent au domaine parent.
+        \textbf{À droite}, un zoom sur le domaine cible.
         \\
-        Pour les deux figures, les pixels oranges sont les maille considérées comme obligatoirement émergées.
-        Les autres couleurs (du bleu au jaune) représentent la bathymétrie dont les échelles respectives sont représentées en dessous de chaque graphique.
+        Les pixels oranges sont les maille considérées comme toujours émergées.
     }
     \label{fig:imbrication}
 \end{figure}
@@ -563,9 +565,8 @@ Ce travail a abouti à une synthèse des outils présents et de la marche à sui
     [+ indication de la version plus complexe en annexes]}
 \begin{figure}[H]
     \centering
-    %\includegraphics{}
+    \includegraphics[scale=0.5]{../images/workflow/graphe_prepro_mere_original.pdf}
     \caption{
-        \textbf{[FIGURE À FAIRE]}
         version similaire à la Figure \ref{fig:workflow_prepro_main}
     }
     \label{fig:workflow_prepro_original}
@@ -655,15 +656,36 @@ Le modèle FES2014 a été choisi car il est préférable pour la qualité et la
 La différence majeure entre les deux modèles TPXO10 et FES2014 réside dans le nombre d'harmoniques de marée qu'ils contiennent.
 Le modèle FES2014 en contient 33 tandis que TPXO10 en propose 15.
 Deux modélisations test ont été réalisées pour vérifier l'effet des 18 harmoniques supplémentaires de FES2014 en sortie de modélisation.
-Les résultats sont présentés en Figure \ref{fig:ana_freq_cotentin}.
+Les résultats sont présentés en Figure \ref{fig:ana_signaux_protec}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{../images/COTENTIN_analyse_off-near-shore.png}
+    \begin{subfigure}{1.\linewidth}
+        \centering
+        \includegraphics[scale=0.4]{../images/post_traitement/PROTEC1_PROTEC2_analyse.pdf}
+        \caption{}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../images/post_traitement/PROTEC1_PROTEC2_analyse_zoom2.pdf}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../images/post_traitement/PROTEC1_PROTEC2_analyse_zoom3.pdf}
+        \caption{}
+    \end{subfigure}
     \caption{
-        Analyse fréquentielle des données de sortie de la première phase de modélisation à large échelle (pour la méthode, voir \ref{sub:postpro}).
+        \textbf{(a) Transformée de Fourier des deux séries de mesure PROTEC réalisées dans l'anse du Cul-de-Loup entre décembre 2023 et février 2024.}
+        Les barres verticales représentent les harmoniques de marrées dans les données de forçages MACLoup.
+        Les noms de quelques harmoniques de marée d'intérêt sont indiqués.
+        En bleu, les harmoniques décrites dans le modèle TPXO10 et dans le modèle FES2014.
+        En Rouge, les harmoniques uniquement présentes dans le modèle FES2014.
+        \\
+        \textbf{(b) et (c) Zoom sur les fréquences des harmoniques S4 et M8.}
     }
-    \label{fig:ana_freq_cotentin}
+    \label{fig:ana_signaux_protec}
 \end{figure}
 
 \alert{[à compléter (analyser) avec la figure]}
@@ -735,15 +757,20 @@ Les chemins de fichiers présentés dans le rapport correspondent à la nomencla
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_mere.pdf}
-        \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_fille_zoom.pdf}
+        \includegraphics[scale=0.35]{../images/workflow/graphe_prepro_mere_new.pdf}
+        \includegraphics[scale=0.35]{../images/workflow/graphe_prepro_fille_new.pdf}
         \caption{
-            [à simplifier sur la partie "données brutes"]
-            \textbf{Pré-traitement avec les CROCO Pytools pour une grille simple ({\color{workColor}mère}) à gauche et pour une sous-grille imbriquée ({\color{orange}fille}) à droite.}
-            \\Les paramètres marqués d'une {\color{paramColor}astérisque (*) bleue} sont ceux qui doivent être modifiés en fonction du code pour lesquels ils sont utilisés (\textit{make\_frc\_tide.py} ou \textit{make\_blk\_interpol.py}).
-            Les paramètres marqués d'une {\color{orange}astérisque (*) orange} sont des paramètres qui ont la même signification pour la grille mère et pour la grille fille mais leur valeur peut être différente pour chaque grille.
-            Dans les données brutes de la grille fille, {\color{outputColor}croco\_his.nc} provient de l'exécution du modèle CROCO sur la grille mère {\color{workColor}croco\_grd.nc}.
-            La signification des paramètres cités dans la figure est détaillée en Annexes.
+            \textbf{
+            Flux de données entre les éléments du pré-traitement utilisé.
+            }
+            Les opérations de pré-traitement sont réalisées avec les CROCO Pytools modifiés et complétés.
+            La partie gauche concerne le pré-traitement opéré sur le domaine COTENTIN ({\color{workColor}domaine parent}) et la partie droite sur le domaine ADCL ({\color{orange}domaine enfant}).
+            %suivi pour générer le domaine COTENTIN et ses forçages  à gauche et le domaine ADCL et ses forçages  à droite.
+            %\\
+            %Les paramètres marqués d'une {\color{paramColor}astérisque (*) bleue} sont ceux qui doivent être modifiés en fonction du code pour lesquels ils sont utilisés (\textit{make\_frc\_tide.py} ou \textit{make\_blk\_interpol.py}).
+            %Les paramètres marqués d'une {\color{orange}astérisque (*) orange} sont des paramètres qui ont la même signification pour le domaine parent et enfant mais dont la valeur peut être différente pour chaque domaine.
+            %Pour le domaine ADCL, la données brute "{\color{outputColor}fichier de sortie du modèle précédent}" provient de l'exécution du modèle CROCO sur le domaine COTENTIN (associé à {\color{workColor}croco\_grd.nc}).
+            \alert{Faire un petit paragraphe dans le texte pour expliquer le figure.}
         }
         \label{fig:workflow_prepro_main}
     \end{center}
@@ -787,7 +814,7 @@ La liste des données brutes utilisées pour la génération des données d'entr
 \textbf{Les données de morphologie}\\
 Dans le cas de MACLoup, dans un premier temps, les données de bathymétrie ont été extraites du jeu de donnée générale \textit{GEBCO 2024} disponible gratuitement. Ces données bathymétriques couvrent la planète entière avec une résolution de \alert{xxx}. Si cette dernière s'est avérée suffisante pour la grille principale du modèle, il a fallu rechercher et utiliser des données plus précises pour la seconde grille centrée sur l'anse du Cul-de-Loup. Ces informations complémentaires sont issues de deux jeux de données distincts obtenus après des campagnes de mesures de terrain.
 
-Le premier jeu est l'\oe{}uvre du \textit{ROLNHDF} (Réseau d'Observation du Littoral Normand et des Hautes De France)\footnote{https://www.rolnhdf.fr} qui a réalisé des campagnes d'acquisitions de données LIDAR bathymétriques aéroportées. Toute la frange littorale de la Normandie a été survolée en deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) et a permis l'acquisition de donnée haute résolution ($<0.5 m$ de résolution verticale). Ces données sont disponibles gratuitement sous forme de dalles géographiques d'emprise régulière ($1 km x 1 km$). Un interface dédié est disponible dans le lequel il est possible de sélectionner les dalles d'intérêt et de réaliser la demande de téléchargement des données. Une fois obtenues, ces données ont présentes dans des fichiers au format \textit{Arc ASCII Grid}. Le logiciel de système d'information géographique (SIG) QGIS (Quantum GIS)\footnote{http://www.qgis.org} a été utilisé pour visualiser les données LIDAR du ROLNHDF et ses outils d'opérations raster pour la concaténation des différentes dalles contenant la zone de l'anse du Cul-de-Loup (Figure \ref{fig:ROLNHDF}).
+Le premier jeu est l'\oe{}uvre du \textit{ROLNHDF} (Réseau d'Observation du Littoral Normand et des Hautes De France)\footnote{https://www.rolnhdf.fr} qui a réalisé des campagnes d'acquisitions de données LIDAR bathymétriques aéroportées. Toute la frange littorale de la Normandie a été survolée en deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) et a permis l'acquisition de donnée haute résolution ($<0.5 m$ de résolution verticale). Ces données sont disponibles gratuitement sous forme de dalles géographiques d'emprise régulière ($1~km$ x $1~km$). Un interface dédié est disponible dans le lequel il est possible de sélectionner les dalles d'intérêt et de réaliser la demande de téléchargement des données. Une fois obtenues, ces données ont présentes dans des fichiers au format \textit{Arc ASCII Grid}. Le logiciel de système d'information géographique (SIG) QGIS (Quantum GIS)\footnote{http://www.qgis.org} a été utilisé pour visualiser les données LIDAR du ROLNHDF et ses outils d'opérations raster pour la concaténation des différentes dalles contenant la zone de l'anse du Cul-de-Loup (Figure \ref{fig:ROLNHDF}).
 
 \begin{figure}[H]
     \centering
@@ -814,8 +841,15 @@ Les données provenant de GEBCO, ROL et XXX sont donc fusionnées entre elles af
 Enfin, les fichier vectoriels géo-référencés qui définissent le trait de côte proviennent de la National Oceanic and Atmospheric Administration (NOAA).
 
 
+
 \textbf{Les conditions initiales}\\
 \label{par:cond_init}
+\alert{
+    - fusionner ini+bry
+    - présenter Copernicus en général et ses outils de sélection
+    - expliquer démarche : zone, dates
+    - expliquer si modifs faites pour pouvoir pré-traiter (nomenclature)
+}
 %Le fichier "croco\_ini.nc" est généré avec le script \textit{make\_ini.py} pour le domaine parent.
 Les données utilisées sont alors celles des bases de données de Copernicus (marine).
 Ces données sont : la température et la salinité %, les conditions atmosphériques, (vérifier si plus de données).
@@ -830,6 +864,7 @@ Ces données sont : la température et la salinité %, les conditions atmosphér
 
 \subsection{Le post-traitement}
 \label{sub:postpro}
+\alert{déplacer dans résultats}
 Un post-traitement des données produites par le modèle MACLoup est nécessaire pour permettre leur validation et leeur interprétation.
 Ces opérations qui permettent d'extraire et de transformer certaines parties du jeu de données.
 La fast fourrier transform (FFT, \alert{citation*}) a été utilisée, c'est l'une des méthodes classiques d'analyse fréquentielle des données.
@@ -915,7 +950,7 @@ La position des grilles emboîtées est déterminée selon deux règles :
     \item les bords de la grille fille doivent être assez loin des bords ouverts sur le plan d'eau de la grille mère, leur centre est donc généralement proche,
     \item au niveau de l'intersection entre les bords d'une grille et le tracé de la côte, ce dernier doit être le plus simple possible, c'est à dire de préférence rectiligne en Nord-Sud ou Est-Ouest.
     De plus, pour les grilles filles, le tracé de la côte au niveau des bords doit être aligné avec le tracé de la côte de la grille mère.
-\end{itemize}
+\end{itemize}\alert{remonter dans METHODE}
 
 Les paramètres principaux des deux domaines emboîtés sont décrits en Table\ref{table:param_generaux}.
 
@@ -953,7 +988,7 @@ Les paramètres principaux des deux domaines emboîtés sont décrits en Table\r
     \end{tabular}
     \caption{
         Paramètres généraux des domaines de MACLoup mis en place pour obtenir les résultats du rapport.
-        Les domaines auxiliaires explorés durant le stage et les raisons de leur non-utilisation sont présentés en Annexes (\ref{anx:param_generaux_aux})\alert{/ ne sont pas présentés ici.}.
+        Les domaines auxiliaires explorés durant le stage ne sont pas présentés ici.
     }
     \label{table:param_generaux}
 \end{table}
@@ -1029,6 +1064,82 @@ indicateurs de qualité (RMSE, etc.)
 Comparaison en analyse fréquentielle (sur l'ensemble de l'enregistrement)
 
 Analyse en fréquence par rapport aux données de FES et en relatif selon la localisation sur la grille
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{../images/post_traitement/COTENTIN_analyse_off-near-shore.pdf}
+    \caption{
+        \textbf{Transformée de Fourier des hauteur d'eau modélisées par MACLoup avec le domaine COTENTIN du 19/11/2023 au 01/03/2024.}
+        La localisation des deux enregistrements analysés est définie en Figure \ref{fig:localisation_modeles}.
+        \textbf{En bas}, se référer à la légende de la Figure \ref{fig:ana_signaux_protec}.
+    }
+    \label{fig:analyse_COTENTIN}
+\end{figure}
+
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{1.\linewidth}
+        \centering
+        \includegraphics[scale=0.4]{../images/post_traitement/COTENTIN_analyse_near-shore.pdf}
+        \caption{}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[scale=0.22]{../images/post_traitement/COTENTIN_analyse_near-shore_zoom1.pdf}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[scale=0.22]{../images/post_traitement/COTENTIN_analyse_near-shore_zoom2.pdf}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.45\linewidth}
+    \centering
+    \includegraphics[scale=0.22]{../images/post_traitement/COTENTIN_analyse_near-shore_zoom3.pdf}
+    \caption{}
+    \end{subfigure}
+    \caption{
+        \textbf{Transformée de Fourier des mesures PROTEC (Figure \ref{fig:ana_signaux_protec}) et des hauteur d'eau modélisées par MACLoup avec le domaine COTENTIN du 19/11/2023 au 01/03/2024 (Figure \ref{fig:analyse_COTENTIN})}
+        La localisation des deux enregistrements analysés est définie en Figure \ref{fig:localisation_modeles}.
+        \textbf{En bas}, se référer à la légende de la Figure \ref{fig:ana_signaux_protec}.
+    }
+    \label{fig:ana_comp_protec_cotentin}
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{1.\linewidth}
+        \centering
+        \includegraphics[scale=0.4]{../images/post_traitement/ADCL_5_analyse_PROTEC1_field.pdf}
+        \caption{}
+    \end{subfigure}
+    \begin{subfigure}{1.\linewidth}
+        \centering
+        \includegraphics[scale=0.4]{../images/post_traitement/ADCL_5_analyse_PROTEC2_field.pdf}
+        \caption{}
+    \end{subfigure}
+    \caption{.}
+    \label{fig:ana_comp_protec_ADCL}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{../images/post_traitement/Speed_PROTEC1_PROTEC2.png}
+    \caption{Fort impact de la proximité avec la zone d'émersion, choix de protec 1 pour comparaison.}
+    \label{}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.4]{../images/post_traitement/Speed_ADCL_PROTEC1.png}
+    \caption{.}
+    \label{}
+\end{figure}
+
 
 \newpage
 
