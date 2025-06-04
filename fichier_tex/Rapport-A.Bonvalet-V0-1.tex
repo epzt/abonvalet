@@ -21,6 +21,7 @@
 \usepackage[]{caption}
 \usepackage{siunitx}
 \usepackage{mathtools}
+\usepackage{float}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 % Swap the definition of \abs* and \norm*, so that \abs
@@ -95,27 +96,27 @@
 \def\siecle#1{\textsc{\romannumeral #1}\textsuperscript{e}~siècle}
 
 \begin{document}
-    
+
     \begin{titlepage}
         \begin{sffamily}
             \begin{center}
-                
+
                 % Upper part of the page. The '~' is needed because \\
                 % only works if a paragraph has started.
                 %\includegraphics[scale=0.04]{img1.JPG}~\\[1.5cm]
-                
+
                 \textsc{\LARGE ENS de Lyon, Université Lyon1}\\[2cm]
-                
+
                 \textsc{\Large Rapport de Master 2}\\[1.5cm]
-                
+
                 % Title
                 \HRule \\[0.4cm]
                 { \huge \bfseries Mise en place d’un modèle numérique hydrodynamique de l’anse du Cul-de-Loup (Normandie, France)\\ [0.4cm] }
-                
+
                 \HRule \\[2cm]
                 %\includegraphics[scale=0.2]{img2.JPG}
                 %\\[2cm]
-                
+
                 % Author and supervisor
                 \begin{minipage}{0.4\textwidth}
                     \begin{flushleft} \large
@@ -127,22 +128,22 @@
                         \emph{Tuteur :} M. \textsc{E. POIZOT}\\
                     \end{flushright}
                 \end{minipage}
-                
+
                 \vfill
-                
+
                 % Bottom of the page
                 {\large Janvier 2025 — Juin 2025}
-                
+
             \end{center}
         \end{sffamily}
     \end{titlepage}
-    
+
     \tableofcontents
     \newpage
-    
+
     \section{INTRODUCTION}
     \label{sec:introduction}
-    
+
     %
     %A faire presque à la fin, mais les grandes idées seront:
     %\begin{itemize}
@@ -152,54 +153,53 @@
     %    \item utilisation du code de calcul CROCO pour réaliser un modèle numériques de ADCL
     %\end{itemize}
     %
-    
-    
+
+
     A l'interface entre les terres et les mers, les zones côtières ont toujours été attractives pour l'Homme, qu'il s'agisse d'y développer des activités économiques ou tout simplement pour y habiter. L’essor industriel des deux cent dernières années a accru la pression anthropique sur ces zones, avec un développement urbain et industriel croissant\footnote{Actuellement, plus de 20\% de la population mondiale vit à moins de 30 km des côtes \cite{senat2015}.}. Depuis environ soixante dix ans, l'accélération quasi exponentielle de ces activités a engendré d'un côté une disparition progressive des espaces naturels côtiers et de l'autre un dérèglement du climat avec une montée régulière du niveau moyen des océans \cite{ipcc2021}. Ce double effet fait aujourd'hui courir de grands risques aux zones côtières.
-    
+
     En France, l'activité de culture d'huître est une source importante de revenus pour certaines régions (Haut de France, Normandie, Bretagne, Pays de la Loire, Charente-Maritime, Aquitaine). En Normandie, le département de la Manche, avec ses 670 km de côtes, produit plus de \num{15000} tonnes d'huîtres par an. Depuis le \siecle{18}, le Cotentin abrite sur ses côtes des activités conchylicoles \cite{Kopp2000}. Tout d'abord artisanale, cette culture consistait en un reparquage d'huître plates locales. À partir du \siecle{20} (début des années 60), la conchyliculture normande connaît une phase d'expansion importante et devient industrielle. De nouvelles zones côtières sont investies pour implanter les concessions ostréicoles et des aménagements sont réalisés pour en faciliter l'implantation.
     Avec certains de ses secteurs encore sauvages, les côtes Normandes ont aussi un attrait touristique de villégiature ainsi qu'historique\footnote{Notamment en relation avec les évènements de la seconde guerre mondiale et le débarquement du 6 juin 1944.}.  C'est aussi un secteur d'activité important pour de nombreuses communes côtières de cette région, antagoniste d'activités industrielles telles que la conchyliculture.
-    
+
     L'anse du Cul-de-Loup (Normandie, Manche, France, Fig. \ref{fig:carte-adcl}) est un exemple typique de l'évolution au cours du temps des côtes du littoral français (Fig. \ref{fig:historique-adcl}). Avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique.} (1 et 2) ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algues protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
-    
+
     L'état français via ses agences dédiées (Agence de l'Eau, IFREMER, etc.), mais aussi les entités régionales (Région Normandie) et locale (Département de la Manche), financent des travaux et projets dans une optique d'amélioration de la gestion de l'espace de l'anse du Cul-de-Loup. Ainsi, l'Agence de l'Eau Seine-Normandie (AESN) a financé le programme scientifique "\textit{Projet de Territoire : anse du Cul-de-Loup}" (ProTeC) de 2022 à 2024, dans l'objectif de dresser un état des lieux environnemental. Ce travail a permis de connaître de manière précise, la nature des cortèges sédimentaires de surface de l'anse, ainsi que sa dynamique de mise en place. Les courants étant le moteur principal des mouvements de sédiment, des mesures de vitesses et directions de la masse d'eau ont été acquises, cumulant trois mois de mesures en deux points à l'entrée de l'anse du Cul-de-Loup. Bien que cet effort de mesure soit déjà important, il n'est pas suffisant pour aborder l'hydrodynamique à l'échelle de l'anse toute entière.
-    
+
     Seuls les modèles numériques hydrodynamiques peuvent offrir la possibilité d'avoir une telle information spatialement répartie à des coûts acceptables. Ce type d'outil offre la possibilité d'avoir, outre le spatial, une approche temporelle, soit en rejouant des conditions hydrodynamiques passées (utiles pour la validation du modèle), soit au contraire en simulant des conditions futures (utiles pour la gestion de l'espace). Aux échelles spatiales et temporelles d'intérêts, ce sont les modèles de type \textit{Reynolds Average Navier-Stokes} (RANS) les mieux adaptés pour modéliser/simuler les écoulements fluides.
-    Le travail qui m'a été demandé dans le cadre de mon stage de seconde année de Master, est de mettre en place un modèle numérique hydrodynamique de l'anse du Cul-de-Loup à l'aide du code de calcul \textit{Coastal and Regional Ocean COmmunity model} (CROCO) (section \ref{sub:croco}). Dans la section \ref{sec:adcl}, je décris brièvement la zone d'étude de l'anse du Cul-de-Loup dans laquelle ont été acquise les données de mesures des courants (section \ref{sub:protec}). Les résultats de la mise en place du modèle numériques sont présentés dans la section \ref{sec:resultats} et la comparaison avec les mesures de terrains est située en section \ref{sec:discussion}. Dans la conclusion (section \ref{sec:conclusion}), je dresse un bilan du travail réalisé et donne des perspectives de travaux complémentaires.
-    
+    Le travail qui m'a été demandé dans le cadre de mon stage de seconde année de Master, est d'initier la mise en place un modèle numérique hydrodynamique de l'anse du Cul-de-Loup à l'aide du code de calcul \textit{Coastal and Regional Ocean COmmunity model} (CROCO) (section \ref{sub:croco}). Dans la section \ref{sec:adcl}, je décris brièvement la zone d'étude de l'anse du Cul-de-Loup dans laquelle ont été acquise les données de mesures des courants (section \ref{sub:protec}). Les résultats de la mise en place du modèle numériques sont présentés dans la section \ref{sec:resultats} et la comparaison avec les mesures de terrains est située en section \ref{sec:discussion}. Dans la conclusion (section \ref{sec:conclusion}), je dresse un bilan du travail réalisé et donne des perspectives de travaux complémentaires.
+
     \newpage
-    
+
     \section{ZONE D'ÉTUDE}
     \label{sec:adcl}
-    
-    
+
     D'une superficie avoisinant les 370 ha, l'anse du Cul-de-Loup n'est ouverte que dans sa partie sud sur la baie de Seine. La fermeture complète de l'anse, à l'est, a été réalisée au cours du \siecle{17} par la construction d'une route-digue qui rejoint le continent depuis St-Vaast-la-Hougue à l'ex île de la Hougue (Fig. \ref{fig:carte-adcl}). L'ensemble de l'anse découvre plus ou moins en fonction des coefficients de marée (marée semi-diurne), avec un marnage d'environ 5 m en marée de vive eau. Le zéro hydrographique est situé juste à l'entrée de l'anse parallèlement à la ligne côtière. L'altitude maximum dans l'anse ne dépasse pas 3 m au dessus du zéro hydrographique.
-    
+
     \begin{figure}[!h]
         \centering
         \includegraphics[width=0.8\linewidth]{../images/carte-ADCL}
         \caption[anse du Cul-de-Loup.]{L'anse du Cul-de-Loup.}
         \label{fig:carte-adcl}
     \end{figure}
-    
+
     Le vent est régulièrement présent sur la zone du Cul-de-Loup, avec une moyenne de 18-19 km/h l'été majoritairement de secteur ouest et de 25-30 km/h en période hivernale avec un partage plus homogène des directions. L'agitation de surface dans l'anse est majoritairement de type mer du vent, due au frottement par le vent à la surface de l'eau.
-    
+
     L'orientation de l'anse du Cul-de-Loup la protège des houles les plus fréquentes en Baie de Seine, qui sont de secteurs nord-ouest à nord-est essentiellement. Les houles de secteur est et sud-est sont les seules à éventuellement pouvoir pénétrer dans l'anse, mais elles sont à la fois plus rares et de faible énergie. Ces dernières sont rapidement dissipées par la présence des structures ostréicoles et pénètrent donc peu à l'intérieure de l'anse. A l'est au niveau de la bordure interne de l'Île de la Hougue, certaines houles peuvent néanmoins diffractées et être canalisées le long de l'île avec une énergie significative.
-    
+
     \begin{figure}[!h]
         \centering
         \includegraphics[width=0.8\linewidth]{../images/historique}
-        \caption[Évolution de l'anse du Cul-de-Loup]{En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole. En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partie nord. En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles. (sourcer les images : géoportail)}
+        \caption[Évolution de l'anse du Cul-de-Loup]{En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole. En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partie nord. En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles. (source les images : géoportail)}
         \label{fig:historique-adcl}
     \end{figure}
-    
-    
-    
+
+
+
     \newpage
-    
+
     \section{MATÉRIELS ET MÉTHODES}
     \label{sec:materiel_methodes}
-    
-    \subsection{Le code de calcul CROCO}
+
+    \subsection{Le code CROCO}
     \label{sub:croco}
     %Mettre les principes généraux de CROCO (origine, type de modèle, etc...)
     Le modèle communautaire océanique côtier et régional (CROCO\footnote{CROCO : Coastal and Regional Ocean COmmunity model}) est une évolution du système de modélisation océanique régionale qui utilise une méthode adaptative de raffinement de grilles en Fortran (ROMS\footnote{ROMS : Regional Oceanic Modeling System}\_AGRIF\footnote{AGRIF : Adaptive Grid Refinement In Fortran}).
@@ -209,27 +209,27 @@
     et le Centre National de la Recherche Scientifique (CNRS).
     L'aspect aujourd'hui communautaire de CROCO fédère à la fois les développeurs/utilisateurs de ROMS, ainsi que des universités et organismes étrangers tels que l'Université de Californie à Los Angeles (UCLA\footnote{UCLA : University of California, Los Angeles})
     et le département de Géophysique de l'université de Concepción au Chili (DGEO\footnote{DGEO : Departamento de Geofísica Universidad de Concepción, Chile}).
-    
+
     % Le code et la documentation de ROMS\_AGRIF ont progressivement été modifiés pour devenir le modèle communautaire CROCO.
-    
+
     Ce modèle CROCO permet désormais de réaliser des modélisations sur des grilles dont la résolution peut être de kilométrique (modèle régional) à métrique (modèle côtier).
-    
-    Le code CROCO est fondé sur la résolution des équations Navier-Stokes avec l'approche Reynolds Average Navier-Stokes (RANS) \alert{(ref*)}.
+
+    Le code CROCO est fondé sur la résolution des équations Navier-Stokes via une approche Reynolds Average Navier-Stokes (RANS) \alert{(ref*)}.
     %        [image possible sur les modèles possibles]}
 Les modèles de la catégorie RANS permettent de mettre en \oe{}uvre des modélisations à des échelles spatiales et temporelles plus importantes que les approches Direct Numerical Simulation (DNS) ou encore Large Eddy Simulation (LES).
 
-Le système d'équations de CROCO est flexible.
+Le système d'équations résolu par le code CROCO est flexible.
 Il permet de choisir la méthode de résolution physico-chimique et de l'adapter à la configuration.
 Les nouvelles fonctionnalités sont progressivement vérifiées par la communauté avec, le cas échéant, la mise en place de cas test afin d'en faciliter l'utilisation.
 
 
-CROCO peut être exécuté sur les machines parallèles ou des clusters d'ordinateurs.
+Le code CROCO peut être exécuté sur les machines parallèles (mémoire partagée) ou des clusters d'ordinateurs (mémoire distribuée).
 %permet d'activer la parallélisation des calculs effectués lors de la modélisation.
 % Ainsi, pour certaines configurations, il est possible de modéliser des temporalités de l'ordre de l'année pour un coût de calcul abordable. (ex .)
 Ainsi, en fonctions des objectifs, il est possible de mettre en place des modélisations à la fois finement résolues et couvrant des périodes de temps annuelles pour des coûts de calcul abordables.
 
 %Enfin, en même temps que le développement du modèle, des outils communautaires de pré- et de post- traitement adaptés au fonctionnement de CROCO ont été développés.
-Pour faciliter la mise en place des configurations CROCO, un ensemble d'outils ont été développés.
+Pour faciliter la mise en place des configurations CROCO, un ensemble d'outils a été développé.
 Ces outils ont d'abord été écrits en Matlab sous le nom de CROCO\_tools.
 Plus récemment, de nouveaux outils développés en Python sont disponibles et appelés les CROCO Pytools.
 % Le transfert des outils de Matlab vers Python renforce l'aspect leur ouvert et communautaires.
@@ -242,16 +242,16 @@ Pour une description exhaustive de ces possibilités, une documentation est disp
 Dans la suite du rapport, seuls les aspects de CROCO spécifiquement utilisés pour la mise en \oe{}vre du Modèle de l'anse du Cul-de-Loup (MACLoup) sont présentés.
 
 
-\subsubsection{Mise en \oe{}uvre de MACLoup}
+\subsubsection{Mise en \oe{}uvre de CROCO}
 \label{subsub:presentation_generale}
 %\alert{[sous-section à reprendre + compléter, si possible, garder la relecture de cette partie pour plus tard] - A
     %    [ajouter la description des fichiers de configuration de croco (cppdefs, param.h, in, jobcomp)]}
 
 La démarche générale de mise en place d'un modèle numérique hydrodynamique est relativement la même quelque soit les codes de calculs. Dans un premier temps, il faut définir et construire la représentation numérique du domaine modélisé. Dans un second temps, il faut définir les caractéristiques de la masse d'eau et la nature des écoulements qui vont être modélisés.
 
-Si CROCO suit les mêmes principes généraux, il se distingue sensiblement sur ce dernier aspect. Il est issu du rassemblement de plusieurs codes de calcul qui avaient chacun leur propre philosophie de mise en place.  Ainsi, plusieurs fichiers de configurations doivent être construits en parallèle, contenant à la fois des informations propres, mais aussi, pour certains paramètres, des redondances qu'il est nécessaire de rendre homogène partout. C'est là une des principales difficulté dans la compréhension de mise en place d'un modèle avec CROCO à laquelle vient s'ajouter une documentation parfois sommaire ou partielle sur certaines parties du code (bien que des efforts soient engagés maintenant sur cet aspect). La figure \ref{fig:workflow_simple} résume les grandes étapes de l'établissement d'un modèle CROCO et les liens entre elles.
+Si CROCO suit les mêmes principes généraux, il se distingue sensiblement sur ce dernier aspect. Il est issu du rassemblement de plusieurs codes de calcul qui avaient chacun leur propre philosophie de mise en place.  Ainsi, plusieurs fichiers de configurations doivent être construits en parallèle, contenant à la fois des informations propres, mais aussi, pour certains paramètres, des redondances qu'il est nécessaire de rendre homogène dans plusieurs fichiers. C'est là une des principales difficulté dans la compréhension de mise en place d'un modèle avec CROCO à laquelle vient s'ajouter une documentation parfois sommaire ou partielle sur certaines parties du code (bien que des efforts soient engagés maintenant sur cet aspect). La Figure \ref{fig:workflow_simple} résulte de ma compréhension de l'organisation des grandes étapes de l'établissement d'un modèle CROCO et les liens entre elles.
 
-Concrètement, les fichiers de configurations sont toujours les mêmes quelque soit le modèle créé et sont au nombre de quatre (en bleu dur la figure \ref{fig:workflow_simple})~:
+Concrètement, les fichiers de configurations sont toujours les mêmes quelque soit le modèle créé et sont au nombre de quatre (en bleu dur sur la gate \ref{fig:workflow_simple})~:
 \begin{itemize}
     \item \textit{param.h}, est un fichier de paramètres qui indique les dimensions du maillage utilisé pour la modélisation ainsi que les variables associées à l'ensemble de la zone,
     \item \textit{cppdefs.h}, est un fichier qui définit essentiellement l'hydrodynamique du modèle, via des clefs de paramètres qui déterminent la manière dont le modèle interprète et propage les données. Il permet par exemple d'identifier quelles équations physiques doivent être résolues par le modèle,
@@ -259,7 +259,7 @@ Concrètement, les fichiers de configurations sont toujours les mêmes quelque s
     \item \textit{croco.in}, est un fichiers de paramètres qui défini, entres autres, l'étendue temporelle de la modélisation, les fréquences de sauvegardes des fichiers de sortie, ainsi que quelques valeurs constantes. Il donne aussi la localisation des données numérisant la zone.
 \end{itemize}
 
-Un schéma global de la mise en place du modèle est présenté en Figure \ref{fig:workflow_simple} \alert{nécessaire ? la figure a déjà été présentée plus tôt}
+% Un schéma global de la mise en place du modèle est présenté en Figure \ref{fig:workflow_simple} \alert{nécessaire ? la figure a déjà été présentée plus tôt}
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.35]{../images/workflow/mise_en_place_generale_croco.pdf}
@@ -290,20 +290,20 @@ Les données des forçages sont regroupées dans cinq principaux fichiers~:
 \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN RELECTURE FUSION VERSIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Le contenu de ces fichiers doit respecter une structure et une nomenclature spécifique afin d'être utilisable par le code CROCO.
-Il est généralement issu de l'extraction et de l'interpolation des données brutes par les outils communautaires associés à CROCO.
+Il est généralement issu de l'extraction et de l'interpolation des données brutes par les outils communautaires associés à CROCO, tels que les CROCO Pytools.
 
 %Afin de simplifier le travail de pré-traitement, la communauté a développé des outils numériques de lecture, calcul et écriture de données.
 %Ces codes de pré-traitement utilisent au choix des scripts Matlab (ces outils sont appelés croco\_tools) ou des scripts Python (ces outils sont appelés CROCO Pytools).
 %L'utilisation dans le cadre du stage de ces outils est décrite dans la partie suivante.
 
-\subsubsection{Le domaine MACLoup}
+\subsubsection{La grille de calcul}
 \label{subsub:grille_croco}
 
 Le domaine CROCO, comme pour tout autre modélisation numérique, est une discrétisation spatiale de la morphologie réelle de la zone modélisée.
-Il représente la bathymétrie et le trait de côte.
+Il contient pour l'essentiel la bathymétrie et le trait de côte.
 Le domaine est supporté par un maillage horizontal (2D) dont chaque n\oe{}ud est géoréférencé et présent au centre d'une maille.
 Dans MACLoup, chaque maille suit la définition de \cite{Arakawa_C-grid_1977} en grille de type C.
-Selon cette définition toutes les variables (température, salinité, hauteur d'eau, etc.) sont définies et résolues au centre des mailles ($H_{i,j}$, Figure \ref{fig:structure_maille horizontale}).
+Dans cette organisation toutes les variables (température, salinité, hauteur d'eau, etc.) sont définies et résolues au centre des mailles ($H_{i,j}$, Figure \ref{fig:structure_maille horizontale}).
 Seules les composantes $U$ et $V$ de la vitesse sont présentes aux bords des mailles (Figure \ref{fig:structure_maille horizontale}).
 \begin{figure}[h!]
     \centering
@@ -337,11 +337,11 @@ Seules les composantes $U$ et $V$ de la vitesse sont présentes aux bords des ma
 %Il contient trois maillages dont deux son issus de la translation Nord-Sud et Est-Ouest du maillage central sur une longueur d'une demi-maille.
 %Pour chaque maille des trois maillages, une latitude et une longitude sont attribués dans le fichier du domaine CROCO.
 %Le domaine contient aussi une donnée de bathymétrie / topographie pour chacune de ses mailles.
-Pour séparer les zones immergeables des autres, un booléen est attribué à chaque maille, respectivement $1$ (True) pour les mailles immergeables et $0$ (False) pour les autres.
+Pour séparer les zones immergeables des autres, un booléen est attribué à chaque maille, respectivement $1$ (True) pour les mailles peuvent être en eau et $0$ (False) pour les autres.
 %Le domaine contient une donnée booléenne\footnote{valeurs indiquant soit \textit{vrai} (1) soit \textit{faux} (0)} attribuée à chaque maille du maillage principal.
 %L'ensemble de ces données booléennes sont appelées le masque du domaine.
 %Le masque indique quelles mailles sont définies comme toujours émergées.
-Les équations ne seront jamais résolues au niveau des mailles non-immergeables du domaine.
+Les équations ne seront jamais résolues sur les mailles non-immergeables du domaine.
 %Le domaine CROCO est contenu dans un unique fichier NetCDF.
 
 Le modèle MACLoup est défini en dimensions pseudo-3D, il est composé d'une succession de maillages 2D répartis verticalement selon une dimension $\sigma$.
@@ -349,7 +349,7 @@ Dans cette définition, les couches sont contraintes verticalement par la bathym
 Par convention, la surface est à $0$ et le fond est à $1$ sur la dimension $\sigma$.
 Cette répartition est modulée selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$ qui décrivent la résolution verticale respectivement à l'approche de la surface et du fond (Fig. \ref{fig:vertical_resolution}).
 %La résolution verticale du maillage n'est pas définie dans le fichier du domaine CROCO.
-Cette paramétrisation de la verticale est indiquée dans les fichiers d'entrées \textit{param.h} et \textit{croco.in} de la configuration.
+Cette paramétrisation de la verticale est présente dans les fichiers d'entrées \textit{param.h} et \textit{croco.in} de la configuration.
 %Selon les paramètre choisis, la résolution verticale peut varier verticalement selon les deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
 %Ces derniers décrivent le taux d'augmentation ou de diminution de la résolution verticale respectivement à l'approche de la surface et du fond.
 
@@ -369,11 +369,12 @@ Cette paramétrisation de la verticale est indiquée dans les fichiers d'entrée
 
 %Les variables physico-chimiques que le modèle propage ont généralement un effet rétroactifs sur leur propre propagation ou-et sur la propagation d'autres variables.
 
-\subsubsection{Hydrodynamique de MACLoup}
+\subsubsection{L'hydrodynamique du modèle}
 \label{subsub:physique_modele}
-C'est le fichier nommé \textit{cppdefs.h} (Fig. \ref{fig:workflow_simple}) qui détermine les caractéristiques hydrodynamiques effectivement résolues dans le modèle.
+
+Les caractéristiques hydrodynamiques effectivement résolues par le modèle sont présentes dans le fichier de configuration nommé \textit{cppdefs.h} (Fig. \ref{fig:workflow_simple})
 % quelles équations physiques doivent être résolues par le modèle.
-La définition de ces caractéristiques s'appuie sur la présence de mots clefs.
+La définition de ces caractéristiques s'appuie sur la présence de mots clefs dédiés.
 Chaque mot clef active ou désactive une fonctionnalité avec la syntaxe "\# define"  ou "\# undef" qui le précède.
 Par exemple, l'ajout de la ligne "\# define SALINITY" dans \textit{cppedefs.h} active, au moment de la compilation, la prise en compte de la salinité.
 
@@ -384,15 +385,15 @@ Par exemple, l'ajout de la ligne "\# define SALINITY" dans \textit{cppedefs.h} a
 %\begin{codeEnv}{Les schémas d'advection et de diffusion\label{encadre:precisions_schema}}
 %(\cite{dev_RANS-LES_these}, \cite{comp_RANS_LES})
 %Les équations utilisées et résolues par CROCO durant la modélisation sont flexibles.
-Les premiers choix fondamentaux à faire sont ceux des types de schémas numériques de résolution de l'advection et de la diffusion.
+Les premiers choix fondamentaux à faire sont ceux des types de schémas numériques de résolution d'advection et de diffusion.
 Le code CROCO propose divers schémas qu'il est nécessaire de choisir en cohérence. % (entre eux)
 %[enlever ?]
 %Les schémas numériques possibles pour l'advection sont au minimum de second ordre et au maximum de cinquième ordre.
 %Les schémas numérique de diffusion sont laplaciens ou biliplaciens. (ça se dit probablement autrement !)
 %[]
 %Le choix des schémas est libre pour l'utilisateur·ice, (\cite{schemas_advection}) il est toutefois important de noter que les schémas choisis doivent être cohérents entre eux.
-Certains schémas sont mieux adaptés que d'autres à chaque configuration.
-Il est donc important que cette dernière soit correctement identifiée avant de choisir les schémas numériques.
+Certains schémas sont mieux adaptés que d'autres en fonction de la zone d'étude et de ses caractéristiques propres.
+Il est donc important que ces dernières soient correctement identifiées avant de choisir les schémas numériques.
 
 Dans l'anse du Cul-de-Loup, la côte est tortueuse et de larges zones sont régulièrement découvertes et recouvertes au cours d'un cycle de marée.
 D'un point de vue numérique, ces caractéristiques sont contraignantes et déterminent la nature des schémas d'advection possibles.
@@ -453,20 +454,20 @@ Des conditions atmosphériques peuvent être ajoutées aux forçages déjà pré
 Un fichier supplémentaire, \textit{croco\_blk.nc}, est construit, il contient notamment l'humidité, la température, la pression de l'air au dessus de la surface de l'eau, la vitesse du vent à $10~m$ au dessus de la surface, des paramètres sur les contraintes de surfaces imposés par le vent et les radiations solaires reçues par la masse d'eau pour les courtes et longues longueurs d'ondes.
 Ces informations sont données sur toute l'étendue du maillage horizontal sur toute la durée temporelle de la modélisation.
 
-\subsubsection{Modélisation par emboîtement de domaines}
+\subsubsection{L'emboîtement de domaines}
 \label{subsub:enchainement_modelisations}
 %Le modèle CROCO permet de mettre en place l'étude d'un lieux en réalisant plusieurs modélisations.
 
 Les conditions initiales et aux limites ne sont pas toujours suffisamment précises pour permettre de démarrer directement le modèle sur le domaine d'intérêt.
 Le principe est de générer ces conditions avec un premier domaine adapté aux données disponibles.
-Les résultats de cette première modélisation sont utilisés comme données initiales sur le domaine d'intérêt.
-Il est donc nécessaire que le domaine d'intérêt (domaine enfant) soit intégralement contenu (emboîté) dans le domaine initial (domaine parent).
+Les résultats de cette première modélisation sont utilisés comme données initiales sur un second domaine d'intérêt.
+Il est donc nécessaire que le domaine cible (domaine enfant) soit intégralement contenu (emboîté) dans le domaine initial (domaine parent).
 
 %Cette méthode d'emboîtement de domaines permet de s'affranchir du besoin de données externes pour les conditions aux bords du domaine d'intérêt qui est le moins étendu et qui est le mieux résolu.
 L'objectif de la démarche est d'obtenir des résultats qui convergent plus vite vers des données justes pour un coût de modélisation soutenable.
 
 %L'usage principal de cette fonctionnalité consiste à emboîter plusieurs domaines de résolution croissante et d'étendue décroissante autour d'un zone d'intérêt.
-Il est possible de généraliser la démarche sur une suite de domaines successivement emboîtés.
+Il est possible de généraliser la démarche sur une série de domaines successivement emboîtés.
 %Un domaine A contenant un domaine B est appelé le domaine parent du domaine B.
 %Le domaine B est appelé le domaine enfant du modèle A.
 Tous les domaines enfants extraient leur conditions aux limites des résultats de leur domaine parent respectif.
@@ -478,9 +479,9 @@ Le choix de la méthode d'emboîtement s'est donc porté sur le type temps-diff�
 Dans ce mode, Les modèles sont exécutés les uns après les autres en commençant par le domaine parent de plus haut niveau.
 Les résultats de chaque parent sont successivement utilisés pour générer les fichiers de forçages du domaine sous-jacent.
 
-Cette méthode est illustrée en \ref{fig:imbrication_workflow} et \ref{fig:imbrication}.
+Cette méthode est illustrée par les Figures \ref{fig:imbrication_workflow} et \ref{fig:imbrication}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.3]{../images/workflow/multi_grid.pdf}
     \caption{Schéma de la mise en place des domaines emboîtés du modèle MACLoup. Les étapes peuvent être répétées pour }
@@ -495,7 +496,7 @@ Le second est centré sur l'anse du Cul-de-Loup, sur une zone de $7$ par $11~km$
 %Une démarche d'emboîtement de domaines a donc été mise en place pour la modélisation de l'anse du Cul-de-Loup (MACLoup).
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{../images/COTENTIN_ADCL5.png}
     \includegraphics[scale=0.27]{../images/ADCL5.png}
@@ -520,18 +521,19 @@ Le second est centré sur l'anse du Cul-de-Loup, sur une zone de $7$ par $11~km$
 \subsection{Les outils de pré-traitement}
 \label{sub:outils_pretraitement}
 
-Le pré-traitement correspond à la création des fichiers nécessaires au démarrage de CROCO.
-Il inclue :
-\begin{itemize}
-    \item la création du domaine qui représente la zone modélisé (voir \ref{subsub:grille_croco}),
-    \item la création des différents forçages (voir \ref{subsub:forcages}).
-\end{itemize}
+Les opérations de mise en place d'une configuration CROCO présentées dans la section \ref{sub:croco}, sont prises en charge par les outils de pré-traitements. Dans le cadre du stage, ce sont les CROCO Pytools qui sont utilisés pour ce travail.
 
-Dans le cadre du stage, ce sont les CROCO Pytools qui sont utilisés pour ce travail.
+%Le pré-traitement correspond à la création des fichiers nécessaires au démarrage de CROCO.
+% Il inclue :
+%    \item la création du domaine qui représente la zone modélisé (voir \ref{subsub:grille_croco}),
+%    \item la création des différents forçages (voir \ref{subsub:forcages}).
+%\end{itemize}
+
+
 %Ces outils sont identifiés comme les \textit{CROCO Pytools} et sont ceux qui ont été intégrés dans l'univers CROCO le plus récemment.
 
-Les CROCO Pytools sont encore en cours de développement. %, les utiliser permet de participer à la vérification de leur fonctionnement par la communauté.
-Certaines fonctionnalités sont encore à valider ou à développer.
+Les CROCO Pytools sont relativement ressent dans l'univers CROCO et sont à l'heure actuelle encore en cours de développement. %, les utiliser permet de participer à la vérification de leur fonctionnement par la communauté.
+Certaines fonctionnalités présentes restent à valider ou à développer.
 
 %Il est donc nécessaire de les ajouter soit en modifiant les scripts déjà présents, soit d'écrire des scripts supplémentaires pour réaliser certaines tâches spécifiques.
 
@@ -546,7 +548,7 @@ Certaines fonctionnalités sont encore à valider ou à développer.
 L'ensemble des travaux associés au prétraitement représentent le c\oe{}ur du travail effectué durant le stage.
 Ces travaux sont structurés en trois parties principales :
 \begin{itemize}
-    \item un état des lieux des outils existants et de leur fonctionnement général,
+    \item un état des lieux des outils existants et de leur fonctionnement,
     \item une utilisation directe des CROCO Pytools en apportant, si nécessaire, des modifications,
     \item le développement d'outils manquants.
 \end{itemize}
@@ -554,12 +556,12 @@ Ces travaux sont structurés en trois parties principales :
 \subsubsection{État des lieux}
 \label{subsub:etat_des_lieux}
 
-Dans un premier temps, l'état des lieux des CROCO Pytools a été dressé.
+Dans un premier temps, afin d'avoir une vue générale sur les opérations déjà possibles avec les outils existant, mais aussi pour définir quels sont ceux qu'il va être nécessaire de développer, un état des lieux des CROCO Pytools a été dressé.
 Ce travail a abouti à une synthèse des outils présents et de la marche à suivre pour leur mise en \oe{}uvre (Fig. \ref{fig:workflow_prepro_original}).
 
 \alert{[texte sur la figure de synthèse]
     [+ indication de la version plus complexe en annexes]}
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     %\includegraphics{}
     \caption{
@@ -569,6 +571,7 @@ Ce travail a abouti à une synthèse des outils présents et de la marche à sui
     \label{fig:workflow_prepro_original}
 \end{figure}
 
+Si certains des outils des CROCO Pytools ont été directement fonctionnels, une grande partie a du être soit adaptée (à des degrés divers), soit profondément modifiée.
 
 \subsubsection{Modification et utilisation}
 
@@ -576,11 +579,11 @@ Parmi les CROCO Pytools, quatre outils ont été utilisés et mis en \oe{uvre} m
 % pour la création du domaine et de ses conditions initiales et aux bords.
 %Au préalable, les dysfonctionnalités des codes ont été recherchées.
 
-Le premier code, \textit{make\_grid.py}, permet de créer les domaines CROCO.
+Le premier programme, \textit{make\_grid.py}, permet de créer les domaines CROCO.
 Il prend en charge la création du masque qui sépare les mailles émergées des mailles immergeables.
 Cette opération utilise un fichier de données vectorielles représentant le trait de côte.
-La version de l'outil ne fonctionne pas avec le fichier qui lui a été fourni pour créer le domaine MACLoup.
-La solution adoptée consiste à modifier les données de bathymétrie en imposant une valeur forte et aberrantes  aux mailles émergées.
+La version de l'outil n'a pas fonctionné directement avec le fichier fourni pour créer le domaine MACLoup.
+La solution adoptée a consisté à modifier les données de bathymétrie en imposant une valeur forte sur les mailles émergées.
 % ne prend pas en compte nos données vectorielles .shp pour déterminer le masquage des mailles non-immergeables.
 %Toutefois, la fonctionnalité de seuillage des données de bathymétrie est fonctionnelle.
 %Le masque du domaine a donc été imposé en fixant les données de bathymétrie des zones émergées au dessus du seuil choisi.
@@ -598,7 +601,7 @@ Le code \textit{make\_grid.py} gère aussi la mise en place de domaines emboît�
 %Il est apparu que son implémentation dans les CROCO Pytools est encore incomplète.
 %D'autre part, l'utilisation du système d'emboîtement AGRIF impose des dépendances sur les clefs définies dans le fichier \textit{cppdefs.h} (section \ref{subsub:physique_modele}) activées pour la modélisation.
 %[vérifier la véracité de cette phrase]
-La procédure d'emboitement de type temps-différé est identifiée comme "Offline Zoom" dans l'outil
+La procédure d’emboîtement de type temps-différé est identifiée comme "Offline Zoom" dans l'outil
 %qui est utilisée pour la génération des domaines emboîtés présentés dans la suite du rapport.
 et a été utilisée sans adaptation particulière.
 %et n'implique pas de dépendances particulières pour les clefs du fichier \textit{cppdefs.h}.
@@ -637,7 +640,8 @@ Cet outils s'est révélé fonctionnel sans que des modifications importantes n'
 
 
 
-\subsubsection{Outils développés}
+%\subsubsection{Outils développés}
+\subsubsection{Les outils développés }
 
 Comme expliqué en Section \ref{subsub:forcages}, les phénomènes de marée sont centraux dans l'hydrodynamique de l'anse du Cul-de-Loup.
 Une attention particulière a donc été portée sur le choix du modèle de marée utilisé.
@@ -699,37 +703,37 @@ Ces classes sont utilisées par les deux nouveaux outils de pré-traitement \tex
 Par ailleurs, un outil supplémentaire, \textit{apply\_grid\_smoothing.py} a été développé afin de traiter le fichier de définition du domaine \textit{croco\_grid.nc}.
 La présence de gradients de pentes importants est préjudiciable à la stabilité des calculs. Ces zones sont à l'origine de la génération de vitesses trop importantes qui ne peuvent pas être prise en compte par les conditions de mise en place du code CROCO.
 Ce nouveau pré-traitement de lissage de certaine partie du domaine MACLoup est appliqué immédiatement après sa création avec le CROCO Pytool correspondant.
-En plus de permettre la mise en place d'un lissage plus ou moins intense, il permet la modification du trait de côte en le lissant automatiquement et-ou en ajoutant et en retirant des pixels dont les coordonnées sur le maillage sont manuellement entrés.
-Une visualisation du fonctionnement et de l'utilisation de ce nouvel outil est donnée en Figure \ref{fig:new_smooth_work} et \ref{fig:new_smooth}.
+Avec la mise en place d'un lissage plus ou moins intense, il permet aussi la modification du trait de côte en le lissant automatiquement et-ou en ajoutant et en retirant manuellement des pixels au masque (cellules émergées).
+Une visualisation du fonctionnement et de l'utilisation de ce nouvel outil est donnée avec les Figures \ref{fig:new_smooth_work} et \ref{fig:new_smooth}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.7]{../images/workflow/grid_smoothing.pdf}
     \caption{Organisation des étapes de traitement effectuées par le nouveau code de calcul \textit{apply\_grid\_smoothing.py} suite à l'utilisation de l'outil original \textit{make\_grid.py}.}
     \label{fig:new_smooth_work}
-    
+
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.35]{../images/grid_smoothing_adcl5_9.png}
     \caption{
-        \textbf{Visualisation du nouvel l'outil de traitement du domaine MACLoup.}\\
+        \textbf{Le nouvel outil de traitement \textit{apply\_grid\_smoothing.py}.}\\
         \textbf{À gauche}, le domaine original, les teintes de couleurs correspondent à la bathymétrie par rapport au niveau marin moyen.
-        Une valeur positive correspond à une hauteur en dessous du niveau marin.
-        Les pixels sont noirs au niveau du masque qui identifie les zones émergées.
-        Un pixel représente une surface de $75$ par $75~m$.
+        Les valeurs sont positives en dessous du niveau marin.
+        Le masque est identifié par des pixels noir (zones émergées).
+        La grille a une résolution de $75$ par $75~m$.
         \textbf{Au centre}, le domaine modifié.
-        La bathymétrie est lissée et le masque est complété
-        \textbf{À droite}, carte des différences de bathymétrie entre le domaine original et modifié.
+        La bathymétrie est lissée et le masque est complété.
+        \textbf{À droite}, la différence entre le domaine original et celui modifié.
         Cette carte permet notamment de vérifier que les valeurs n'ont pas été modifiées aux limites externes du domaine.
     }
     \label{fig:new_smooth}
 \end{figure}
 
-La Figure \ref{fig:workflow_prepro_main} présente l'utilisation des CROCO Pytools modifiés et des scripts écrits dans le cadre du stage pour l'ensemble des opérations de pré-traitement.
-Les chemins de fichiers présentées dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
+La Figure \ref{fig:workflow_prepro_main} présente le schéma d'organisation des CROCO Pytools modifiés et des scripts écrits dans le cadre du stage pour l'ensemble des opérations de pré-traitement.
+Les chemins de fichiers présentés dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_mere.pdf}
         \includegraphics[scale=0.35]{../images/workflow/graphe_data_process_fille_zoom.pdf}
@@ -752,7 +756,7 @@ Les chemins de fichiers présentées dans le rapport correspondent à la nomencl
 %En effet, les CROCO Pytools associés à ces forçages n'étaient pas existants ou pas fonctionnels avec nos données.
 
 
-\textbf{Les forçages par la marée}\\
+%\textbf{Les forçages par la marée}\\
 %\label{par:forcages_marree}
 %Le script \textit{make\_frc.py}, écrit dans le cadre du stage, permet de générer un fichier de marée pour CROCO à partir des données des modèles TPXO10 ou FES2014.
 %Les données procurées par les modèles de marées sont les amplitudes et les phases des hauteur d'eau et des composantes des courants associées à différentes harmoniques de marées en fonction de la position à la surface du globe.
@@ -776,13 +780,13 @@ Le calcul des valeurs d'humidité relative $RH$ suit le méthode décrite par \c
 $$RH = 10^{7,591386.(\frac{T_{dewpt}}{T_{dewpt}+240,7263}-\frac{T}{T+240,7263})}$$
 avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus de la surface de l'eau et $T$ la température de l'air à la même altitude.
 
-\subsubsection{Données brutes utilisées}
+\subsection{Données brutes utilisées}
 
-L'ensemble des données brutes utilisées pour la génération des données d'entrées est représenté en Figure \ref{fig:workflow_prepro_main}.
 
-Pour la majorité de la surface couverte par la grille mère, les données de bathymétrie proviennent de GEBCO 2024.
-Ces données couvrent l'espace selon une grille régulière.
-Par ailleurs, deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'anse du Cul-de-Loup.
+La liste des données brutes utilisées pour la génération des données d'entrées est représenté en Figure \ref{fig:workflow_prepro_main}. La recherche, la concaténation et la mise en forme de ces données pour le code CROCO, forment un ensemble d'opérations qui peut s'avérer relativement long et fastidieux en fonction du lieux modélisé et de la précision recherchée. Si des données générales sont facilement disponibles telles que la bathymétrie, par exemple, leur précision ne permet pas la mise en place de configurations à faible emprise géographique. Dans ce cas, il faut rechercher des informations complémentaires plus complètes mais plus difficilement disponibles. Se pose aussi alors souvent le problème du format dans lequel ces données sont présentes, qui peut nécessiter le développement d'outils spécifiques de mise en forme.
+
+Dans le cas de MACLoup, les données de bathymétrie ont été extraites du jeu de donnée générale \textit{GEBCO 2024} disponible gratuitement. Ces données bathymétriques couvrent la planète entière avec une résolution de \alert{xxx}. Si cette dernière s'est avérée suffisante pour la grille principale du modèle, il a fallu rechercher et utiliser des données plus précise pour la seconde grille centrée sur l'anse du Cul-de-Loup.
+Deux campagnes offrent des données de haute résolution mais discontinues sur la zone de l'anse du Cul-de-Loup.
 La campagne du ROL (https://www.rolnhdf.fr/) constituée de deux phases (topo-bathymétrique de 2016 à 2018 et topographique et orthophoto en 2020) couvre les côtes Normandes.
 Les données de cette campagnes utilisées pour l'étude de l'anse du Cul-de-Loup proviennent de prises Lidar.
 La campagne XXX a été réalisée dans le but de compléter les données de la campagne ROL.
@@ -898,7 +902,7 @@ Les paramètres principaux des deux domaines emboîtés sont décrits en Table\r
 
 \begin{table}[h!]
     \centering
-    
+
     \begin{tabular}{||c||c|c|c|c|c|}
         \hline
         Nom du domaine & latitude & longitude & étendue Nord Sud & étendue Est Ouest & résolution (m/px)\\
@@ -908,7 +912,7 @@ Les paramètres principaux des deux domaines emboîtés sont décrits en Table\r
         ADCL & 49,566 & -1,27 & $220~pixels$, $11~km$ & $138~pixels$, $6,9~km$ & $50$\\
         \hline
     \end{tabular}\newline
-    
+
     \begin{tabular}{||c||c|c|c|c|c|c|}
         \hline
         Nom du domaine & nombre de & lissage de & source de & marge de jonction & $\sigma_{s}$ & $\sigma_{b}$ \\
@@ -918,7 +922,7 @@ Les paramètres principaux des deux domaines emboîtés sont décrits en Table\r
         ADCL & 5 & 9 & ROL et XXX & $5~pixels$ & 0 & 2 \\
         \hline
     \end{tabular}\newline
-    
+
     \begin{tabular}{||c||c|c|c|}
         \hline
         Nom du domaine & bords ouverts & source des forçages & source des forçages \\
@@ -1076,7 +1080,7 @@ D'autre part, il a plus de chances de mieux représenter la réalité grâce à 
         MACLoup\_4 & 49,566 & -1,27 & $220~pixels$, $11~km$ & $138~pixels$, $6,9~km$ & $50$\\
         \hline
     \end{tabular}\newline
-    
+
     \begin{tabular}{||c||c|c|c|c|c|c|}
         \hline
         Nom du domaine & nombre de & lissage de & source de & marge de jonction & $\sigma_{s}$ & $\sigma_{b}$ \\
@@ -1086,7 +1090,7 @@ D'autre part, il a plus de chances de mieux représenter la réalité grâce à 
         MACLoup\_4 & 5 & 9 & ROL et XXX & $5~pixels$ & 0 & 2 \\
         \hline
     \end{tabular}\newline
-    
+
     \begin{tabular}{||c||c|c|c|}
         \hline
         Nom du domaine & bords ouverts & source des forçages & source des forçages \\
@@ -1279,22 +1283,22 @@ Une fois croco et les CROCO Pytools installés, l'achitecture de la configuratio
         # croco source directory
         # ---------------------
         CROCO_DIR=~/PATH-TO-CROCO/croco
-        
+
         # Home and Work configuration directories
         # ---------------------------------------
         MY_CONFIG_HOME=~/PATH-TO-CONFIGS/CONFIGS
-        
+
         # croco_tools directory for matlab tools
         # ---------------------
         # TOOLS_DIR=~/PATH-TO-CROCO/croco_pytools
         # For pre-processing WITH MATLAB:
         #cp ${TOOLS_DIR}/crocotools_param.m ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
         #cp ${TOOLS_DIR}/start.m ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
-        
+
         # Configuration name
         # ------------------
         MY_CONFIG_NAME=CONFIG-NAME  # put the name you want
-        
+
         # For configuration initialisaiton
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/datasets
@@ -1303,19 +1307,19 @@ Une fois croco et les CROCO Pytools installés, l'achitecture de la configuratio
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/datasets/gshhs
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/datasets/Ini
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/datasets/Topo
-        
-        
+
+
         # For pre-processing WITH PYTHON :
         mkdir ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/preproOUTPUT
-        
+
         # For CROCO compiling
         cp ${CROCO_DIR}/OCEAN/cppdefs.h ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
         cp ${CROCO_DIR}/OCEAN/param.h ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
         cp ${CROCO_DIR}/OCEAN/jobcomp ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
-        
+
         # For running
         cp ${CROCO_DIR}/OCEAN/croco.in ${MY_CONFIG_HOME}/${MY_CONFIG_NAME}/
-        
+
     \end{lstlisting}
 \end{codeEnv}
 
@@ -1326,11 +1330,11 @@ Une fois croco et les CROCO Pytools installés, l'achitecture de la configuratio
 Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et de traitement de données et d'exécution de codes décrit ci-après.
 
 \begin{processEnv}{\textbf{Plan des processus généraux à suivre pour mettre en place un modèle fonctionnel}}
-    
+
     {\color{paramColor}\textbf{Paramètres du modèle}}
-    
+
     Avant de rechercher les données qui seraient trop lourdes à télécharger à l'échelle globale, il convient de déterminer les propriétés principales de la zone d'étude et de son modèle. Ces paramètres sont :
-    
+
     \begin{enumerate}
         \item les latitudes et longitudes du centre de la zone d'étude totale,
         \item l'étendue en kilomètres de la zone d'étude dans le sens de la latitude et de la longitude,
@@ -1340,13 +1344,13 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
         \item les dates de début et de fin de la modélisation,
         \item les valeurs associées à la répartition des mailles verticales de la grille. Leur nombre $N$ doit aussi être déterminé.
     \end{enumerate}
-    
-    
+
+
     {\color{dataColor}\textbf{Données en entrée}}
-    
+
     En entrée, les données brutes nécessaires doivent toujours couvrir spatialement l'intégralité de la zone d'étude. Elles doivent être placées dans le dossier PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/datasets/.
     Elles sont :
-    
+
     \begin{enumerate}
         \item la bathymétrie {\color{darkgrey}[topo.nc]} couvrant au moins la zone d'étude,
         \item le masque côtier {\color{darkgrey}[GSHHS\_f\_L1.shp]} comprenant au moins les côtes de la zone d'étude,
@@ -1355,34 +1359,34 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
         \item le fichier texte présent nativement dans les CROCO Pytools {\color{darkgrey}[tides.txt]} contenant les noms et les périodes des différentes harmoniques des vagues de marée.
         \item les données atmosphériques {\color{darkgrey}[copernicus\_atmospheric\_data.nc]} couvrant une zone large autour et comprenant la zone d'étude. Ces données doivent couvrir le plus finement possible la gamme temporelle mentionnée dans la section précédente.
     \end{enumerate}
-    
+
     Les {\color{paramColor}\textbf{paramètres}} qu'il conviendra de récupérer dans la documentation des données de forçage (initial et aux limites) sont :
-    
+
     \begin{enumerate}
         \item les dates qui correspondent à l'origine du temps donné dans les fichiers téléchargées (généralement 1970/01/01),
         \item la nomenclature des variables devra aussi être vérifiée en fonction du contenu de \textit{croco\_pytools/prepro/Readers/ibc\_reader.py},
         \item l'orientation des limites de la grille ouvertes dans le plan d'eau,
         \item la cyclicité potentielle des données entrées.
     \end{enumerate}
-    
+
     {\color{workColor}\textbf{Pré-processing}}
-    
+
     Le pré-processing des données brutes n'est détaillé ici que pour les CROCO Pytools. Les outils Matlab ne sont pas abordés.
-    
+
     \textbf{- modifications basiques des fichiers netCDF}
-    
+
     Certaines modifications peuvent êtres préférablement réalisées avant d'utiliser les outils de pré-processing. Ces modifications peuvent être effectuées en utilisant la librairie NCO de traitement des fichiers netCDF
-    
+
     \begin{codeEnv}{\textbf{Changer le nom d'une variables du fichier}}
         \begin{lstlisting}[language=bash]
             # renome la variable t2m en HR
             nco chname,t2m,HR
         \end{lstlisting}
     \end{codeEnv}
-    
+
     Cette commande n'est pas obligatoire car les fichiers "ibc\_reader.py", "make\_frc\_tide.py" et "make\_blk\_interpol.py" peuvent être adaptés à la main.
     La commande reste utile si on souhaite dupliquer une variable (La marche à suivre est : dupliquer un fichier en in1.nc et in2.nc, puis renommer la variable A en A2 du fichier nc2.nc, puis concaténer les fichiers in1.nc et in2.nc. Le fichier de sortie contient alors les deux variables identiques A et A2).
-    
+
     \begin{codeEnv}{\textbf{Rognage des données selon une dimension}}
         \begin{lstlisting}[language=bash]
             # rogne selon les indices de la dimension time et
@@ -1390,16 +1394,16 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
             ncks -d time,240,359 -d longitude,-2.,3. -d latitude,48.,50. in.nc out.nc
         \end{lstlisting}
     \end{codeEnv}
-    
+
     Si des des entiers (exemple : 40) sont donnés pour la gamme à restreindre d'une dimension, ces valeurs sont interprétées comme les \textbf{indices} des dimensions minimum et maximum. Si des décimaux (exemple : 40.) sont donnés, les valeurs sont interprétées comme les \textbf{valeurs }minimales et maximales des dimensions.
-    
+
     \begin{codeEnv}{\textbf{Concaténation de plusieurs fichiers selon les dimensions communes}}
         \begin{lstlisting}[language=bash]
             # concatene tous les fichiers data_*.nc en un fichier data_tot_calc.nc
             ncrcat raw_download/data_*.nc data_tot_calc.nc
         \end{lstlisting}
     \end{codeEnv}
-    
+
     \begin{codeEnv}{\textbf{Effectuer une opération arithmétique sur plusieurs variables du fichier}}
         \begin{lstlisting}[language=bash]
             # calcule et stocke dans RH les valeurs d'humidite relative selon
@@ -1409,7 +1413,7 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
             in.nc out.nc
         \end{lstlisting}
     \end{codeEnv}
-    
+
     \begin{codeEnv}{\textbf{Effectuer une opération arithmétique sur plusieurs variables du fichier}}
         \begin{lstlisting}[language=bash]
             # change a "new attribute str value" la valeur de l'attribut "attribute"
@@ -1417,11 +1421,11 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
             ncatted -a attribute,variable,o,c,"new attribute str value" in.nc
         \end{lstlisting}
     \end{codeEnv}
-    
+
     \textbf{- Génération de la grille}
-    
+
     La grille \textit{croco\_grd.nc} est la base des prochaines actions de pré-processing ainsi que du modèle. Elle contient toutes les données relatives aux coordonnées de chaque maille de la grille sur laquelle le va travailler, ainsi que les données de bathymétrie, un paramètre de Coriolis et les coordonnées curvilinéaires des mailles.
-    
+
     \begin{codeEnv}{\textbf{générer la grille en mode graphique}}
         \begin{lstlisting}[language=bash]
             # dans PATH-TO-CROCO/croco_pytools/prepro/
@@ -1430,82 +1434,82 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
             > (e.g., for grid rotation or parameter adjustments) : y,[n] y
         \end{lstlisting}
     \end{codeEnv}
-    
+
     Dans la fenêtre graphique, les champs doivent être modifiés pour correspondre aux paramètres voulus. Ils peuvent être aussi déterminés et choisis par tâtonnement en utilisant les boutons \textit{Compute grid} et \textit{Compute smoothing} successivement.
-    
+
     Les valeurs utilisées pour modéliser le Cotentin (France) ainsi que les visualisation proposées sont présentées en Figure \ref{make_grid_main}.
-    
+
     Une fois la grille souhaitée obtenue, la sauvegarder en utilisant le bouton \textit{Save grid}.
-    
+
     \textbf{- Génération des fichiers de données}
-    
+
     Tous les codes de pré-processing suivants peuvent être exécutés dans n'importe quel ordre en se plaçant dans le répertoire du code voulu et en indiquant l'intitulé de ce code dans la commande:
-    
+
     \begin{codeEnv}{\textbf{exécuter un code de pré-pocessing}}
         \begin{lstlisting}[language=bash]
             python3 <name_of_the_pre-pro_code>.py
         \end{lstlisting}
     \end{codeEnv}
-    
+
     Au début de chaque code, une partie dans l'entête encadrée par \lstinline[language=python]|###...## USER CHANGES ###...###| et \lstinline[language=python]|###...## end USER CHANGES ###...###| doit être relue pour indiquer les bon paramètres ainsi que les noms et registres des fichiers de données brutes nécessaires.
-    
+
     Les codes devant être exécutés sont dans le répertoire \textit{croco\_pytools/} :
-    
+
     \begin{enumerate}
         \item \textit{prepro/make\_ini.py} génération des conditions initiales à partir des données marines,
         \item \textit{prepro/make\_bry.py} génération des conditions (de pression, température, salinité, etc.) aux bords ouverts sur le plan d'eau de la grille, à partir des données marines,
         \item \textit{make\_frc\_tide.py} génération des conditions de forçage par les modèles de marées pour les bords ouverts sur le plan d'eau de la grille, à partir des données issues d'un modèle de marée,
         \item \textit{make\_blk\_interpol.py} génération des conditions de forçage atmosphériques à la surface du plan d'eau sur l'ensemble de la grille, à partir des données atmosphériques.
     \end{enumerate}
-    
+
     Ces codes vont respectivement générer les fichiers de données :
-    
+
     \begin{enumerate}
         \item \textit{croco\_ini.py}
         \item \textit{croco\_bry.py}
         \item \textit{croco\_frc.py}
         \item \textit{croco\_blk.py}
     \end{enumerate}
-    
+
     Le schéma XXX détaille les dépendances de fichiers et les paramètres à spécifier pour chaque code de pré-processing.
-    
+
     Attention, à partir de deux grilles filles, il convient de corriger manuellement le fichier AGRIF\_FixedGrids.in.
-    
+
     {\color{workColor}\textbf{Modélisation}}
-    
+
     \textbf{- Modification des fichiers de compilation}
-    
+
     Les fichiers qui doivent être modifiés (ou écrits) sont :
-    
+
     \begin{itemize}
         \item croco.in (+ croco.in.n avec n allant de 1 au nombre de grilles enfants)
         \item param.h
         \item cppdefs.h
         \item jobcomp
     \end{itemize}
-    
+
     \textbf{- Compilation du modèle}
-    
+
     \begin{codeEnv}{\textbf{commande pour compiler le code CROCO}}
         \begin{lstlisting}[language=bash]
             # dans PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/
             ./jobcomp
         \end{lstlisting}
     \end{codeEnv}
-    
+
     \textbf{- Exécution du modèle}
-    
+
     \begin{codeEnv}{\textbf{commande pour exécuter le code CROCO}}
         \begin{lstlisting}[language=bash]
             # dans PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/
             ./croco
         \end{lstlisting}
     \end{codeEnv}
-    
+
     {\color{outputColor}\textbf{Fichiers de sortie}}
-    
+
     La compilation du modèle produit les fichiers :
-    
+
     \begin{itemize}
         \item de dossier Compile dans son intégralité,
         \item croco,
@@ -1514,7 +1518,7 @@ Le schéma Figure\ref{fig:workflow_simple} résume les étapes de décision et d
         \item kRGB61.txt.1,
         \item kRGB61.txt
     \end{itemize}
-    
+
 \end{processEnv}
 \begin{comment}
     \begin{codeEnv}{\textbf{Exemple de code Python}}
@@ -1542,23 +1546,23 @@ L'entête du code \textit{make\_grid.py} doit être adaptée aux paramètres cho
 \begin{codeEnv}{\textbf{modifications utilisateur·ice de make\_grid.py}}
     \begin{lstlisting}[language=python]
         #--- USER CHANGES ---------------------------------------------------------
-        
+
         # Grid center [degree]
         tra_lon =  15 # Longitude of the grid center
         tra_lat = -32 # Latitude of the grid center
-        
+
         # Grid size [km]
         size_x = 1556
         size_y = 1334
-        
+
         # Grid number of points
         # Note: grid resolution is grid size / number of points
         nx = 39
         ny = 40
-        
+
         # Grid rotation [degree]
         rot = 0
-        
+
         # Smoothing parameters
         # (see online documentation for more details)
         hmin        = 50    # Minimum depth [m]
@@ -1570,20 +1574,20 @@ L'entête du code \textit{make\_grid.py} doit être adaptée aux paramètres cho
         smooth_meth = 'lsmooth'  # Smoothing method ('smooth', 'lsmooth',
         #                           'lsmooth_legacy', 'lsmooth2', 'lsmooth1',
         #                           'cond_rx0_topo')
-        
+
         # Topo/Bathy file
         topofile = 'PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/dataset/Topo/etopo2.nc'
-        
+
         # Coastline file (for the mask)
         shp_file = 'PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/dataset/gshhs/GSHHS_i_L1.shp'
-        
+
         # Single Connect [Mask water not connected to the main water body]
         sgl_connect=[False,20,20]  # point indices inside the main water body
         #                               (True or False)
-        
+
         # Output grid file
         output_file="PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/preproOUTPUT/croco_grd.nc"
-        
+
         #--- END USER CHANGES -----------------------------------------------------
     \end{lstlisting}
 \end{codeEnv}
@@ -1592,7 +1596,7 @@ L'entête du code \textit{make\_grid.py} doit être adaptée aux paramètres cho
 \begin{figure}
     \begin{center}
         \includegraphics[scale=0.4]{../images/makegrid/parameters_main.png}
-        
+
         \includegraphics[scale=0.2]{../images/makegrid/config_main.png}
         \includegraphics[scale=0.2]{../images/makegrid/ismooth_main.png}
         \caption{Caption.}
@@ -1608,14 +1612,14 @@ L'entête du code \textit{make\_ini.py} doit être adaptée aux paramètres choi
 \begin{codeEnv}{\textbf{modifications utilisateur·ice de \textit{make\_ini.py}}}
     \begin{lstlisting}[language=python]
         #--- USER CHANGES ---------------------------------------------------------
-        
+
         # Dates
         # starting date
         Yini, Mini, Dini, Hini  = '2013', '11', '28', '01'  # Month and days need to be
         #       2-digits format reference time (default = ini time)
         Yorig, Morig, Dorig= '1970', '01', '01'  # Month and days need to be
         #       2-digits format
-        
+
         # Input data information and formating
         inputdata = 'copernicus'  # Input data dictionnary as defined in the
         #       Readers/ibc_reader.py
@@ -1631,31 +1635,31 @@ L'entête du code \textit{make\_ini.py} doit être adaptée aux paramètres choi
             'u'    : input_dir + input_prefix + 'EVEL.Y2013M01.nc',\
             'v'    : input_dir + input_prefix + 'NVEL.Y2013M01.nc'\
         }
-        
+
         # time index to use in the file
         tndx = 0
-        
+
         # default value to consider a z-level fine to be used
         Nzgoodmin = 4
-        
+
         # tracers
         tracers = ['temp','salt']
-        
+
         # CROCO grid informations
         croco_dir = 'PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/preproOUTPUT/'
         croco_grd = 'croco_grd.nc'
         sigma_params = dict(theta_s=7, theta_b=2, N=32, hc=200)  # Vertical streching,
         #       sig_surf/sig_bot/ nb level/critical depth
-        
+
         # Ini file informations
         ini_filename = 'croco_ini.nc'  # output will be put in croco_dir by default
-        
+
         # Conserv OGCM transport option
         conserv=1  # Correct the horizontal transport i.e. remove the integrated
         #       transport and add the OGCM transport
-        
+
         #--- END USER CHANGES -----------------------------------------------------
-        
+
     \end{lstlisting}
 \end{codeEnv}
 
@@ -1665,7 +1669,7 @@ Pour que les codes d'initialisation et de conditions aux limites fonctionnent co
     \begin{lstlisting}[language=python]
         # ajouter dans  la fonction lookvar(input):
         # avant la ligne "else:" (vers la ligne 55)
-        
+
         elif input == 'copernicus':
         dico={ 'depth':'depth',\
             'lonr':'longitude','lonu':'longitude','lonv':'longitude',\
@@ -1688,13 +1692,13 @@ L'entête du code \textit{make\_bry.py} doit être adaptée aux paramètres choi
 \begin{codeEnv}{\textbf{modifications utilisateur·ice de \textit{make\_bry.py}}}
     \begin{lstlisting}[language=python]
         #--- USER CHANGES ---------------------------------------------------------
-        
+
         # Dates
         Yorig, Morig, Dorig = '1970', '01', '01'  # origin of time as: days since
         #       Yorig-Morig-Dorig-00h00
         Ystart, Mstart, Dstart, Hstart = '2013', '11', '28', '01'  # Starting month
         Yend, Mend, Dend, Hend  = '2014','03', '01', '01'  # Ending month
-        
+
         # Input data information and formating
         inputdata = 'copernicus'  # Input data dictionnary as defined in the
         #       Readers/ibc_reader.py
@@ -1710,30 +1714,30 @@ L'entête du code \textit{make\_bry.py} doit être adaptée aux paramètres choi
         }
         else:  # glob all files
         input_file  = sorted(glob.glob(input_dir + input_prefix))
-        
+
         # default value to consider a z-level fine to be used
         Nzgoodmin = 4
-        
+
         # Tracers
         tracers = ['temp', 'salt']
-        
+
         # CROCO grid informations
         croco_dir = 'PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/preproOUTPUT/'
         croco_grd = 'croco_grd.nc'
         sigma_params = dict(theta_s=7, theta_b=2, N=32, hc=200)  # Vertical streching,
         #       sig_surf/sig_bot/ nb level/critical depth
-        
+
         # Bry file informations
         bry_filename = 'croco_bry.nc'  # output will be put in croco_dir by default
         obc_dict = dict(south=1, west=1, east=1, north=1) # open boundaries
         #       (1=open , [S W E N])
         output_file_format = "FULL"  # How outputs are spit (MONTHLY,YEARLY,FULL)
         cycle_bry = 0.
-        
+
         # Conserv OGCM transport option
         conserv=1  # Correct the horizontal transport i.e. remove the integrated
         #       tranport and add the OGCM transport
-        
+
         #--- END USER CHANGES -----------------------------------------------------
     \end{lstlisting}
 \end{codeEnv}
@@ -1747,7 +1751,7 @@ Quelques modifications doivent aussi être effectuées dans le corps du code com
         start_date = Ystart+Mstart+'01'+'12'  # defaut start day is 1st
         # NOUVEAU :
         start_date = Ystart+Mstart+Dstart+Hstart  # defaut start day is 1st
-        
+
         # ligne 119
         # ORIGINAL :
         dtenddt = plt.datetime.datetime(int(Yend),int(Mend),1,12) \
@@ -1769,7 +1773,7 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
     \begin{lstlisting}[language=python]
         ############################ User changes ############################
         # don't change de left part of the dictionnary (keys)
-        
+
         INPUT_PARAM = {	"lon": "longitude",
             "lat": "latitude",
             "time": "valid_time",
@@ -1785,13 +1789,13 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
             "UWind": "u10",
             "VWind": "v10"
         }
-        
+
         INPUT = {
             "dir": "PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/datasets/Bulk/",
             "file": 'cpernicus_atmospheric_data.nc',
             "param": INPUT_PARAM
         }
-        
+
         output_param = {"time": "bulk_time",
             "Tair": "tair",
             "HumiditeRelat": "rhum",
@@ -1805,16 +1809,16 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
             "UWind": "uwnd",
             "VWind": "vwnd"
         }
-        
+
         OUTPUT = {	"dir": "PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/preproOUTPUT/",
             "file": 'croco_blk.nc',
             "param": output_param
         }
-        
+
         NB_VOISINS = 8
-        
+
         sigma_params = dict(theta_s=0, theta_b=0, N=1, hc=1)
-        
+
         ########################## END User changes ##########################
     \end{lstlisting}
 \end{codeEnv}
@@ -1830,19 +1834,19 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
 \begin{codeEnv}{\textbf{modifications utilisateur·ice de \textit{make\_frc\_tide.py}}}
     \begin{lstlisting}[language=python]
         # sera modifie pour que ce soit des disctionnaires si on le veut dans le rapport
-        
+
         ############################ User changes ############################
-        
+
         Correction_uv = False
         tides = ['M2','S2','N2','K2','K1','O1','P1','Q1','Mf','Mm']
-        
+
         grid_dir = "PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/preproOUTPUT/"
         grid_name = "croco_grd.nc"
         #grid_param = ["lon_rho", "lat_rho", "lon_u", "lat_u", "lon_v", "lat_v"]
         grid_param = ["lon_rho", "lat_rho", "lon_rho", "lat_rho", "lon_rho", "lat_rho"]
         print("\n grid param : \n", grid_param)
         grid_param_meaning = ["lonH", "latH", "lonU", "latU", "lonV", "latV"]  # don't change this order
-        
+
         input_dir = "PATH-TO-CONFIGS/CONFIGS/CONFIG-NAME/datasets/Bry/AVISO/"
         TPXO_or_AVISO = True  # 0 or False for TPXO    and    1 or True for AVISO
         multi_file = True  # 0 or False if monofile   and   1 or True if multifile
@@ -1863,7 +1867,7 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
         input_file_name = np.array(input_file_name)
         print("\ninput directory :\n", input_dir)
         print("\ninput files : \n", input_file_name)
-        
+
         input_param_names = [   ["lat", "lon", "phase", "amplitude"],
         ["lat", "lon", "Ug", "Ua"],
         ["lat", "lon", "Vg", "Va"],
@@ -1874,16 +1878,16 @@ schéma descriptif du fonctionnement du code [FIGURE À FAIRE]
         ["latV", "lonV", "phaseV", "amplitudeV"],
         ]  # keep same names as grid_param_meaning
         print("\n input param meaning : \n", input_param_meaning)
-        
+
         output_dir = "../CONFIGS/CUL_DE_LOUP/GRIDS/"
         output_file_name = 'croco_frc.nc'
         output_param = ["tide_period", "tide_Ephase", "tide_Eamp",
         "tide_Cmin", "tide_Cmax", "tide_Cangle", "tide_Cphase"]  # don't change the order
-        
+
         tide_param_path="prepro/Modules/tides.txt"
-        
+
         NB_VOISINS = 8
-        
+
         ########################## END User changes ##########################
     \end{lstlisting}
 \end{codeEnv}
