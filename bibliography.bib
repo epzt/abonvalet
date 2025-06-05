@@ -1,7 +1,7 @@
 % Encoding: UTF-8
 
 @PhdThesis{dev_RANS-LES_these,
-  author  = {Vladimir Duffal},
+  author  = {Duffal, V.},
   title   = {Développement d’un modèle hybride RANS-LES pour l’étude des efforts instationnaires en paroi},
   school  = {Université de Pau et des Pays de l’Adour},
   year    = {2020},
@@ -13,11 +13,11 @@
   url     = {https://theses.hal.science/tel-03038837v1},
 }
 
-@article{comp_RANS_LES,
-	title={Comparison of RANS and LES in high pressure turbines},
-	author={Fransen, R and Collado, E and Duchaine, F and Gourdain, N and Gicquel, L and Vial, L and Bonneau, G},
-	journal={3rd INCA Colloquim},
-	year={2011}
+@Article{comp_RANS_LES,
+  author  = {Fransen, R. and Collado, E. and Duchaine, F. and Gourdain, N. and Gicquel, L. and Vial, L. and Bonneau, G.},
+  title   = {Comparison of RANS and LES in high pressure turbines},
+  journal = {3rd INCA Colloquim},
+  year    = {2011},
 }
 
 @Misc{croco_files_examples,
@@ -40,7 +40,7 @@
 
 @Manual{dyn_sed_contraintes_lehire2008aide,
   title        = {Aide mémoire de dynamique sédimentaire},
-  author       = {Le Hir, Pierre},
+  author       = {Le Hir, P.},
   organization = {IFREMER, Département DYNECO, Laboratoire PHYSED},
   address      = {Centre IFREMER de BREST, BP 70, 29280 Plouzané, France},
   edition      = {7},
@@ -56,7 +56,7 @@
 }
 
 @Article{new_bathy_smoothing_sikiric2009new,
-  author    = {Sikirić, Mathieu Dutour and Janeković, Ivica and Kuzmić, Milivoj},
+  author    = {Sikirić, M. D. and Janeković, I. and Kuzmić, M.},
   title     = {A new approach to bathymetry smoothing in sigma-coordinate ocean models},
   journal   = {Ocean Modelling},
   year      = {2009},
@@ -106,7 +106,7 @@
 }
 
 @Article{swash_article_MARCHESIELLO2021101816,
-  author    = {Marchesiello, Patrick and Auclair, Francis and Debreu, Laurent and McWilliams, James and Almar, Rafael and Benshila, Rachid and Dumas, Franck},
+  author    = {Marchesiello, P. and Auclair, F. and Debreu, L. and McWilliams, J. and Almar, R. and Benshila, R. and Dumas, F.},
   title     = {Tridimensional nonhydrostatic transient rip currents in a wave-resolving model},
   journal   = {Ocean Modelling},
   year      = {2021},
@@ -120,22 +120,21 @@
   url       = {https://www.sciencedirect.com/science/article/pii/S1463500321000676},
 }
 
-@inproceedings{GLS_KOMEGA_kolmogorov1941equations,
-	title={Equations of turbulent motion in an incompressible fluid},
-	author={Kolmogorov, Andrej Nikolaevich},
-	booktitle={Dokl. Akad. Nauk SSSR},
-	volume={30},
-	pages={299--303},
-	year={1941}
+@InProceedings{GLS_KOMEGA_kolmogorov1941equations,
+  author    = {Kolmogorov, A. N.},
+  title     = {Equations of turbulent motion in an incompressible fluid},
+  booktitle = {Dokl. Akad. Nauk SSSR},
+  year      = {1941},
+  volume    = {30},
+  pages     = {299--303},
 }
 
-@unknown{ap2ep,
-    author = {Xu, Zhigang},
-    year = {2002},
-    month = {10},
-    pages = {},
-    title = {Ellipse Parameters Conversion and Velocity Profiles for Tidal Currents in Matlab},
-    doi = {10.13140/RG.2.1.2515.4000}
+@Unknown{ap2ep,
+  author = {Xu, Z.},
+  title  = {Ellipse Parameters Conversion and Velocity Profiles for Tidal Currents in Matlab},
+  month  = {10},
+  year   = {2002},
+  doi    = {10.13140/RG.2.1.2515.4000},
 }
 
 @Misc{GEBCO,
@@ -154,10 +153,65 @@
   title     = {Computational Design of the Basic Dynamical Processes of the UCLA General Circulation Model},
   publisher = {Elsevier},
   year      = {1977},
-  author    = {ARAKAWA, AKIO and LAMB, VIVIAN R.},
+  author    = {Arakawa, A. and Lamb, V. R.},
   booktitle = {General Circulation Models of the Atmosphere},
   doi       = {https://doi.org/10.1016/B978-0-12-460817-7.50009-4},
   issn      = {0076-6860},
+}
+
+@Misc{copernicus_marine_data,
+  author    = {{European Union-Copernicus Marine Service}},
+  title     = {Global Ocean 1/12° Physics Analysis and Forecast updated Daily},
+  year      = {2016},
+  doi       = {10.48670/MOI-00016},
+  keywords  = {oceanography},
+  language  = {en},
+  publisher = {Mercator Ocean International},
+}
+
+@Misc{copernicus_climate_data,
+  author    = {{Copernicus Climate Change Service}},
+  title     = {ERA5 monthly averaged data on single levels from 1940 to present},
+  year      = {2019},
+  doi       = {10.24381/CDS.F17050D7},
+  publisher = {Copernicus Climate Change Service (C3S) Climate Data Store (CDS)},
+}
+
+@Misc{FES2014,
+  author    = {{LEGOS} and {NOVELTIS} and {CLS}},
+  title     = {FES2022 (Finite Element Solution) Ocean Tide},
+  year      = {2024},
+  doi       = {10.24400/527896/A01-2024.004},
+  journal   = {Finite Elements Solution 2022 is a tidal model},
+  publisher = {CNES},
+}
+
+@Article{FFT,
+  author  = {Cooley, J. W. and John W. T.},
+  title   = {An Algorithm for the Machine Calculation of Complex Fourier Series},
+  journal = {American Mathematical Society},
+  year    = {1965},
+}
+
+@Article{RANS_def,
+  author  = {Reynolds, O.},
+  title   = {On the Dynamical Theory of Incompressible Viscous Fluids and the Determination of the Criterion},
+  journal = {Philosophical Transactions of the Royal Society of London. (A.)},
+  year    = {1895},
+  volume  = {186},
+  pages   = {123--164},
+  month   = dec,
+  issn    = {2053-9231},
+  doi     = {10.1098/rsta.1895.0004},
+}
+
+@Misc{geoportail,
+  author       = {{Institut géographique national}},
+  title        = {Géoportail},
+  howpublished = {Saint-Mandé (73 avenue de Paris ; 94165 Cedex) : IGN},
+  year         = {2012},
+  note         = {Notice rédigée d'après la consultation de la ressource, 2015-12-29 Titre provenant de l'écran-titre Date de première collecte dans les archives du web : 2012-07-12},
+  url          = {https://web.archive.org/web/*/https://www.geoportail.gouv.fr/},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
