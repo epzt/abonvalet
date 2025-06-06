@@ -160,7 +160,7 @@ Mots-clés (5 maximum) : CROCO, Python, pré-traitement, post-traitement
                 \end{minipage}
                 \\
                 \vspace{1cm}
-                {\large— Janvier 2025 - Juin 2025 —}
+                {\large— janvier - juin 2025 —}
 
             \end{center}
         \end{sffamily}
@@ -175,11 +175,11 @@ Le modèle a passé sa première phase de mise en place et de validation.
 Sa construction est le premier pas vers la création d'un outil de compréhension et de projection environnementale dans l'anse du Cul-de-Loup.
 
 
-\vspace{10cm}
+\vfill
 \begin{sffamily}
 \begin{center}
 \HRule \\[0.4cm]
-{ \huge \bfseries Implementation of an hydrodynamic numerical model of the \textit{anse du Cul-de-Loup} (Normandy, France)\\ [0.4cm] }
+{ \huge \bfseries Implementation of an hydrodynamic numerical model of the \textit{anse du Cul-de-Loup} (Normandy,~France)\\ [0.4cm] }
 
 \HRule \\[2cm]
 \end{center}
@@ -191,7 +191,6 @@ Today, the fast and continuous loss of environmental quality and safety of the b
 During the internship, an hydrodynamic numerical model of the \textit{anse du Cul-de-Loup} has been set up by using the community computing code CROCO.
 The model have passed its first setup and validation round.
 The model implementation is the first step toward the creation of a tool allowing understanding and forecast of the studied bay.
-
 
 \newpage
 
@@ -236,7 +235,7 @@ The model implementation is the first step toward the creation of a tool allowin
     \begin{figure}[!h]
         \centering
         \includegraphics[width=0.8\linewidth]{../images/carte-ADCL}
-        \caption[anse du Cul-de-Loup.]{L'anse du Cul-de-Loup.}
+        \caption[anse du Cul-de-Loup.]{\textbf{L'anse du Cul-de-Loup.}}
         \label{fig:carte-adcl}
     \end{figure}
 
@@ -244,10 +243,14 @@ The model implementation is the first step toward the creation of a tool allowin
 
     L'orientation de l'anse du Cul-de-Loup la protège des houles les plus fréquentes en baie de Seine, qui sont de secteurs nord-ouest à nord-est essentiellement. Les houles de secteur est et sud-est sont les seules à éventuellement pouvoir pénétrer dans l'anse, mais elles sont à la fois plus rares et de faible énergie. Ces dernières sont rapidement dissipées par la présence des structures ostréicoles et pénètrent donc peu à l'intérieure de l'anse. À l'est au niveau de la bordure interne de l'Île de la Hougue, certaines houles peuvent néanmoins diffracter et être canalisées le long de l'île avec une énergie significative.
 
-    \begin{figure}[!h]
+    \begin{figure}[h!]
         \centering
         \includegraphics[width=0.8\linewidth]{../images/historique}
-        \caption[Évolution de l'anse du Cul-de-Loup]{En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole. En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partie nord. En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles. \parencite{geoportail}}
+        \caption[Évolution de l'anse du Cul-de-Loup]{
+            \textbf{L'évolution temporelle de l'anse du Cul-de-Loup.}\\
+            En bas à gauche, image aérienne de 1942, l'anse du Cul-de-Loup ne contient aucun parc ostréicole.
+            En bas à droite, image aérienne de 1965, l'anse du Cul-de-Loup commence à être aménagée dans sa partie nord.
+            En haut à gauche et à droite, respectivement la morpho-bathymétrie  et une image aérienne actuelle de l'anse du Cul-de-Loup montrant de nombreuses concessions ostréicoles. \parencite{geoportail}}
         \label{fig:historique-adcl}
     \end{figure}
 
@@ -553,8 +556,9 @@ Cette méthode est illustrée par la Figure \ref{fig:imbrication_workflow} qui p
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.3]{../images/workflow/multi_grid.pdf}
-    \caption{Schéma de la mise en place des domaines emboîtés du modèle MACLoup. La procédure du cadre de droite (ADCL) peut être dupliquée autant que nécessaire.}
+    \includegraphics[scale=0.35]{../images/workflow/multi_grid.pdf}
+    \caption{\textbf{Schéma de la mise en place des domaines emboîtés du modèle MACLoup.}\\
+        La procédure du cadre de droite (ADCL) peut être dupliquée autant que nécessaire.}
     \label{fig:imbrication_workflow}
 \end{figure}
 
@@ -580,8 +584,8 @@ Les morphologies des deux domaines de MACLoup sont visualisées en Figure \ref{f
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4]{../images/COTENTIN_ADCL5.png}
-	\includegraphics[scale=0.27]{../images/ADCL5.png}
+	\includegraphics[scale=0.35]{../images/COTENTIN_ADCL5.png}
+	\includegraphics[scale=0.25]{../images/ADCL5.png}
 	%\includegraphics[scale=0.27]{../images/croco_grd.nc.2_V2.png}
 	\caption{
 		\textbf{Les domaines emboîtés et leur bathymétrie utilisés dans MACLoup.}\\
@@ -739,7 +743,8 @@ Cette dernière a nécessité d'être redéfinie de manière à ne pas être inf
 %Cette modification a soulevé un autre problème du code de création du domaine.
 %En effet, le code permet de choisir une distance d'interpolation plus ou moins grande et les valeurs sélectionnées pour l'interpolation peuvent être localisées sous le masque.
 %Pour éviter que les données modifiées appartenant au masque n'aient une influence sur les données de bathymétrie, l'option d'interpolation n'a pas été utilisée pour le domaine d'intérêt centré sur l'anse du Cul-de-Loup.
-Le code \textit{make\_grid.py} gère aussi la mise en place de domaines emboîtés (voir \ref{subsub:emboitement_domaines}).%qu'il s'agisse du type temps réel (AGRIF) ou du type temps-différé (notre choix) décrits en section .
+Le code \textit{make\_grid.py} gère aussi la mise en place de domaines emboîtés (voir \ref{subsub:emboitement_domaines}).
+%qu'il s'agisse du type temps réel (AGRIF) ou du type temps-différé (notre choix) décrits en section .
 %La première méthode permet de mettre en place le système d'esmboîtement de domaines simultané et rétrospectif.
 %Cette méthode de création de domaines emboîtés est appelée AGRIF dans les CROCO Pytools.
 %La seconde méthode permet de mettre en place manuellement et successivement un emboîtement linéaire de domaines.
@@ -791,7 +796,7 @@ Cet outils s'est révélé fonctionnel sans que des modifications importantes n'
 \subsubsection{Les outils développés}
 \label{subsub:outils_dev}
 \textbf{Les forçages par la marée}\\
-Comme expliqué en Section \ref{subsub:forcages}, les phénomènes de marée sont centraux dans l'hydrodynamique de l'anse du Cul-de-Loup.
+Comme expliqué en section \ref{subsub:forcages}, les phénomènes de marée sont centraux dans l'hydrodynamique de l'anse du Cul-de-Loup.
 Une attention particulière a donc été portée sur le choix du modèle de marée utilisé.
 Le modèle TPXO10 est le modèle traditionnellement utilisé.
 Il apparaît de plus en plus dans la littérature scientifique que le modèle Finite Element Solution (FES2014) \parencite{FES2014} lui est préféré.
@@ -826,7 +831,7 @@ L'analyse fréquentielle des données de mesures de la campagne ProTeC (voir \re
         \caption{}
     \end{subfigure}
     \caption{
-        \textbf{(a) Transformée de Fourier des deux séries de mesure ProTeC réalisées dans l'anse du Cul-de-Loup entre décembre 2023 et février 2024.}
+        \textbf{(a) Transformée de Fourier des deux séries de mesure ProTeC réalisées dans l'anse du Cul-de-Loup entre décembre 2023 et février 2024.}\\
         Les barres verticales représentent les harmoniques de marées des données de forçages MACLoup.
         Les noms des harmoniques de marée d'intérêt sont indiqués.
         Les noms en bleu sont ceux des harmoniques communes aux modèles TPXO10 et FES2014.
@@ -869,7 +874,9 @@ Quatre modules ont ainsi été écrits contenant chacun une classe :
 \end{itemize}
 %Ces classes sont utilisées par les deux nouveaux outils de pré-traitement \textit{make\_frc.py} et \textit{make\_blk.py}.
 
-Par ailleurs, un outil supplémentaire, \textit{apply\_grid\_smoothing.py}, a été développé afin d'agir sur le fichier de définition du domaine \textit{croco\_grid.nc}.
+\vspace*{0.5cm}
+\textbf{La morphologie du domaine}\\
+Un outil supplémentaire, \textit{apply\_grid\_smoothing.py}, a été développé afin d'agir sur le fichier de définition du domaine \textit{croco\_grid.nc}.
 La présence de pentes importantes est préjudiciable à la stabilité des calculs.
 Ces zones sont à l'origine de la génération de vitesses trop importantes qui mènent au crash du modèle.
 Le programme \textit{apply\_grid\_smoothing.py} applique un lissage plus ou moins intense de la bathymétrie du domaine modélisé.
@@ -878,8 +885,8 @@ Un exemple du fonctionnement et de l'utilisation de ce nouvel outil est donnée 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{../images/workflow/grid_smoothing.pdf}
-    \caption{Organisation des étapes de traitement effectuées par le nouveau code de calcul \textit{apply\_grid\_smoothing.py} suite à l'utilisation de l'outil original \textit{make\_grid.py}.}
+    \includegraphics[scale=0.65]{../images/workflow/grid_smoothing.pdf}
+    \caption{\textbf{Organisation des étapes de traitement effectuées par le nouveau code de calcul \textit{apply\_grid\_smoothing.py} suite à l'utilisation de l'outil original \textit{make\_grid.py}.}}
     \label{fig:new_smooth_work}
 
 \end{figure}
@@ -899,6 +906,29 @@ Un exemple du fonctionnement et de l'utilisation de ce nouvel outil est donnée 
     }
     \label{fig:new_smooth}
 \end{figure}
+
+
+
+
+\textbf{Les forçages atmosphériques}\\
+Les données de forçage atmosphérique sont contenues dans un fichier nommé \textit{croco\_blk.nc}.
+Aucun programme n'est jusqu'alors présent dans les CROCO Pytools pour générer ce fichier.
+Un nouvel outil a donc été développé (\textit{make\_blk.py}) en conservant à la fois la démarche rétro-ingénierie et une mise en \oe{}uvre générique.
+
+Le script génère un fichier de conditions atmosphériques en surface de l'eau à partir des données issues de Copernicus (climate).
+Ces données sont celles attendues dans le fichier de conditions atmosphériques.
+Néanmoins l'humidité relative au dessus de la surface de l'eau n'est pas présente.
+Le point de rosée est utilisé pour la déterminer.
+% à l'exception de l'humidité relative au dessus de la surface de l'eau. Cette dernière donnée n'est pas disponible dans le pool de données utilisées.
+%Toutefois, la température du point de rosée de l'eau est disponibles dans ce pool.
+%Or, la température du point de rosée est dépendante de plusieurs paramètres atmosphériques dont l'humidité relative.
+La formulation permettant d'estimer l'humidité relative $RH$ a été ajouté dans le script \textit{make\_blk.py}.
+Elle suit la méthode décrite par \cite{humidity_formulation} en considérant une température entre $-20$ et $+50 ^\circ C$ :
+$$RH = 10^{7,591386.(\frac{T_{dewpt}}{T_{dewpt}+240,7263}-\frac{T}{T+240,7263})},$$
+avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus de la surface de l'eau et $T$ la température de l'air à la même altitude.\\
+
+
+
 
 La Figure \ref{fig:workflow_prepro_main} présente le schéma d'organisation des CROCO Pytools modifiés et des scripts écrits dans le cadre du stage pour l'ensemble des opérations de pré-traitement.
 %Les chemins de fichiers présentés dans le rapport correspondent à la nomenclature définie en Annexes \ref{anx:orga_fichiers}.
@@ -947,23 +977,6 @@ Les nouveaux outils développés sont \textit{apply\_grid\_smoothing.py}, \texti
 %Les données de marée du modèle TPXO10 ont été testées, mais ce sont les résultats du modèle FES2014 qui ont finalement été retenus notamment car ils contiennent un nombre plus important d'harmoniques de marées.
 %Si les données de FES2022 sont complétées dans le futur, il sera alors possible d'aisément re-modéliser les domaines avec les nouvelles données.
 %(indiquer pourquoi ? meilleure résolution dans notre zone, données à un format plus adapté au pré-processing)
-
-\textbf{Les forçages atmosphériques}\\
-Les données de forçage atmosphérique sont contenues dans un fichier nommé \textit{croco\_blk.nc}.
-Aucun programme n'est jusqu'alors présent dans les CROCO Pytools pour générer ce fichier.
-Un nouvel outil a donc été développé (\textit{make\_blk.py}) en conservant à la fois la démarche rétro-ingénierie et une mise en \oe{}uvre générique.
-
-Le script génère un fichier de conditions atmosphériques en surface de l'eau à partir des données issues de Copernicus (climate).
-Ces données sont celles attendues dans le fichier de conditions atmosphériques.
-Néanmoins l'humidité relative au dessus de la surface de l'eau n'est pas présente.
-Le point de rosée est utilisé pour la déterminer.
-% à l'exception de l'humidité relative au dessus de la surface de l'eau. Cette dernière donnée n'est pas disponible dans le pool de données utilisées.
-%Toutefois, la température du point de rosée de l'eau est disponibles dans ce pool.
-%Or, la température du point de rosée est dépendante de plusieurs paramètres atmosphériques dont l'humidité relative.
-La formulation permettant d'estimer l'humidité relative $RH$ a été ajouté dans le script \textit{make\_blk.py}.
-Elle suit la méthode décrite par \cite{humidity_formulation} en considérant une température entre $-20$ et $+50 ^\circ C$ :
-$$RH = 10^{7,591386.(\frac{T_{dewpt}}{T_{dewpt}+240,7263}-\frac{T}{T+240,7263})},$$
-avec $T_{dewpt}$ la température du point de rosée de l'air à $2~m$ au dessus de la surface de l'eau et $T$ la température de l'air à la même altitude.
 
 \subsection{Les données brutes}
 \label{sub:donnes_brutes}
@@ -1214,7 +1227,7 @@ La première analyse est effectuée pour les trois mois de données produites su
 	\centering
 	\includegraphics[scale=0.4]{../images/post_traitement/COTENTIN_analyse_off-near-shore.pdf}
 	\caption{
-		\textbf{Transformée de Fourier des hauteur d'eau modélisées par MACLoup sur le domaine COTENTIN du 19/11/2023 au 01/03/2024.}
+		\textbf{Transformée de Fourier des hauteur d'eau modélisées par MACLoup sur le domaine COTENTIN du 19/11/2023 au 01/03/2024.}\\
 		La localisation des deux enregistrements analysés est définie en Figure \ref{fig:loc_COTENTIN}.
 		%\textbf{En bas}, se référer à la légende de la Figure \ref{fig:ana_signaux_protec}.
 	}
@@ -1229,7 +1242,7 @@ Cette confirmation étant faite, elle autorise à poursuivre la comparaison avec
 	\centering
 	\includegraphics[scale=0.4]{../images/post_traitement/COTENTIN_analyse_near-shore.pdf}
 	\caption{
-		\textbf{Transformée de Fourier des mesures ProTeC (Figure \ref{fig:ana_signaux_protec}) et des hauteurs d'eau modélisées par MACLoup avec le domaine COTENTIN du 19/11/2023 au 01/03/2024 (Figure \ref{fig:ana_COTENTIN})}
+		\textbf{Transformée de Fourier des mesures ProTeC (Figure \ref{fig:ana_signaux_protec}) et des hauteurs d'eau modélisées par MACLoup avec le domaine COTENTIN du 19/11/2023 au 01/03/2024 (Figure \ref{fig:ana_COTENTIN})}\\
 		La localisation des deux enregistrements analysés est définie en Figure \ref{fig:loc_COTENTIN}.
 		%\textbf{En bas}, se référer à la légende de la Figure \ref{fig:ana_signaux_protec}.
 	}
@@ -1254,7 +1267,7 @@ Cette confirmation étant faite, elle autorise à poursuivre la comparaison avec
 		%\caption{}
 	\end{subfigure}
 	\caption{
-		\textbf{Zoom sur différentes parties de la Figure \ref{fig:ana_comp_protec_cotentin}}
+		\textbf{Zoom sur différentes parties de la Figure \ref{fig:ana_comp_protec_cotentin}.}
 	}
 	\label{fig:ana_comp_protec_cotentin_zoom}
 \end{figure}
@@ -1272,15 +1285,13 @@ La résolution suffisamment fine du domaine ADCL autorise à comparer indépenda
 	\begin{subfigure}{1.\linewidth}
 		\centering
 		\includegraphics[scale=0.4]{../images/post_traitement/ADCL_5_analyse_PROTEC1_field.pdf}
-		\caption{}
 	\end{subfigure}
 	\begin{subfigure}{1.\linewidth}
 		\centering
 		\includegraphics[scale=0.4]{../images/post_traitement/ADCL_5_analyse_PROTEC2_field.pdf}
-		\caption{}
 	\end{subfigure}
 	\caption{
-		\textbf{Transformées de Fourier des deux mesures ProTeC (Figure \ref{fig:ana_signaux_protec}) et des hauteur d'eau correspondantes modélisées par MACLoup avec le domaine ADCL 06/12/2023 au 18/12/2023}
+		\textbf{Transformées de Fourier des deux mesures ProTeC (Figure \ref{fig:ana_signaux_protec}) et des hauteur d'eau correspondantes modélisées par MACLoup avec le domaine ADCL 06/12/2023 au 18/12/2023.}\\
 		La localisation des enregistrements analysés est définie en Figure \ref{fig:sed_adcl_b}.
 		%\textbf{Pour la partie basse de chaque figure}, se référer à la légende de la Figure \ref{fig:ana_signaux_protec}.
 	}
@@ -1503,7 +1514,7 @@ Enfin, les paramètres localisés à la \textbf{position V}, sur un troisième:
 Indépendamment de leur appartenance à l'un ou l'autre des maillages, les paramètres forçant le modèle ne couvrent pas toujours l'ensemble du maillage.
 Certains de ces paramètres sont exprimés sur l'intégralité du maillage horizontal et vertical.
 D'autres ne le sont qu'aux bords du maillage, parfois sur l'ensemble des mailles verticales.
-D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une unique maille à la verticale, ces données sont localisées soit en surface (ex. vent) soit au fond (ex. rugosité).
+D'autres encore sont exprimés sur toutes l'étendue horizontale de la grille mais sur une seule couche, ces données sont localisées soit en surface (ex. vent) soit au fond (ex. rugosité).
 
 \subsection{Méthode d'emboîtement AGRIF}
 \label{anx:AGRIF}
@@ -1577,12 +1588,12 @@ L'équation et son explication provient de \cite{schemas_advection}.
 
 \subsection{Fichier de paramétrisation cppdefs.h}
 \label{anx:cppdefs}
-Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessous. Pour la grille mère, comme il n'y a pas de données héritées d'une grille précédente, quelques clefs sont modifiées selon la table \ref{table:cppdefs_mere}.
+Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessous. Pour la grille mère, comme il n'y a pas de données héritées d'une grille précédente, quelques clefs sont modifiées comme décrit par la Table \ref{table:cppdefs_mere}.
 
 \begin{table}[h!]
     \centering
     \caption{
-        Différence du fichier \textit{cppdefs.h} du domaine parent (COTENTIN) et du domaine enfant (ADCL).
+        \textbf{Différence du fichier \textit{cppdefs.h} du domaine parent (COTENTIN) et du domaine enfant (ADCL).}\\
         Le nom des clefs qui doivent être modifiés sont indiqués à gauche.
         %Modifications à appliquer au fichier cppdefs d'une grille fille dont un exemple est donnée dans l'encadré en section \ref{codecppdefs} pour obtenir celui de la grille mère.
         %Le statut de la clefs dans le fichier de la grille fille est écrit en colonne centrale, le statut dans le fichier de la grille mère est indiqué en colonne de droite.
