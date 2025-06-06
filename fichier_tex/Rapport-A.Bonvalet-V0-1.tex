@@ -7,7 +7,7 @@
 \usepackage{hyperref}
 \usepackage{nameref}
 \usepackage[pdftex]{graphicx}
-\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} % A personaliser
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry} % A personaliser
 \usepackage{libertine}
 \usepackage{dirtree}
 % Custom colors
@@ -133,12 +133,12 @@
                 \begin{flushleft} \large
                     \emph{Encadrement :} \\ \textsc{POIZOT Emmanuel, IGR (HDR) ; LUSAC / Intechmer}\\
                 \end{flushleft}
-\vspace{0.4cm}
+\vspace{1cm}
 {\large LUSAC / Intechmer  – UR 4253
     \\Laboratoire universitaire des sciences appliquées de Cherbourg (LUSAC)
     \\Institut national des sciences et techniques de la mer (Intechmer)
 }
-\\[0.4cm]
+\\[2cm]
 
 \HRule \vspace{0.2cm}
 Informations destinées à la Bibliothèque des Sciences de la Terre
@@ -159,7 +159,7 @@ Mots-clés (5 maximum) : CROCO, Python, pré-traitement, post-traitement
                     \end{flushright}
                 \end{minipage}
                 \\
-                \vspace{0.4cm}
+                \vspace{1cm}
                 {\large— Janvier 2025 - Juin 2025 —}
 
             \end{center}
@@ -172,13 +172,18 @@ Sur les côtes Normandes, au nord-est du Cotentin, l'anse du Cul-de-Loup est une
 La dégradation rapide et continue de l'environnement de l'anse du Cul-de-Loup est avérée et nécessite des prises de décisions rapides.
 Durant le stage, un modèle numérique hydrodynamique de cette anse a été réalisé en utilisant le code de calcul communautaire CROCO.
 Le modèle a passé sa première phase de mise en place et de validation.
-Sa construction est le premier pas vers la création d'un outil de compréhension et de projection environnementale dans l'ans du Cul-de-Loup.
+Sa construction est le premier pas vers la création d'un outil de compréhension et de projection environnementale dans l'anse du Cul-de-Loup.
 
 
 \vspace{10cm}
-\HRule \\[0.2cm]
-{ \huge \bfseries Implementation of an hydrodynamic numerical model of the \textit{anse du Cul-de-Loup} (Normandy, France)\\ [0.2cm] }
+\begin{sffamily}
+\begin{center}
+\HRule \\[0.4cm]
+{ \huge \bfseries Implementation of an hydrodynamic numerical model of the \textit{anse du Cul-de-Loup} (Normandy, France)\\ [0.4cm] }
+
 \HRule \\[2cm]
+\end{center}
+\end{sffamily}
 \vspace{0.5cm}
 \section*{Abstract}
 On the Normandy's coasts, on the north-east of the \textit{Cotentin}, the \textit{anse du Cul-de-Loup}, a bay of some square kilometers, has been suffering from anthropogenic and climate pressure for around fifty years.
@@ -214,7 +219,7 @@ The model implementation is the first step toward the creation of a tool allowin
     En France, l'activité de culture d'huître est une source importante de revenus pour certaines régions (Haut de France, Normandie, Bretagne, Pays de la Loire, Charente-Maritime, Aquitaine). En Normandie, le département de la Manche, avec ses $670~km$ de côtes, produit plus de \num{15000} tonnes d'huîtres par an. Depuis le \siecle{18}, le Cotentin abrite sur ses côtes des activités conchylicoles \parencite{Kopp2000}. Tout d'abord artisanale, cette culture consistait en un reparquage d'huître plates locales. À partir du \siecle{20} (début des années 60), la conchyliculture normande connaît une phase d'expansion importante et devient industrielle. De nouvelles zones côtières sont investies pour implanter les concessions ostréicoles et des aménagements sont réalisés pour en faciliter l'implantation.
     Avec certains de ses secteurs encore sauvages, les côtes Normandes ont aussi un attrait touristique de villégiature ainsi qu'historique\footnote{Notamment en relation avec les évènements de la seconde guerre mondiale et le débarquement du 6 juin 1944.}.  C'est aussi un secteur d'activité important pour de nombreuses communes côtières de cette région, antagoniste d'activités industrielles telles que la conchyliculture.
 
-    L'anse du Cul-de-Loup (Normandie, Manche, France, Fig. \ref{fig:carte-adcl}) est un exemple typique de l'évolution au cours du temps des côtes du littoral français (Fig. \ref{fig:historique-adcl}). Avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF (1 et 2)\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique.}  ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algues protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
+    L'anse du Cul-de-Loup (Normandie, Manche, France, Figure \ref{fig:carte-adcl}) est un exemple typique de l'évolution au cours du temps des côtes du littoral français (Figure \ref{fig:historique-adcl}). Avec la prise de conscience de la nécessaire préservation des milieux naturels, de nombreuses zones côtières telles que l'anse du Cul-de-Loup ont vu des mesures de sauvegarde mises en place, via la création de sites Natura 2000, les classements ZNIEFF (1 et 2)\footnote{Zones naturelles d’Intérêt Écologique, Faunistique et Floristique.}  ou encore les directives habitat faune et flore. Malgré ces initiatives de préservation d'un milieu naturel fragile, l'anse du Cul-de-Loup connaît une dégradation de son environnement, avec une disparition progressive de certaine communauté d'algues protégées (la Zostère et Spatine marine), ainsi qu'un envasement de plus en plus important au détriment de la couverture sableuse originale.
 
     L'état français via ses agences dédiées (Agence de l'Eau, IFREMER, etc.), mais aussi les entités régionales (Région Normandie) et locale (Département de la Manche), financent des travaux et projets dans une optique d'amélioration de la gestion de l'espace de l'anse du Cul-de-Loup. Ainsi, l'Agence de l'Eau Seine-Normandie (AESN) a financé le programme scientifique "\textit{Projet de Territoire : anse du Cul-de-Loup}" (ProTeC) de 2022 à 2024, dans l'objectif de dresser un état des lieux environnemental. Ce travail a permis de connaître de manière précise, la nature des cortèges sédimentaires de surface de l'anse, ainsi que sa dynamique de mise en place. Les courants étant le moteur principal des mouvements de sédiment, des mesures de vitesses et directions de la masse d'eau ont été acquises, cumulant trois mois de mesures en deux points à l'entrée de l'anse du Cul-de-Loup. Bien que cet effort de mesure soit déjà important, il n'est pas suffisant pour aborder l'hydrodynamique à l'échelle de l'anse toute entière.
 
@@ -226,7 +231,7 @@ The model implementation is the first step toward the creation of a tool allowin
     \section{ZONE D'ÉTUDE}
     \label{sec:adcl}
 
-    D'une superficie avoisinant les $370~ha$, l'anse du Cul-de-Loup n'est ouverte que dans sa partie sud sur la baie de Seine. La fermeture complète de l'anse, à l'est, a été réalisée au cours du \siecle{17} par la construction d'une route-digue qui rejoint le continent depuis St-Vaast-la-Hougue à l'ex île de la Hougue (Fig. \ref{fig:carte-adcl}). L'ensemble de l'anse découvre plus ou moins en fonction des coefficients de marée (marée semi-diurne), avec un marnage d'environ $5~m$ en marée de vive eau. Le zéro hydrographique est situé juste à l'entrée de l'anse parallèlement à la ligne côtière. L'altitude maximum dans l'anse ne dépasse pas 3 m au dessus du zéro hydrographique.
+    D'une superficie avoisinant les $370~ha$, l'anse du Cul-de-Loup n'est ouverte que dans sa partie sud sur la baie de Seine. La fermeture complète de l'anse, à l'est, a été réalisée au cours du \siecle{17} par la construction d'une route-digue qui rejoint le continent depuis St-Vaast-la-Hougue à l'ex île de la Hougue (Figure \ref{fig:carte-adcl}). L'ensemble de l'anse découvre plus ou moins en fonction des coefficients de marée (marée semi-diurne), avec un marnage d'environ $5~m$ en marée de vive eau. Le zéro hydrographique est situé juste à l'entrée de l'anse parallèlement à la ligne côtière. L'altitude maximum dans l'anse ne dépasse pas 3 m au dessus du zéro hydrographique.
 
     \begin{figure}[!h]
         \centering
@@ -401,7 +406,7 @@ Les équations ne seront jamais résolues sur les mailles du domaine qui sont d�
 Le modèle MACLoup est défini en dimensions pseudo-3D, il est composé d'une succession de maillages 2D répartis verticalement selon la dimension $\sigma$.
 Dans cette définition, les couches sont contraintes verticalement par la bathymétrie et réparties analytiquement sur la hauteur de la colonne d'eau.
 Par convention, la surface est à $0$ et le fond est à $1$.
-Cette répartition est modulée selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$ qui décrivent la résolution verticale respectivement à l'approche de la surface et du fond (Fig. \ref{fig:vertical_resolution}).
+Cette répartition est modulée selon deux paramètres $\sigma_{s}$ et $\sigma_{b}$ qui décrivent la résolution verticale respectivement à l'approche de la surface et du fond (Figure \ref{fig:vertical_resolution}).
 %La résolution verticale du maillage n'est pas définie dans le fichier du domaine CROCO.
 Cette paramétrisation de la verticale est présente dans les fichiers d'entrées \textit{param.h} et \textit{croco.in}.
 %Selon les paramètre choisis, la résolution verticale peut varier verticalement selon les deux paramètres $\sigma_{s}$ et $\sigma_{b}$.
@@ -437,7 +442,7 @@ Les choix réalisés pour la définition des domaines modélisés dans le cadre 
 \subsubsection{L'hydrodynamique du modèle}
 \label{subsub:physique_modele}
 
-Les caractéristiques hydrodynamiques effectivement résolues par le modèle sont présentes dans le fichier de configuration nommé \textit{cppdefs.h} (Fig. \ref{fig:workflow_simple})
+Les caractéristiques hydrodynamiques effectivement résolues par le modèle sont présentes dans le fichier de configuration nommé \textit{cppdefs.h} (Figure \ref{fig:workflow_simple})
 % quelles équations physiques doivent être résolues par le modèle.
 La définition de ces caractéristiques s'appuie sur la présence de mots clefs dédiés.
 Chaque mot clef active ou désactive une fonctionnalité avec la syntaxe "\# define"  ou "\# undef" qui le précède.
@@ -470,7 +475,7 @@ Cette dynamique est analogue à celle de notre configuration.
 %En effet, dans le modèle de l'anse du Cul-de-Loup, le découvrement s'effectue sur les mailles dans la zone de balancement des marées.
 %La même robustesse que la configuration précédemment citée est donc recherchée.
 
-Le schéma retenu est celui d'advection quasi-monotone de cinquième ordre de WENO\footnote{Weighted Essentially Non-Oscillatory scheme} (voir \ref{anx:WENO}).
+Le schéma retenu est celui d'advection quasi-monotone de cinquième ordre de WENO\footnote{Weighted Essentially Non-Oscillatory scheme} (voir annexe \ref{anx:WENO}).
 
 Le choix du schéma numérique de diffusion est de type Generic Length Scale (GLS).
 Les schémas de diffusion verticale et horizontale sont différenciés.
@@ -481,7 +486,7 @@ Le schéma de diffusion horizontale choisi est de type Laplacien avec une viscos
 Enfin, le schéma de diffusion horizontale est de type K-OMEGA provenant de \cite{GLS_KOMEGA_kolmogorov1941equations}.
 %\end{codeEnv}
 
-L'ensemble des clefs activées qui définissent le schéma d'advection-diffusion de MACLoup se trouve en annexes (\ref{anx:cppdefs}).
+L'ensemble des clefs activées qui définissent le schéma d'advection-diffusion de MACLoup se trouve en annexe \ref{anx:cppdefs}.
 
 
 \subsubsection{Les forçages du modèle}
@@ -539,7 +544,7 @@ Tous les domaines enfants extraient leurs conditions aux limites sur la base des
 
 Dans CROCO, il existe deux manières mettre en place une modélisation en domaines emboîtés : un emboîtement de type temps-réel et l'autre de type temps-différé.
 La méthode de type temps-réel est prise en charge dans CROCO via le module spécifique AGRIF\footnote{AGRIF : Adaptive Grid Refinement In Fortran}.
-Cette méthode n'a pas été retenue dans le cadre de MACLoup, des précisions sur ce point sont présentes en annexe (\ref{anx:AGRIF}).
+Cette méthode n'a pas été retenue dans le cadre de MACLoup, des précisions sur ce point sont présentes en annexe \ref{anx:AGRIF}.
 Le choix de la méthode d'emboîtement s'est donc porté sur le type temps-différé.
 Dans ce mode, Les modèles sont exécutés les uns après les autres en commençant par le domaine parent de plus haut niveau.
 Les résultats de chaque parent sont successivement utilisés pour générer les fichiers de forçages du domaine sous-jacent.
@@ -614,13 +619,17 @@ Les paramètres principaux des deux domaines sont décrits en Table\ref{table:pa
 
     
 \begin{table}[h!]
+    \caption{
+        \textbf{Paramètres généraux des domaines de MACLoup.}
+        %Les domaines auxiliaires explorés durant le stage ne sont pas présentés ici.
+    }
     \begin{tabular}{||c||c|c|c|c|c|}
         \hline
-        Nom du domaine & latitude & longitude & étendue nord-sud & étendue est-ouest & résolution (m/px)\\
+        Nom du domaine & latitude & longitude & étendue nord-sud & étendue est-ouest & résolution ($m/pixels$)\\
         & au centre & au centre &  &  & \\
         \hline
-        COTENTIN & 49,6 & -1,28 & $80~pixels$, $150~km$ & $80~pixels$, $150~km$ & $1~875$\\
-        ADCL & 49,566 & -1,27 & $220~pixels$, $11~km$ & $138~pixels$, $6,9~km$ & $50$\\
+        COTENTIN & 49,6 & -1,28 & $80~pixels$; $150~km$ & $80~pixels$; $150~km$ & $1~875$\\
+        ADCL & 49,566 & -1,27 & $220~pixels$; $11~km$ & $138~pixels$; $6,9~km$ & $50$\\
         \hline
     \end{tabular}\newline
     
@@ -643,10 +652,6 @@ Les paramètres principaux des deux domaines sont décrits en Table\ref{table:pa
         ADCL & nord, sud, est & - & COTENTIN \\
         \hline
     \end{tabular}
-    \caption{
-        Paramètres généraux des domaines de MACLoup.
-        %Les domaines auxiliaires explorés durant le stage ne sont pas présentés ici.
-    }
     \label{table:param_generaux}
 \end{table}
 
@@ -1001,7 +1006,7 @@ Le logiciel de système d'information géographique (SIG) QGIS (Quantum GIS)\foo
         \textbf{(a)} données bathymétriques LIDAR aéroportées du ROLNHDF assemblées via les outils raster de QGIS. \textbf{(b)} données bathymétriques multi-faisceaux acquises au cours de la mission QIMCOUF.}
 \end{figure}
 
-Les données LIDAR (Fig. \ref{fig:ROLNHDF}) ne couvrent pas en totalité la zone d'intérêt, en particulier au niveau des grandes dunes sous-marines qui se trouvent au sud-est de l'anse du Cul-de-Loup. La campagne océanographique \textit{QIMCOUF} financée dans le cadre du programme ProTeC, a été réalisée en 2024 et a consisté pour l'essentiel, à l'acquisition de données sondeur multi-faisceaux à bord du navire océanographique "\textit{Côtes de la Manche}" armé par l'IFREMER/GÉNAVIR (Figure \ref{fig:QIMCOUF}).
+Les données LIDAR (Figure \ref{fig:ROLNHDF}) ne couvrent pas en totalité la zone d'intérêt, en particulier au niveau des grandes dunes sous-marines qui se trouvent au sud-est de l'anse du Cul-de-Loup. La campagne océanographique \textit{QIMCOUF} financée dans le cadre du programme ProTeC, a été réalisée en 2024 et a consisté pour l'essentiel, à l'acquisition de données sondeur multi-faisceaux à bord du navire océanographique "\textit{Côtes de la Manche}" armé par l'IFREMER/GÉNAVIR (Figure \ref{fig:QIMCOUF}).
 
 
 Ces données de hautes précisions verticales ($\approx 20~cm$) ont été mises à disposition pour compléter le jeu de données disponibles.
@@ -1185,7 +1190,7 @@ La comparaison entre les données ProTeC et les données modélisées avec MACLo
 \label{sub:ana_freq}
 Le forçage par la marée se fait aux limites du domaine.
 Une première vérification consiste à s'assurer de la bonne propagation des harmoniques de marée à l'intérieur du domaine sur le temps modélisé.
-%L'hydrodynamique de la zone d'intérêt étant dominée par la marée, la première et principale phase de validation des données consiste à vérifier la présence des différentes ondes de marrées entrées et la justesse de leur période.
+%L'hydrodynamique de la zone d'intérêt étant dominée par la marée, la première et principale phase de validation des données consiste à vérifier la présence des différentes ondes de marées entrées et la justesse de leur période.
 Des analyses fréquentielles sont effectuées sur les variations de hauteurs d'eau des données ProTeC (pointées en Figure \ref{fig:sed_adcl_b}) et des données modélisées par MACLoup (aux localisations indiquées en Figure \ref{fig:loc_COTENTIN}).
 Pour ces analyses, la méthode classique fast fourrier transform (FFT, \cite{FFT}) est utilisée.
 
@@ -1336,11 +1341,12 @@ L'observation faite des différences d'amplitudes permet de bien mettre en évid
 
 Les directions des courants mesurés sur le terrain et modélisés avec MACLoup présentent aussi des différences importantes.
 Elles sont plus importantes durant la phase de morte-eaux, pendant laquelle les courants sont généralement faibles.
-En revanche, les changements de direction qui s'opèrent au moment de la renverse des courant sont synchrones.
+En revanche, les changements de direction qui s'opèrent au moment de la renverse des courants sont synchrones.
 %Les variations du modèle sont toutefois synchrones avec les mesures de terrain.
-La mauvaise paramétrisation du frottement sur le fond peut-être aussi incriminée mais ne peut pas à elle seule expliquer des différences d'une telle ampleur.% encore partie des possibles raisons d'écarts entre le modèle et la réalité.
+La mauvaise paramétrisation du frottement sur le fond peut-être aussi incriminée mais ne peut pas à elle seule expliquer des différences d'une telle ampleur.
+% encore partie des possibles raisons d'écarts entre le modèle et la réalité.
 Cette analyse des directions conduit aussi à identifier une autre source des écarts constatés.
-En effet, les constatations faites à partir de la comparaison entre les deux points de mesures (Figure \ref{fig:comp_brute_PROTEC_PROTEC}) ont démontré l'existence de variations importantes sur de courtes distance.
+En effet, les constatations faites à partir de la comparaison entre les deux points de mesures (Figure \ref{fig:comp_brute_PROTEC_PROTEC}) ont démontré l'existence de variations importantes sur de courtes distances.
 C'est un signe de niveau de turbulence lui aussi important.
 La résolution du domaine ADCL actuel ne permet pas de capter avec suffisamment de précision ce niveau de turbulence et les variations associées.
 Par conséquent, il sera nécessaire de mettre en place un troisième sous domaine moins étendu dans l'espace mais avec une meilleure résolution.
@@ -1356,7 +1362,7 @@ Par conséquent, il sera nécessaire de mettre en place un troisième sous domai
 
 Le modèle est contraint à une valeur minimale de la hauteur d'eau qui, lorsqu'elle est \alert{dépassée} par une maille, définit cette dernière comme émergée.
 Une nouvelle grille de plus haute résolution pourrait permettre de diminuer cette valeur seuil qui vaut $20~cm$ pour le domaine ADCL.
-Par ailleurs, la valeur seuil ne peut pas être nullifiée elle aura donc toujours un effet sur les résultats dans la zone de balancement des marrées là où la bathymétrie est très horizontale.
+Par ailleurs, la valeur seuil ne peut pas être nullifiée elle aura donc toujours un effet sur les résultats dans la zone de balancement des marées là où la bathymétrie est très horizontale.
 Il serait donc intéressant qu'un autre point de mesures de terrain dans des zones plus au large soit utilisé pour valider ou non le modèle.
 
 \end{comment}
@@ -1401,7 +1407,7 @@ Effet de l'ajout du bottom drag (à voir)
 
 \newpage
 
-\section{CONCLUSION}
+\section{CONCLUSION et perspectives}
 \label{sec:conclusion}
 
 %Ca sera fait à la fin ou presque
@@ -1446,12 +1452,14 @@ L'objectif est de pouvoir fournir un outil qui puisse servir à la mise en place
 
 \subsection{Fonction ap2ep (Zhigang Xu (2002))}
 \label{anx:ap2ep}
-La fonction ap2ep décrite par \cite[Zhigang Xu (2002)][]{ap2ep} permet de transformer les amplitudes ($AmpleU$ et $AmplV$) et phases ($PhaseU$ et $PhaseV$) des courants de marée en paramètres d'ellipse représentant ces mêmes courants: le demi grand-axe $SemiMajAxis$, l'excentricité $Eccentricity$, l'inclinaison $Inclinaison$ et l'angle de phase $PhaseAngle$.
-Les opérations effectuées respectent ces équations :
-$$SemiMajAxis = \abs{wp}+\abs{wm}$$
-$$Eccentricity = \frac{\abs{wp}+\abs{wm}}{\abs{wp}-\abs{wm}}$$
-$$Inclinaison = \frac{arg(wm)+arg(wp)}{2\pi}.180$$
-$$PhaseAngle =  \frac{arg(wm)-arg(wp)}{2\pi}.180$$
+La fonction ap2epp est implémentée dans le nouvel outil \textit{make\_frc.py} développé dans le cadre du stage (voir \ref{subsub:outils_dev}).
+Elle est aussi utilisées dans l'outil original des CROCO Pytools.
+La fonction est décrite par \cite[Zhigang Xu (2002)][]{ap2ep}, elle permet de transformer les amplitudes ($AmpleU$ et $AmplV$) et phases ($PhaseU$ et $PhaseV$) des courants de marée en paramètres d'ellipse représentant ces mêmes courants: le demi grand-axe $SemiMajAxis$, l'excentricité $Eccentricity$, l'inclinaison $Inclinaison$ et l'angle de phase $PhaseAngle$.
+Ces variables sont définies comme suit :
+$$SemiMajAxis = \abs{wp}+\abs{wm},$$
+$$Eccentricity = \frac{\abs{wp}+\abs{wm}}{\abs{wp}-\abs{wm}},$$
+$$Inclinaison = \frac{arg(wm)+arg(wp)}{2\pi}.180,$$
+$$PhaseAngle =  \frac{arg(wm)-arg(wp)}{2\pi}.180,$$
 avec
 \begin{equation*}
     wp = \frac{u*+j.v*}{2}
@@ -1467,7 +1475,9 @@ avec $PhaseU$, $PhaseV$, $AmpleU$, $AmplV$ les phases et amplitudes des composan
 
 
 \subsection{Répartition des variables dans les mailles}
-Les variables que nous avons choisies de modéliser sont organisées comme suit entre les localisations sur les mailles de \cite{Arakawa_C-grid_1977}.\\
+\label{anx:vars_dans_maillage}
+Les variables que nous avons choisies de modéliser sont organisées comme suit sur les mailles de \cite{Arakawa_C-grid_1977}.\\
+La définition des trois positions possibles \textbf{H}, \textbf{U} et \textbf{V} est donnée en section \ref{subsub:grille_croco}
 La majorité des variables sont localisées en \textbf{position H}, sur le maillage central.
 \begin{itemize}
     \item la hauteur de la colonne d'eau relativement au niveau marin moyen (*référentiel à vérifier),
@@ -1545,51 +1555,61 @@ D'autre part, il a plus de chances de mieux représenter la réalité grâce à 
 \end{table}
 \end{comment}
 
-\subsection{Schémas numériques}
-\subsubsection{Schéma WENO de cinquième ordre (Weighted Essentially Non-Oscillatory scheme)}\label{anx:WENO}
-Les variables sont disposées en C-grille d'Arakawa.
+%\subsection{Schémas numériques}
+\subsection{Schéma numérique WENO de cinquième ordre}
+\label{anx:WENO}
+Dans le \textit{Weighted Essentially Non-Oscillatory scheme} (WENO), les variables sont disposées en C-grille d'Arakawa.
 Les valeurs des traceurs sont notées $q_i$ et les vitesses $u_i$.
-Dans le cadre de ce schémas d'advection, trois valeurs aux interfaces sont évaluées en se utilisant trois stencils différents. Une moyenne non linéaire entre ces trois valeurs est utilisée comme suit pour déterminer la valeur calculée :
-$$\tilde{q}_{k-\frac{1}{2}} = a_1k-\frac{1}{2}^{(1)} + a_2k-\frac{1}{2}^{(2)} + a_2k-\frac{1}{2}^{(2)}$$
-Les constantes de pondération sont définies selon les règles suivantes :
+Dans le cadre de ce schémas d'advection, trois valeurs aux interfaces sont évaluées en utilisant trois résolutions différentes.
+Une moyenne non linéaire entre ces trois valeurs est utilisée pour déterminer la valeur finale.
+Cette moyenne est définie par :
+$$\tilde{q}_{k-\frac{1}{2}} = a_1\tilde{q}^{(0)}_{k-\frac{1}{2}} + a_2\tilde{q}^{(1)}_{k-\frac{1}{2}} + a_2\tilde{q}^{(2)}_{k-\frac{1}{2}},$$
+où les constantes de pondération $a_1$, $a_2$ et $a_3$ sont définies selon les règles suivantes :
 \begin{enumerate}
     \item $\sum_{j=0}^{2}a_j = 1$,
     \item propriété ENO (Essentially Non Oscillatory),
     \item cinquième ordre à condition que q(x) soit peut rugueux.
 \end{enumerate}
 C'est un schéma à variation bornée (TBV, Total variation Bounded).
-source pour l'équation et son explication : \cite{schemas_advection}
+
+L'équation et son explication provient de \cite{schemas_advection}.
 
 
-\subsection{Fichiers d'entrées}
-\subsubsection{cppdefs.h}
+\subsection{Fichier de paramétrisation cppdefs.h}
 \label{anx:cppdefs}
 Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessous. Pour la grille mère, comme il n'y a pas de données héritées d'une grille précédente, quelques clefs sont modifiées selon la table \ref{table:cppdefs_mere}.
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{c | c c c}
-        BSTRESS\_FAST & define & $\rightarrow$ & {\color{red}undef}\\
-        \hline
-        LIMIT\_BSTRESS & undef & $\rightarrow$ & {\color{green}define}\\
-        \hline
-        SPONGE & undef & $\rightarrow$ & {\color{green}define}\\
-        \hline
-        TIDES & undef & $\rightarrow$ & {\color{green}define}\\
-    \end{tabular}
     \caption{
-        Modifications à appliquer au fichier cppdefs d'une grille fille dont un exemple est donnée dans l'encadré en section \ref{codecppdefs} pour obtenir celui de la grille mère.
-        Le statut de la clefs dans le fichier de la grille fille est écrit en colonne centrale, le statut dans le fichier de la grille mère est indiqué en colonne de droite.
+        Différence du fichier \textit{cppdefs.h} du domaine parent (COTENTIN) et du domaine enfant (ADCL).
+        Le nom des clefs qui doivent être modifiés sont indiqués à gauche.
+        %Modifications à appliquer au fichier cppdefs d'une grille fille dont un exemple est donnée dans l'encadré en section \ref{codecppdefs} pour obtenir celui de la grille mère.
+        %Le statut de la clefs dans le fichier de la grille fille est écrit en colonne centrale, le statut dans le fichier de la grille mère est indiqué en colonne de droite.
     }
+    \begin{tabular}{c | c c c}
+        clef & domaine parent & & domaine enfant  \\
+         & (COTENTIN) & & (ADCL) \\
+        \hline
+        BSTRESS\_FAST & {\color{red}undef} & $\rightarrow$ & {\color{green}define} \\
+        \hline
+        LIMIT\_BSTRESS & {\color{green}define} & $\rightarrow$ & {\color{red}undef} \\
+        \hline
+        SPONGE & {\color{green}define} & $\rightarrow$ & {\color{red}undef} \\
+        \hline
+        TIDES & {\color{green}define} & $\rightarrow$ & {\color{red}undef} \\
+    \end{tabular}
+    
     \label{table:cppdefs_mere}
 \end{table}
 
 % peut être à transformer en un tableau pour une meilleure lisibilité
 % + nettoyer
-\begin{codeEnv}{{Contenu du fichier cppdefs.h d'une sous-grille\label{codecppdefs}}}
-    \lstinputlisting[firstline=3,lastline=386,language=bash]{../croco_files/cppdefs_child.h}
+\begin{codeEnv}{{Contenu du fichier cppdefs.h pour un domaine enfant (ADCL)\label{codecppdefs}}}
+    \lstinputlisting[firstline=0,lastline=386,language=bash]{../croco_files/cppdefs_child.h}
 \end{codeEnv}
 
+\begin{comment}
 \subsection{Nomenclature et organisation des fichiers de la configuration}
 \color{darkgrey}
 \label{anx:orga_fichiers}
@@ -1648,6 +1668,7 @@ Le contenu du fichier \textit{cppdefs.h} des grilles filles est écrit ci-dessou
 \color{black}
 
 
+\end{comment}
 
 
 \end{document}
